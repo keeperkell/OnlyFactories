@@ -19,16 +19,18 @@ const HeaderBar = styled.header`
 
 const Nav = styled.nav`
     padding: 1em;
+    padding-left: 1e;
     z-index: 2;
-    position: fixed;
+    position: relative;
     padding: 50em;
 
     @media (max-width: 700px){
-        padding-top: 0;
+        padding-top: 0; 
     }
     @media (min-width: 700px){
         position: fixed;
-        width: 100%;
+        
+        width: 80%;
         height: 64;
         
     }
@@ -44,13 +46,8 @@ const NavList = styled.ul`
         list-style: none;
     }
     li{
-        padding: 1em;
+        padding: 1.5em;
         display: inline;
-        //background-color: #0077cc;
-    }
-    li:hover {
-        background-color: #0077cc;
-        color: #FFFFFF
     }
 
     a{
@@ -64,7 +61,7 @@ const NavList = styled.ul`
     }
     a:hover,
     a:focus{
-        color: #FFFFFF;
+        color: #2F81B6;
     }
 
 `
@@ -73,22 +70,23 @@ const Header = () => {
     return(
         <HeaderBar>
             <a href="./">
-                <img className="img-responsive" src={logo} alt="University of Idaho Logo" height="65" />
+                <img className="img-responsive" src={logo} alt="University of Idaho Logo" height="65" padding-right="120" />
             </a>
-            <Nav>
-                <NavList>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/ordering">Order Page</Link>
-                    </li>
-                    <li>
-                        <Link to="/tracking">Tracking</Link>
-                    </li>
-                </NavList>
-            </Nav>
-
+                
+            <NavList>
+                <li>
+                    <Link to="/">Home</Link>
+                </li>
+                <li>
+                    <Link to="/ordering">Order Page</Link>
+                </li>
+                <li>
+                    <Link to="/tracking">Tracking</Link>
+                </li>
+                <li>
+                    <Link to="/about">About</Link>
+                </li>
+            </NavList>
         </HeaderBar>
     )
 }

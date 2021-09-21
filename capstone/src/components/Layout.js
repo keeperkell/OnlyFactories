@@ -37,7 +37,7 @@ const Layout = ({ children }) => {
         <React.Fragment>
             <Header />
             <Wrapper>
-                <Navigation />
+                
                 <Main>{children}</Main>
             </Wrapper>
         </React.Fragment>

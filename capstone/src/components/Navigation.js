@@ -7,14 +7,13 @@ import styled from "styled-components";
 const Nav = styled.nav`
     padding: 1em;
     background: #bbdced;
-    box-shadow: 5px 0 0 0 rgba(0, 0, 0, 0.25);
 
     @media (max-width: 700px){
         padding-top: 64px;
     }
     @media (min-width: 700px){
         position: fixed;
-        width: 220px;
+        width: 50%;
         height: calc(100% - 64px);
         
     }
@@ -53,15 +52,7 @@ const Navigation = () => {
     return (
         <Nav>
             <NavList>
-                <li>
-                    <Link to="/">Home</Link>
-                </li>
-                <li>
-                    <Link to="/ordering">Order Page</Link>
-                </li>
-                <li>
-                    <Link to="/tracking">Tracking</Link>
-                </li>
+                
             </NavList>
         </Nav>
     )
