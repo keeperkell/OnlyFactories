@@ -1,8 +1,13 @@
 // file: src/webpages/home.js
 
-import React from "react";
+import React, {useEffect} from "react";
 
 const Home = () => {
+
+    useEffect(() => {
+        document.title = "Project Name"
+    })
+    
     return (
         <div>
             <h1>Capstone</h1>
