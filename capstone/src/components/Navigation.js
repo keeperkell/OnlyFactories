@@ -6,7 +6,8 @@ import styled from "styled-components";
 
 const Nav = styled.nav`
     padding: 1em;
-    background: #f7f3e9;
+    background: #bbdced;
+    box-shadow: 5px 0 0 0 rgba(0, 0, 0, 0.25);
 
     @media (max-width: 700px){
         padding-top: 64px;
@@ -15,7 +16,7 @@ const Nav = styled.nav`
         position: fixed;
         width: 220px;
         height: calc(100% - 64px);
-        overflow-y: scroll;
+        
     }
 `;
 
@@ -24,6 +25,14 @@ const NavList = styled.ul`
     padding: 0;
     list-style: none;
     line-height: 2;
+
+    ul{
+        list-style: none;
+    }
+    li{
+        padding: 1em;
+        display: inline;
+    }
 
     a{
         text-decoration: none;
