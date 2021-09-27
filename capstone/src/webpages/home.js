@@ -18,12 +18,10 @@ const Home = () => {
             <p>To start, make an order by clicking on Order. If you have already ordered something and would like to track it, click Track</p>
 
             <Link to = "/ordering">
-                <button style = {{height: 50, width: 250, backgroundColor: "#f1b300", borderRadius: 20, borderWidth: 4, borderColor: "#191919"}}> 
-                Order </button>
+                <Button name = "Order" />
             </Link>
             <Link to = "/Tracking">
-                <button style = {{height: 50, width: 250, backgroundColor: "#f1b300",marginLeft: 50, borderRadius: 20, borderWidth: 4, borderColor: "#191919"}}> 
-                Track </button>
+                <Button name = "Track" />
             </Link>
             <p/>
             <img style ={{marginTop: 200}} src={logo} height="400"/>
