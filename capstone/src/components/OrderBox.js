@@ -1,11 +1,20 @@
 //file: src/components/OrderBox.js
 
 import React from "react";
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import { Formik } from "formik";
+import * as Yup from 'yup'
 import styled from "styled-components";
 
-const Order = styled.div`
-    height: 750px;
+
+
+const OrderBox = styled.div`
+    height: 450px;
+    width: 1000px;
+    display: grid;
+    grid-template-rows: auto auto auto auto auto;
+    align-items: center;
+    justify-content: center;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
@@ -14,42 +23,128 @@ const Order = styled.div`
 
 `
 
-class OrderForm extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {value: ''}
+const OrderForm = () => (
+    <div className="app">
+    <h1>
+      Demo
+    </h1>
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleChange = this.handleSubmit.bind(this);
-    }
+    <Formik
+      initialValues={{ name: "",
+                       email: "",
+                       quantity: 1,
+                       color: "Red" }}
 
-    handleChange(event) {
-        this.setState({value: event.target.value});
-    }
+      onSubmit={async values => {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        alert(JSON.stringify(values, null, 2));
+      }}
 
-    handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
-    }
+      validationSchema={Yup.object().shape({
+        name: Yup.string().required("Required"),
+        email: Yup.string().email().required("Required")
+      })}>
 
-    render(){
-        return(
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    Name:
-                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+      {props => {
+        const {
+          values,
+          touched,
+          errors,
+          dirty,
+          isSubmitting,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          handleReset
+        } = props;
+
+        return (
+            <form onSubmit={handleSubmit}>
+                <label style={{ display: "block" }}>
+                    Name
                 </label>
-                <input type="submit" value="Submit" />
-            </form>
-        );
-    }
-}
+                <input
+                    id="name"
+                    placeholder="Enter your name"
+                    type="text"
+                    value={values.name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={
+                        errors.name && touched.name
+                        ? "text-input error"
+                        : "text-input"
+                    }
+                />  
 
-const OrderBox = () => {
-    return (
-        
-            <OrderForm />
-    )
-}
+                <label htmlFor="email" style={{ display: "block" }}>
+                    Email
+                </label>
+                <input
+                    id="email"
+                    placeholder="Enter your email"
+                    type="text"
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={
+                        errors.email && touched.email
+                        ? "text-input error"
+                        : "text-input"
+                    }
+                />
+                {errors.email && touched.email && (
+                <div className="input-feedback">{errors.email}</div>
+                )}
+
+                <label style={{ display: "block" }}>
+                    Quantity
+                </label>
+                <select
+                    id="quantity"
+                    type="select"
+                    value={values.quantity}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                >
+                    <option defaultValue>1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+
+                <label style={{ display: "block" }}>
+                    Color
+                </label>
+                <select
+                    id="color"
+                    type="select"
+                    value={values.color}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                >
+                    <option defaultValue>Red</option>
+                    <option value="Blue">Blue</option>
+                    <option value="White">White</option>
+                </select>
+
+            <button
+              type="button"
+              className="outline"
+              onClick={handleReset}
+              disabled={!dirty || isSubmitting}
+            >
+              Reset
+            </button>
+            <button type="submit" disabled={isSubmitting}>
+              Submit
+            </button>
+
+          </form>
+        );
+      }}
+    </Formik>
+  </div>
+);
+
 
 export default OrderForm
