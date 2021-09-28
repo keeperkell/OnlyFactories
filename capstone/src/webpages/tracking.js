@@ -1,6 +1,7 @@
 // file: src/webpages/tracking.js
 
 import React, {useEffect} from "react";
+import TrackingBox from "../components/TrackingBox";
 
 const Tracking = () => {
     useEffect (() => {
@@ -9,8 +10,9 @@ const Tracking = () => {
 
     return (
         <div>
-            <h1>Capstone</h1>
-            <p>This is the tracking page...</p>
+            <h1>Track Your Order</h1>
+            <p>Enter Order Number: </p>
+            <TrackingBox />
         </div>
     );
 };
