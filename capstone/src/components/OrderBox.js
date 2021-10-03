@@ -1,12 +1,10 @@
 //file: src/components/OrderBox.js
 
 import React from "react";
-import { render } from 'react-dom';
-import { Formik } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from 'yup'
 import styled from "styled-components";
-
-
+import * as MUI from '@mui/material'
 
 const OrderBox = styled.div`
     height: 450px;
@@ -18,133 +16,137 @@ const OrderBox = styled.div`
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
-
     color: #333333;
-
 `
 
+const initialValues = {
+  name: "",
+  email: "",
+  quantity: 1,
+  color: "Red" 
+}
+
+const validationSchema = 
+  Yup.object().shape({
+    name: Yup.string().required("Required"),
+    email: Yup.string().email().required("Required")
+  });
+
 const OrderForm = () => (
+
   <OrderBox>
     <div className="app">
-    <h1>
-      Demo
-    </h1>
 
-    <Formik
-      initialValues={{ name: "",
-                       email: "",
-                       quantity: 1,
-                       color: "Red" }}
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
 
-      onSubmit={async values => {
-        await new Promise(resolve => setTimeout(resolve, 500));
-        alert(JSON.stringify(values, null, 2));
-      }}
+        onSubmit={async values => {
+          await new Promise(resolve => setTimeout(resolve, 500));
+          alert(JSON.stringify(values, null, 2));
+        }}
+      >
+        
+        {({
+            values,
+            touched,
+            errors,
+            dirty,
+            isSubmitting,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            handleReset
+          }) => (
 
-      validationSchema={Yup.object().shape({
-        name: Yup.string().required("Required"),
-        email: Yup.string().email().required("Required")
-      })}>
+                <Form autoComplete="off" onSubmit={handleSubmit}>
+                  <MUI.TextField
+                      id="name"
+                      placeholder="Enter your name"
+                      label="Name"
+                      type="text"
+                      value={values.name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className={
+                          errors.name && touched.name
+                          ? "text-input error"
+                          : "text-input"
+                      }
+                  />  
 
-      {props => {
-        const {
-          values,
-          touched,
-          errors,
-          dirty,
-          isSubmitting,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          handleReset
-        } = props;
+                  <MUI.TextField
+                      id="email"
+                      placeholder="Enter your email"
+                      label="Email"
+                      type="text"
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className={
+                          errors.email && touched.email
+                          ? "text-input error"
+                          : "text-input"
+                      }
+                  />
+                  {errors.email && touched.email && (
+                  <div className="input-feedback">{errors.email}</div>
+                  )}
 
-        return (
-            <form onSubmit={handleSubmit}>
-                <label style={{ display: "block" }}>
-                    Name
-                </label>
-                <input
-                    id="name"
-                    placeholder="Enter your name"
-                    type="text"
-                    value={values.name}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                        errors.name && touched.name
-                        ? "text-input error"
-                        : "text-input"
-                    }
-                />  
 
-                <label htmlFor="email" style={{ display: "block" }}>
-                    Email
-                </label>
-                <input
-                    id="email"
-                    placeholder="Enter your email"
-                    type="text"
-                    value={values.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={
-                        errors.email && touched.email
-                        ? "text-input error"
-                        : "text-input"
-                    }
-                />
-                {errors.email && touched.email && (
-                <div className="input-feedback">{errors.email}</div>
-                )}
+                  <MUI.FormControl fullWidth>
+                    <MUI.InputLabel id="quantity-select-label">Color</MUI.InputLabel>
+                    <MUI.Select
+                        id="quantity"
+                        labelId="quantity-select-label"
+                        type="select"
+                        value={values.quantity}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                    >
+                        <MUI.MenuItem value={1}>1</MUI.MenuItem>
+                        <MUI.MenuItem value={2}>2</MUI.MenuItem>
+                        <MUI.MenuItem value={3}>3</MUI.MenuItem>
+                    </MUI.Select>
+                  </MUI.FormControl>
 
-                <label style={{ display: "block" }}>
-                    Quantity
-                </label>
-                <select
-                    id="quantity"
-                    type="select"
-                    value={values.quantity}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                >
-                    <option defaultValue>1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
 
-                <label style={{ display: "block" }}>
-                    Color
-                </label>
-                <select
-                    id="color"
-                    type="select"
-                    value={values.color}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                >
-                    <option defaultValue>Red</option>
-                    <option value="Blue">Blue</option>
-                    <option value="White">White</option>
-                </select>
-            <br/><br/>
-            <button
-              type="button"
-              className="outline"
-              onClick={handleReset}
-              disabled={!dirty || isSubmitting}
-            >
-              Reset
-            </button>
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
+                  <MUI.FormControl fullWidth>
+                    <MUI.InputLabel id="color-select-label">Color</MUI.InputLabel>
+                    <MUI.Select
+                        id="color"
+                        labelId="color-select-label"
+                        type="select"
+                        value={values.color}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                    >
+                        <MUI.MenuItem value="Red">Red</MUI.MenuItem>
+                        <MUI.MenuItem value="Blue">Blue</MUI.MenuItem>
+                        <MUI.MenuItem value="White">White</MUI.MenuItem>
+                    </MUI.Select>
+                  </MUI.FormControl>
 
-          </form>
-        );
-      }}
-    </Formik>
-  </div>
+              <MUI.Button
+                variant="contained"
+                type="button"
+                className="outline"
+                onClick={handleReset}
+                disabled={!dirty || isSubmitting}
+              >
+                Reset
+              </MUI.Button>
+              <MUI.Button 
+                type="submit" 
+                variant="contained"
+                disabled={isSubmitting}>
+                Submit
+              </MUI.Button>
+
+            </Form>
+          )}
+      </Formik>
+    </div>
   </OrderBox>
 );
 
