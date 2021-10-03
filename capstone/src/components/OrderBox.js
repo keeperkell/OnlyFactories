@@ -24,6 +24,7 @@ const OrderBox = styled.div`
 `
 
 const OrderForm = () => (
+  <OrderBox>
     <div className="app">
     <h1>
       Demo
@@ -126,7 +127,7 @@ const OrderForm = () => (
                     <option value="Blue">Blue</option>
                     <option value="White">White</option>
                 </select>
-
+            <br/><br/>
             <button
               type="button"
               className="outline"
@@ -144,6 +145,7 @@ const OrderForm = () => (
       }}
     </Formik>
   </div>
+  </OrderBox>
 );
 
 
