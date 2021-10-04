@@ -23,6 +23,8 @@ const Home = () => {
             <Link to = "/Tracking">
                 <Button name = "Track" />
             </Link>
+            <p/>
+            <img style ={{marginLeft: 140}} src={logo} height="400"/>
         </div>
     );
 };
