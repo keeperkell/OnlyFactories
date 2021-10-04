@@ -76,7 +76,6 @@ const OrderForm = () => (
                       type="text"
                       value={values.name}
                       onChange={handleChange}
-                      onBlur={handleBlur}
                       required="true"
                       className={
                           errors.name && touched.name
@@ -94,7 +93,6 @@ const OrderForm = () => (
                       type="text"
                       value={values.email}
                       onChange={handleChange}
-                      onBlur={handleBlur}
                       required="true"
                       className={
                           errors.email && touched.email
@@ -118,7 +116,7 @@ const OrderForm = () => (
                         onChange={handleChange}
                         onBlur={handleBlur}
                     >
-                        <MUI.MenuItem value={1}>1</MUI.MenuItem>
+                        <MUI.MenuItem defaultValue>1</MUI.MenuItem>
                         <MUI.MenuItem value={2}>2</MUI.MenuItem>
                         <MUI.MenuItem value={3}>3</MUI.MenuItem>
                     </MUI.Select>
@@ -135,11 +133,12 @@ const OrderForm = () => (
                         onChange={handleChange}
                         onBlur={handleBlur}
                     >
-                        <MUI.MenuItem value="Red">Red</MUI.MenuItem>
+                        <MUI.MenuItem defaultValue>Red</MUI.MenuItem>
                         <MUI.MenuItem value="Blue">Blue</MUI.MenuItem>
                         <MUI.MenuItem value="White">White</MUI.MenuItem>
                     </MUI.Select>
                   </MUI.FormControl>
+
               <MUI.FormControl sx={{m: 2, minWidth: 210}}>
                 <MUI.Button
                   variant="contained"
@@ -167,6 +166,5 @@ const OrderForm = () => (
     </div>
   </OrderBox>
 );
-
 
 export default OrderForm
