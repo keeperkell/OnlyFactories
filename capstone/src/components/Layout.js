@@ -2,6 +2,7 @@
 
 import React from "react";
 import Header from "./Header";
+import Footer from './Footer'
 import Navigation from "./OrderBox";
 import styled from "styled-components";
 
@@ -40,6 +41,7 @@ const Layout = ({ children }) => {
                 
                 <Main>{children}</Main>
             </Wrapper>
+            <Footer />
         </React.Fragment>
     )
 }

@@ -12,7 +12,7 @@ const Home = () => {
     })
 
     return (
-        <div style = {{textAlign: "center"}}>
+        <div>
             <h1>Factory Ordering System</h1>
             <p>Make orders and track them.</p>
             <p>To start, make an order by clicking on Order. If you have already ordered something and would like to track it, click Track</p>
@@ -23,8 +23,6 @@ const Home = () => {
             <Link to = "/Tracking">
                 <Button name = "Track" />
             </Link>
-            <p/>
-            <img style ={{marginTop: 200}} src={logo} height="400"/>
         </div>
     );
 };
