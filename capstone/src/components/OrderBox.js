@@ -7,16 +7,20 @@ import styled from "styled-components";
 import * as MUI from '@mui/material'
 
 const OrderBox = styled.div`
-    height: 450px;
-    width: 1000px;
-    display: grid;
-    grid-template-rows: auto auto auto auto auto;
+    height: 600px;
+    width: 500px;
+    display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0 auto;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
     color: #333333;
+
+    .MUI.FormControl{
+      width: 80%
+    }
 `
 
 const initialValues = {
@@ -28,8 +32,8 @@ const initialValues = {
 
 const validationSchema = 
   Yup.object().shape({
-    name: Yup.string().required("Required"),
-    email: Yup.string().email().required("Required")
+    name: Yup.string(),
+    email: Yup.string().email()
   });
 
 const OrderForm = () => (
@@ -60,6 +64,11 @@ const OrderForm = () => (
           }) => (
 
                 <Form autoComplete="off" onSubmit={handleSubmit}>
+                  <MUI.Typography variant="h3" component="h3" align='center'>
+                    Order Form
+                  </MUI.Typography>
+
+                  <MUI.FormControl sx={{m: 2, minWidth: 450}}>
                   <MUI.TextField
                       id="name"
                       placeholder="Enter your name"
@@ -68,13 +77,16 @@ const OrderForm = () => (
                       value={values.name}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      required="true"
                       className={
                           errors.name && touched.name
                           ? "text-input error"
                           : "text-input"
                       }
-                  />  
+                  /> 
+                  </MUI.FormControl> 
 
+                  <MUI.FormControl sx={{m: 2, minWidth: 450}}>
                   <MUI.TextField
                       id="email"
                       placeholder="Enter your email"
@@ -83,6 +95,7 @@ const OrderForm = () => (
                       value={values.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      required="true"
                       className={
                           errors.email && touched.email
                           ? "text-input error"
@@ -92,10 +105,11 @@ const OrderForm = () => (
                   {errors.email && touched.email && (
                   <div className="input-feedback">{errors.email}</div>
                   )}
+                  </MUI.FormControl>
 
 
-                  <MUI.FormControl fullWidth>
-                    <MUI.InputLabel id="quantity-select-label">Color</MUI.InputLabel>
+                  <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+                    <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
                     <MUI.Select
                         id="quantity"
                         labelId="quantity-select-label"
@@ -111,7 +125,7 @@ const OrderForm = () => (
                   </MUI.FormControl>
 
 
-                  <MUI.FormControl fullWidth>
+                  <MUI.FormControl sx={{m: 2, minWidth: 210}}>
                     <MUI.InputLabel id="color-select-label">Color</MUI.InputLabel>
                     <MUI.Select
                         id="color"
@@ -126,22 +140,26 @@ const OrderForm = () => (
                         <MUI.MenuItem value="White">White</MUI.MenuItem>
                     </MUI.Select>
                   </MUI.FormControl>
+              <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+                <MUI.Button
+                  variant="contained"
+                  type="button"
+                  className="outline"
+                  onClick={handleReset}
+                  disabled={!dirty || isSubmitting}
+                >
+                  Reset
+                </MUI.Button>
+              </MUI.FormControl>
 
-              <MUI.Button
-                variant="contained"
-                type="button"
-                className="outline"
-                onClick={handleReset}
-                disabled={!dirty || isSubmitting}
-              >
-                Reset
-              </MUI.Button>
-              <MUI.Button 
-                type="submit" 
-                variant="contained"
-                disabled={isSubmitting}>
-                Submit
-              </MUI.Button>
+              <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+                <MUI.Button 
+                  type="submit" 
+                  variant="contained"
+                  disabled={isSubmitting}>
+                  Submit
+                </MUI.Button>
+              </MUI.FormControl>
 
             </Form>
           )}

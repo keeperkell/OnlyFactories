@@ -5,8 +5,13 @@ import OrderBox from "../components/OrderBox";
 import styled from "styled-components";
 
 const OrderPageStyle = styled.div `
-    background: #a9d7eb;
+    background: #FFFFFF;
     align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
 
 `
 
@@ -16,9 +21,8 @@ const OrderPage = () => {
     });
 
     return (
+        
         <OrderPageStyle>
-            <h1>Capstone</h1>
-            <p>This is the order page...</p>
             <OrderBox />
 
         </OrderPageStyle>
