@@ -9,7 +9,14 @@ const OrderPage = () => {
     });
 
     return (
-        <div>
+        <div
+            style={{
+            display: 'flex',
+            justifyContent: 'Right',
+            alignItems: 'Right',
+            height: '100vh'
+          }}
+        >
             <h1>Capstone</h1>
             <p>This is the order page...</p>
             <OrderBox />
