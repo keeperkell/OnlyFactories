@@ -8,7 +8,7 @@ import * as MUI from '@mui/material';
 import * as Yup from 'yup';
 import {Formik, Form } from "formik";
 
-const Track = styled.div`
+const TrackStyle = styled.div`
     height: 600px;
     width: 500px;
     display: flex;
@@ -31,12 +31,12 @@ const initialValues = {
 
 const validationSchema = 
     Yup.object().shape({
-        orderNumber: Yup.string()
+        orderNumber: Yup.string().required()
     });
 
 const TrackingBox = () => (
 
-    <TrackingBox>
+    <TrackStyle>
         <div className="app">
 
             <Formik
@@ -67,7 +67,7 @@ const TrackingBox = () => (
                             <MUI.TextField
                                 id="OrderNumber"
                                 placeholder="Enter your Order Number"
-                                label="OrderNumber"
+                                label="Order Number"
                                 type="text"
                                 value={values.orderNumber}
                                 onChange={handleChange}
@@ -106,7 +106,7 @@ const TrackingBox = () => (
                 )}
             </Formik>
         </div>
-    </TrackingBox>
+    </TrackStyle>
 );
 
 export default TrackingBox
