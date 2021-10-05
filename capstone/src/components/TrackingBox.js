@@ -65,7 +65,7 @@ const TrackingBox = () => (
 
                         <MUI.FormControl sx = {{m: 2, minWidth: 450}}>
                             <MUI.TextField
-                                id="OrderNumber"
+                                id="orderNumber"
                                 placeholder="Enter your Order Number"
                                 label="Order Number"
                                 type="text"
