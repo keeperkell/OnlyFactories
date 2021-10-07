@@ -1,3 +1,5 @@
+// command: node ./src/components/MQTT sub.js
+
 const mqtt = require('mqtt');
 var client = mqtt.connect('mqtt://mqtt.eclipseprojects.io');
 
