@@ -1,18 +1,36 @@
 // file: src/webpages/tracking.js
 
 import React, {useEffect} from "react";
+import reactDom from "react-dom";
+import TrackingBox from "../components/TrackingBox";
+import TrackingStatus from "../components/TrackingStatus";
+import styled from "styled-components";
 
-const Tracking = () => {
+const TrackingPageStyle = styled.div `
+    background: #FFFFFF;
+    align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+
+`
+
+const TrackingPage = () => {
     useEffect (() => {
         document.title = 'Tracking Page';
     });
 
-    return (
-        <div>
-            <h1>Capstone</h1>
-            <p>This is the tracking page...</p>
-        </div>
-    );
+        return (
+            <TrackingPageStyle>
+               <TrackingBox />
+
+
+            </TrackingPageStyle>
+        );
+
+
 };
 
-export default Tracking;
+export default TrackingPage;
