@@ -2,6 +2,18 @@
 
 import React, {useEffect} from "react";
 import OrderBox from "../components/OrderBox";
+import styled from "styled-components";
+
+const OrderPageStyle = styled.div `
+    background: #FFFFFF;
+    align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+
+`
 
 const OrderPage = () => {
     useEffect(() => {
@@ -9,11 +21,11 @@ const OrderPage = () => {
     });
 
     return (
-        <div>
+        
+        <OrderPageStyle>
             <OrderBox />
-            <h1>Capstone</h1>
-            <p>This is the order page...</p>
-        </div>
+
+        </OrderPageStyle>
     );
 };
 

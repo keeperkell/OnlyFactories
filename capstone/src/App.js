@@ -1,12 +1,24 @@
 import './App.css';
-import Webpages from './webpages';
-
+import React from 'react';
+import Header from './components/Header';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './webpages'
+import About from './webpages/about';
+import Ordering from './webpages/ordering'
+import Tracking from './webpages/tracking'
 
 function App() {
   return (
-    <div>
-      <Webpages />
-    </div>
+    <Router>
+      <Header />
+      <Switch>
+        <Route path='/' exact component={Home} />
+        <Route path='/ordering' component={Ordering} />
+        <Route path='/tracking' component={Tracking} />
+        <Route path='/about' component={About} />
+
+      </Switch>
+    </Router>
   );
 }
 
