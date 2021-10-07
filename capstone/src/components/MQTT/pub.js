@@ -1,5 +1,5 @@
 
-// command: node ./src/components/MQTT pub.js
+// command: node ./src/components/MQTT/pub.js
 
 const mqtt = require("mqtt");
 var client = mqtt.connect('mqtt://mqtt.eclipseprojects.io');
@@ -16,4 +16,3 @@ client.on("connect", function(){
 
     }), 3;
 });
-
