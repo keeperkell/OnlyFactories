@@ -17,7 +17,7 @@ import About from "./about";
 
 const Webpages = () => {
     return(
-        null
+        <Home />
     );
 };
 
