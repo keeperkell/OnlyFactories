@@ -1,17 +1,23 @@
 // file: src/webpages/home.js
 
 import React, {useEffect} from "react";
+import { Link } from "react-router-dom";
+import Button from '../components/Button'
 
 const Home = () => {
 
     useEffect(() => {
-        document.title = "Project Name"
+        document.title = "Home page"
     })
-    
+
     return (
-        <div>
-            <h1>Capstone</h1>
-            <p>This is home page</p>
+        <div style={{textAlign: "center"}}>
+            <h1>OnlyFactories</h1>
+            <p>Make orders and track them.</p>
+            <p>To start, make an order by clicking on Order. If you have already ordered 
+                something and would like to track it, click Track</p>
+
+            <Button />
         </div>
     );
 };
