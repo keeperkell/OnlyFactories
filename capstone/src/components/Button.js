@@ -4,20 +4,34 @@ import { getNodeText } from "@testing-library/dom";
 import React from "react";
 import {Link} from 'react-router-dom';
 import styled from "styled-components";
+import * as MUI from '@mui/material'
 
-class Button extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = props.name
-    }
+const ButtonS = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
 
-    render(){
-        return (
-        <button style = {{height: 50, width: 250, backgroundColor: "#f1b300",marginLeft: 50, borderRadius: 20, borderWidth: 4, borderColor: "#191919"}}>
-            {this.state}
-        </button>
-        )
-    }
-}
+const Button = () =>(
+    <ButtonS>
+        <div>
+            <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+            <MUI.Button component={Link}
+                to="/ordering"
+                variant="contained">
+                    Ordering
+            </MUI.Button>
+            </MUI.FormControl>
+
+            <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+            <MUI.Button component={Link}
+                to="/tracking"
+                variant="contained">
+                    Tracking
+            </MUI.Button>
+            </MUI.FormControl>
+        </div>
+    </ButtonS>
+)
 
 export default Button
