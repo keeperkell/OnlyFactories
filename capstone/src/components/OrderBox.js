@@ -26,9 +26,21 @@ const OrderBox = styled.div`
 const initialValues = {
   name: "",
   email: "",
-  quantity: 1,
-  color: "Red" 
+  quantity: "",
+  color: "" 
 }
+
+const colorOptions = [
+  {color: "Red"},
+  {color: "Blue"},
+  {color: "White"}
+];
+
+const quantities = [
+  {quantity: 1},
+  {quantity: 2},
+  {quantity: 3}
+]
 
 const validationSchema = 
   Yup.object().shape({
@@ -49,6 +61,7 @@ const OrderForm = () => (
           await new Promise(resolve => setTimeout(resolve, 500));
           alert(JSON.stringify(values, null, 2));
         }}
+        enableReinitialize
       >
         
         {({
@@ -110,32 +123,35 @@ const OrderForm = () => (
                     <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
                     <MUI.Select
                         id="quantity"
+                        name="quantity"
                         labelId="quantity-select-label"
                         type="select"
                         value={values.quantity}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        required="true"
                     >
-                        <MUI.MenuItem defaultValue>1</MUI.MenuItem>
+                        <MUI.MenuItem value={1}>1</MUI.MenuItem>
                         <MUI.MenuItem value={2}>2</MUI.MenuItem>
                         <MUI.MenuItem value={3}>3</MUI.MenuItem>
                     </MUI.Select>
                   </MUI.FormControl>
 
-
                   <MUI.FormControl sx={{m: 2, minWidth: 210}}>
                     <MUI.InputLabel id="color-select-label">Color</MUI.InputLabel>
                     <MUI.Select
                         id="color"
+                        name="color"
                         labelId="color-select-label"
                         type="select"
                         value={values.color}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        required="true"
                     >
-                        <MUI.MenuItem defaultValue>Red</MUI.MenuItem>
-                        <MUI.MenuItem value="Blue">Blue</MUI.MenuItem>
-                        <MUI.MenuItem value="White">White</MUI.MenuItem>
+                        <MUI.MenuItem value={"Red"}>Red</MUI.MenuItem>
+                        <MUI.MenuItem value={"Blue"}>Blue</MUI.MenuItem>
+                        <MUI.MenuItem value={"White"}>White</MUI.MenuItem>
                     </MUI.Select>
                   </MUI.FormControl>
 
