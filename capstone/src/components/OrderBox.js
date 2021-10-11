@@ -5,18 +5,18 @@ import { Formik, Form } from "formik";
 import * as Yup from 'yup'
 import styled from "styled-components";
 import * as MUI from '@mui/material'
+import '../globalStyles'
 
 const OrderBox = styled.div`
     height: 600px;
     width: 500px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    //justify-content: center;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: var(--background);
     border-radius: 8px;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
-    color: #333333;
 
     .MUI.FormControl{
       width: 80%
@@ -216,7 +216,8 @@ const OrderForm = () => (
                 <MUI.Button 
                   type="submit" 
                   variant="contained"
-                  disabled={isSubmitting}>
+                  disabled={isSubmitting}
+                >
                   Submit
                 </MUI.Button>
               </MUI.FormControl>

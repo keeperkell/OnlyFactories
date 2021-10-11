@@ -6,10 +6,12 @@ import Home from './webpages'
 import About from './webpages/about';
 import Ordering from './webpages/ordering'
 import Tracking from './webpages/tracking'
+import GlobalStyle from './globalStyles';
 
 function App() {
   return (
     <Router>
+      <GlobalStyle />
       <Header />
       <Switch>
         <Route path='/' exact component={Home} />
