@@ -26,8 +26,12 @@ const OrderBox = styled.div`
 const initialValues = {
   name: "",
   email: "",
-  quantity: 1,
-  color: "Red" 
+  color_1: "Red",
+  quantity_1: "",
+  color_2: "Blue",
+  quantity_2: "",
+  color_3: "White",  
+  quantity_3: ""
 }
 
 const validationSchema = 
@@ -49,6 +53,7 @@ const OrderForm = () => (
           await new Promise(resolve => setTimeout(resolve, 500));
           alert(JSON.stringify(values, null, 2));
         }}
+        enableReinitialize
       >
         
         {({
@@ -104,38 +109,94 @@ const OrderForm = () => (
                   <div className="input-feedback">{errors.email}</div>
                   )}
                   </MUI.FormControl>
+                  
+                  <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
+                    <MUI.TextField
+                        id="color_1"
+                        name="color_1"
+                        placeholder="Red"
+                        type="text"
+                        value={values.color_1}
+                        disabled="true"
+                    /> 
+                  </MUI.FormControl> 
 
-
-                  <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+                  <MUI.FormControl sx={{m: 1.45, minWidth: 210}}>
                     <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
                     <MUI.Select
-                        id="quantity"
+                        id="quantity_1"
+                        name="quantity_1"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantity}
+                        value={values.quantity_1}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        required="true"
                     >
-                        <MUI.MenuItem defaultValue>1</MUI.MenuItem>
+                        <MUI.MenuItem value={0}>0</MUI.MenuItem> 
+                        <MUI.MenuItem value={1}>1</MUI.MenuItem>
                         <MUI.MenuItem value={2}>2</MUI.MenuItem>
                         <MUI.MenuItem value={3}>3</MUI.MenuItem>
                     </MUI.Select>
                   </MUI.FormControl>
 
+                  <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
+                    <MUI.TextField
+                        id="color_2"
+                        name="color_2"
+                        placeholder="Blue"
+                        type="text"
+                        value={values.color_2}
+                        disabled="true"
+                    /> 
+                  </MUI.FormControl> 
 
                   <MUI.FormControl sx={{m: 2, minWidth: 210}}>
-                    <MUI.InputLabel id="color-select-label">Color</MUI.InputLabel>
+                    <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
                     <MUI.Select
-                        id="color"
-                        labelId="color-select-label"
+                        id="quantity_2"
+                        name="quantity_2"
+                        labelId="quantity-select-label"
                         type="select"
-                        value={values.color}
+                        value={values.quantity_2}
                         onChange={handleChange}
                         onBlur={handleBlur}
+                        required="true"
                     >
-                        <MUI.MenuItem defaultValue>Red</MUI.MenuItem>
-                        <MUI.MenuItem value="Blue">Blue</MUI.MenuItem>
-                        <MUI.MenuItem value="White">White</MUI.MenuItem>
+                        <MUI.MenuItem value={0}>0</MUI.MenuItem> 
+                        <MUI.MenuItem value={1}>1</MUI.MenuItem>
+                        <MUI.MenuItem value={2}>2</MUI.MenuItem>
+                        <MUI.MenuItem value={3}>3</MUI.MenuItem>
+                    </MUI.Select>
+                  </MUI.FormControl>
+
+                  <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
+                    <MUI.TextField
+                        id="color_3"
+                        name="color_3"
+                        placeholder="White"
+                        type="text"
+                        value={values.color_3}
+                        disabled="true"
+                    /> 
+                  </MUI.FormControl> 
+
+                  <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+                    <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
+                    <MUI.Select
+                        id="quantity_3"
+                        name="quantity_3"
+                        labelId="quantity-select-label"
+                        type="select"
+                        value={values.quantity_3}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        required="true"
+                    >
+                        <MUI.MenuItem value={0}>0</MUI.MenuItem> 
+                        <MUI.MenuItem value={1}>1</MUI.MenuItem>
+                        <MUI.MenuItem value={2}>2</MUI.MenuItem>
+                        <MUI.MenuItem value={3}>3</MUI.MenuItem>
                     </MUI.Select>
                   </MUI.FormControl>
 
