@@ -1,7 +1,8 @@
 // command: node ./src/components/MQTT/sub.js
 
 const mqtt = require('mqtt');
-var client = mqtt.connect('mqtt://mqtt.eclipseprojects.io');
+const url = 'ws://mqtt.eclipseprojects.io:80/mqtt';
+var client = mqtt.connect(url);
 
 client.on('connect', function(){
     client.subscribe('UofICapstone');

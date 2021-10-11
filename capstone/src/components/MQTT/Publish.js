@@ -1,9 +1,11 @@
-
 // command: node ./src/components/MQTT/pub.js
 
 const mqtt = require("mqtt");
 var _ = require('lodash');
-var client = mqtt.connect('mqtt://mqtt.eclipseprojects.io');
+//var host = 'mqtt://mqtt.eclipseprojects.io';
+const url = 'ws://mqtt.eclipseprojects.io:80/mqtt';
+
+var client = mqtt.connect(url);
 //var msg_id = 'SO1000';  //have dynamic msg_id based off of number of messages sent 
 
 const orderStatus = {
