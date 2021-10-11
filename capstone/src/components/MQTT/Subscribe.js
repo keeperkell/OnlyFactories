@@ -24,32 +24,32 @@ client.on('message', function(topic, message){
 
     //if ordar status message is received
     if(data.msg_type == 'order status'){
-        console.log('Message ID = ' + data.sim_msg_id)
+        console.log(data)
         publishResponse(data);
     }
     //if status message is received
     if(data.msg_type == 'status'){
-        console.log('Message ID = ' + data.sim_msg_id)
+        console.log(data)
         publishResponse(data);
     }
     //if inventory is received
     if(data.msg_type == 'inventory'){
-        console.log('Message ID = ' + data.sim_msg_id)
+        console.log(data)
         publishResponse(data);
     }
     //if cancel status is received
     if(data.msg_type == 'cancel status'){
-        console.log('Message ID = ' + data.sim_msg_id)
+        console.log(data)
         publishResponse(data);
     }
     //if webcam status is received
     if(data.msg_type == 'webcam status'){
-        console.log('Message ID = ' + data.sim_msg_id)
+        console.log(data)
         publishResponse(data);
     }
     //?????????
     if(data.msg_type == 'unable status'){
-        console.log('Message ID = ' + data.sim_msg_id)
+        console.log(data)
         publishResponse(data);
     }
 });

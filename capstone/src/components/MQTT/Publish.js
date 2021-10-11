@@ -7,13 +7,23 @@ var client = mqtt.connect('mqtt://mqtt.eclipseprojects.io');
 //var msg_id = 'SO1000';  //have dynamic msg_id based off of number of messages sent 
 
 const orderStatus = {
-    msg_type: 'order status',
-    sim_msg_id: 'OS1000'
+    msg_type: 'order status', 
+    sim_msg_id: 'OS1000', 
+    cloud_id: 'SO1000', 
+    disk_color_id: 'Red01', 
+    order_complete: 'True'
 }
 
 const status = {
     msg_type: 'status',
     sim_msg_id: 'RS1000',
+    cloud_id: 'RS1000', 
+    running: 'True', 
+    HBW: 'True', 
+    VGR: 'False', 
+    MPO: 'False', 
+    SSC: 'False', 
+    SLD: 'False'
 }
 
 const requestInventory = {
@@ -23,12 +33,18 @@ const requestInventory = {
 
 const cancelStatus = {
     msg_type: 'cancel status',
-    sim_msg_id: 'CS1000'
+    sim_msg_id: 'CS1000',
+    cloud_id: 'CO1000', 
+    order_id: 'SO1000', 
+    canceled: 'True'
 }
 
 const webcamStatus = {
     msg_type: 'webcam status',
-    sim_msg_id: 'WS1000'
+    sim_msg_id: 'WS1000',
+    power: 'True', 
+    y_turntable: 1, 
+    x_turntable: 1
 }
 
 const unableStatus = {

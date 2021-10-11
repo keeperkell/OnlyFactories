@@ -10,6 +10,6 @@ client.on('connect', function(){
 
 client.on('message', function(topic, message){
     var data = JSON.parse(message);
-    console.log('Message ID = ' + data.sim_msg_id)
+    console.log(data)
 
 });
