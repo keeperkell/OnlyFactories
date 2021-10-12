@@ -5,6 +5,7 @@ import reactDom from "react-dom";
 import TrackingBox from "../components/TrackingBox";
 import TrackingStatus from "../components/TrackingStatus";
 import styled from "styled-components";
+import App from "../App.jsx";
 
 const TrackingPageStyle = styled.div `
     background: #FFFFFF;
@@ -25,8 +26,7 @@ const TrackingPage = () => {
         return (
             <TrackingPageStyle>
                <TrackingBox />
-
-
+                    
             </TrackingPageStyle>
         );
 
