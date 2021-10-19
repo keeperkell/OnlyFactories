@@ -1,0 +1,10 @@
+type Order @model {
+  id: ID!
+  OrderID: Int!
+  Color: String!
+  Email: String!
+  Name: String!
+  OrderStatus: String!
+  Quantity: Int!
+  TransactionID: Int!
+}

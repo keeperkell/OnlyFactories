@@ -4,6 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import * as AWS from 'aws-sdk'
+import { ConfigurationOptions } from 'aws-sdk'
+
+/*
+const configuration: ConfigurationOptions = {
+  region: 'us-east-2',
+  secretAccessKey: 'mvIlVqTOsIDpt1KqDvzyy8uLIhg8z1GIb0UJdzvL',
+  accessKeyId: 'AKIAXYC6DLPLLCLBE7XI'
+}
+
+AWS.config.update(AWS.configuration)
+*/
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
