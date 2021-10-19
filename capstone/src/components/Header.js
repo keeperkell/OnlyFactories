@@ -25,6 +25,9 @@ const Header = () => {
                 <NavMenu>
                     <NavLink to='/about' activeStyle>About</NavLink>
                 </NavMenu>
+                <NavMenu>
+                    <NavLink to='/stats' activeStyle>Stats</NavLink>
+                </NavMenu>
                 <NavBtn>
                     <NavBtnLink to='/'>Sign In</NavBtnLink>
                 </NavBtn>
