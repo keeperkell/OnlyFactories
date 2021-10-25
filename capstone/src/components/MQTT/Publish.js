@@ -6,6 +6,19 @@ const url = 'ws://mqtt.eclipseprojects.io:80/mqtt';
 
 var client = mqtt.connect(url);
 
+/*
+---------------------------------------------------------------
+when creating MQTT packets, follow this scheme
+
+var newSendOrder = sendOrder
+updateSendOrder(newSendOrder)
+var payload = JSONstringify(newSendOrder)
+
+// need to create functions for each packet type to query database
+// for order IDs
+---------------------------------------------------------------
+*/
+
 const sendOrder={
     msg_type: 'order',
     cloud_id: 'SO1000',
