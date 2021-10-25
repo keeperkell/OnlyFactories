@@ -5,7 +5,7 @@ const url = 'ws://mqtt.eclipseprojects.io:80/mqtt';
 var client = mqtt.connect(url);
 
 client.on('connect', function(){
-    client.subscribe('UofICapstone');
+    client.subscribe('UofICapstone_Sim');
     console.log('Client has subscribed successfully');
 });
 
@@ -26,31 +26,29 @@ client.on('message', function(topic, message){
     //if ordar status message is received
     if(data.msg_type == 'order status'){
         console.log(data)
-        publishResponse(data);
     }
     //if status message is received
-    if(data.msg_type == 'status'){
+    else if(data.msg_type == 'status'){
         console.log(data)
-        publishResponse(data);
     }
     //if inventory is received
-    if(data.msg_type == 'inventory'){
+    else if(data.msg_type == 'inventory'){
         console.log(data)
-        publishResponse(data);
     }
     //if cancel status is received
-    if(data.msg_type == 'cancel status'){
+    else if(data.msg_type == 'cancel status'){
         console.log(data)
-        publishResponse(data);
     }
     //if webcam status is received
-    if(data.msg_type == 'webcam status'){
+    else if(data.msg_type == 'request status'){
         console.log(data)
-        publishResponse(data);
     }
     //?????????
-    if(data.msg_type == 'unable status'){
+    else if(data.msg_type == 'factory status'){
         console.log(data)
-        publishResponse(data);
     }
+    else {
+        console.log(data)
+    }
+
 });

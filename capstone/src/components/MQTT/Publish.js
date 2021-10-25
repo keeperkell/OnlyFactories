@@ -6,60 +6,56 @@ const url = 'ws://mqtt.eclipseprojects.io:80/mqtt';
 
 var client = mqtt.connect(url);
 
+const sendOrder={
+    msg_type: 'order',
+    cloud_id: 'SO1000',
+    location: 'location01',
+    order_id: 'ABCDEF',
+}
+
 const orderStatus = {
-    msg_type: 'order status', 
-    sim_msg_id: 'OS1000', 
-    cloud_id: 'SO1000', 
-    disk_color_id: 'Red01', 
-    order_complete: 'True'
+    msg_type: 'request status', 
+    cloud_id: 'OS1000', 
 }
 
 const status = {
-    msg_type: 'status',
-    sim_msg_id: 'RS1000',
+    msg_type: 'factory status',
     cloud_id: 'RS1000', 
-    running: 'True', 
-    HBW: 'True', 
-    VGR: 'False', 
-    MPO: 'False', 
-    SSC: 'False', 
-    SLD: 'False'
 }
 
 const requestInventory = {
     msg_type: 'inventory',
-    sim_msg_id: 'RI1000'
+    cloud_id: 'RI1000'
 }
 
 const cancelStatus = {
     msg_type: 'cancel status',
-    sim_msg_id: 'CS1000',
-    cloud_id: 'CO1000', 
-    order_id: 'SO1000', 
+    cloud_id: 'CS1000', 
+    order_id: 'ABCDEFG', 
     canceled: 'True'
 }
 
-const webcamStatus = {
-    msg_type: 'webcam status',
-    sim_msg_id: 'WS1000',
+const webcamPower = {
+    msg_type: 'webcam Power',
+    cloud_id: 'WP1000',
     power: 'True', 
+}
+
+const webcamControl = {
+    msg_type: 'control webcam',
+    cloud_id: 'WC1000',
     y_turntable: 1, 
     x_turntable: 1
 }
 
-const unableStatus = {
-    msg_type: 'unable status',
-    sim_msg_id: 'US1000'
-}
-
-var commands = [orderStatus, status, requestInventory, cancelStatus, webcamStatus, unableStatus];
+var commands = [sendOrder, orderStatus, status, requestInventory, cancelStatus];
 
 function incrementID(data){
-    var prefix = data.sim_msg_id.slice(0,2)
-    var id = data.sim_msg_id.slice(2)
+    var prefix = data.cloud_id.slice(0,2)
+    var id = data.cloud_id.slice(2)
 
     //concat msg type ID with incremented value
-    data.sim_msg_id = prefix + String(Number(id) + 1)
+    data.cloud_id = prefix + String(Number(id) + 1)
 }
 
 client.on("connect", function(){
@@ -73,8 +69,8 @@ client.on("connect", function(){
         //var payload = JSON.stringify(orderStatus);
 
         console.log(payload);
-        client.publish('UofICapstone', payload);
+        client.publish('UofICapstone_Cloud', payload);
         incrementID(random_command);
 
-    },2000 );
+    },5000 );
 });
