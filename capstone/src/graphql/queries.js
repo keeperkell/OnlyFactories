@@ -1,8 +1,8 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getOrder = /* GraphQL */ `
-  query GetOrder($id: ID!) {
+export const GetOrder = /* GraphQL */ `
+  query getOrder($id: ID!) {
     getOrder(id: $id) {
       id
       OrderID
@@ -39,4 +39,22 @@ export const listOrders = /* GraphQL */ `
       nextToken
     }
   }
+`;
+
+const getMyOrder = `query myOrder {
+  myOrder {
+      items{
+          id
+          OrderID
+          Color
+          Email
+          Name
+          OrderStatus
+          Quantity
+          TransactionID
+          createdAt
+          updatedAt
+      }
+  }
+}
 `;
