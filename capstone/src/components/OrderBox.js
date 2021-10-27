@@ -5,6 +5,8 @@ import { Formik, Form } from "formik";
 import * as Yup from 'yup'
 import styled from "styled-components";
 import * as MUI from '@mui/material'
+import API, { graphqlOperation } from "@aws-amplify/api";
+import * as gql from "../graphql/mutations"
 
 const OrderBox = styled.div`
     height: 600px;
@@ -51,7 +53,32 @@ const OrderForm = () => (
 
         onSubmit={async values => {
           await new Promise(resolve => setTimeout(resolve, 500));
-          alert(JSON.stringify(values, null, 2));
+          //alert(JSON.stringify(values, null, 2));
+
+          //Set up for Orders to be added to the database
+          //*id needs an incremented value still*
+          //*OrderId needs an incremented / randomized value still*
+          //*Transaction ID will need an ID from payment system
+          //*For some reason this created a _typename field in database
+          //*Message me to work on more - JH
+          var orderDetails = {
+            id : "4",
+            OrderID: 4,
+            Color: values.color_1,
+            Email: values.email,
+            Name: values.name,
+            OrderStatus: "Created",
+            Quantity: values.quantity_1,
+            TransactionID: 9999999,
+
+          };
+
+
+          //Add order to database
+          await API.graphql(graphqlOperation(gql.createOrder, { input: orderDetails }));
+
+          alert(JSON.stringify(orderDetails, null, 2));
+
         }}
         enableReinitialize
       >

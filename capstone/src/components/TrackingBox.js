@@ -53,6 +53,8 @@ const TrackingBox = () => (
                 onSubmit={async values => {
                     await new Promise(resolve => setTimeout(resolve, 500));
                     //alert(JSON.stringify(values, null, 2));
+
+                    //parse and slice off order number
                     var orderLen = values.length;
                     var orderNum = values.orderNumber.slice(0,orderLen);
                     console.log(orderNum);
