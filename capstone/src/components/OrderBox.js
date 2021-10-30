@@ -42,7 +42,16 @@ const validationSchema =
     email: Yup.string().email()
   });
 
+
 const OrderForm = () => (
+  // pass order details in JSON and add order to databse
+  function addOrderToDB(orderDetails){
+
+  }
+  // send order to orderAPI and log it in table
+  function sendOrderMQTT(orderDetails){
+
+  }
 
   <OrderBox>
     <div className="app">
