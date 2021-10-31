@@ -42,16 +42,23 @@ const validationSchema =
     email: Yup.string().email()
   });
 
+// pass order details in JSON and add order to databse
+const addOrderToDB = (orderDetails) =>{
+  API.graphql(graphqlOperation(gql.createOrder, { input: orderDetails }));
+  //this code is working!!!!
+};
+
+// send order to orderAPI and log it in table
+const sendOrderMQTT = (orderDetails) =>{
+  return 'Empty Function'
+};
+
+// update table id and order id
+const updateIDs = (orderDetails) =>{
+  return 'Empty Function'
+};
 
 const OrderForm = () => (
-  // pass order details in JSON and add order to databse
-  function addOrderToDB(orderDetails){
-
-  }
-  // send order to orderAPI and log it in table
-  function sendOrderMQTT(orderDetails){
-
-  }
 
   <OrderBox>
     <div className="app">
@@ -71,8 +78,8 @@ const OrderForm = () => (
           //*For some reason this created a _typename field in database
           //*Message me to work on more - JH
           var orderDetails = {
-            id : "4",
-            OrderID: 4,
+            id : "5",
+            OrderID: 5,
             Color: values.color_1,
             Email: values.email,
             Name: values.name,
@@ -84,7 +91,10 @@ const OrderForm = () => (
 
 
           //Add order to database
-          await API.graphql(graphqlOperation(gql.createOrder, { input: orderDetails }));
+          // await API.graphql(graphqlOperation(gql.createOrder, { input: orderDetails }));
+
+          await addOrderToDB(orderDetails);
+
 
           alert(JSON.stringify(orderDetails, null, 2));
 
