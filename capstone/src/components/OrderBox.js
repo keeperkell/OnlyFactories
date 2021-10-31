@@ -45,16 +45,30 @@ const validationSchema =
 // pass order details in JSON and add order to databse
 const addOrderToDB = (orderDetails) =>{
   API.graphql(graphqlOperation(gql.createOrder, { input: orderDetails }));
-  //this code is working!!!!
 };
 
 // send order to orderAPI and log it in table
 const sendOrderMQTT = (orderDetails) =>{
+  // query db to get necesary message ID
+  // increment message ID
+
+  // Publish orderDetails to Doug over MQTT
+
+  // store log of message in db
+  
+  // await response from doug
+
+  //
   return 'Empty Function'
 };
 
 // update table id and order id
 const updateIDs = (orderDetails) =>{
+  let tempID;
+  // query db to get largest orderID
+  
+  // set tempID to that query result
+  // set orderDetails.id & orderDetails.OrderID to tempID 
   return 'Empty Function'
 };
 
@@ -90,11 +104,13 @@ const OrderForm = () => (
           };
 
 
-          //Add order to database
-          // await API.graphql(graphqlOperation(gql.createOrder, { input: orderDetails }));
-
+          
+          // update order IDs
+          await updateIDs(orderDetails);
+          // Add order to database
           await addOrderToDB(orderDetails);
-
+          // send order to Doug and log message
+          await sendOrderMQTT(orderDetails);
 
           alert(JSON.stringify(orderDetails, null, 2));
 
