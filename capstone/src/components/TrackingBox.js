@@ -7,6 +7,10 @@ import TrackingStatus from "../components/TrackingStatus";
 import * as MUI from '@mui/material';
 import * as Yup from 'yup';
 import {Formik, Form } from "formik";
+import { listOrders } from "../graphql/queries";
+import  Amplify, {API, graphqlOperation }  from 'aws-amplify';
+import * as GQL from "../graphql/queries"
+
 
 const TrackStyle = styled.div`
     height: 600px;
@@ -34,9 +38,12 @@ const validationSchema =
         orderNumber: Yup.string().required()
     });
 
+
 const TrackingBox = () => (
 
+
     <TrackStyle>
+      
         <div className="app">
 
             <Formik
@@ -45,7 +52,24 @@ const TrackingBox = () => (
 
                 onSubmit={async values => {
                     await new Promise(resolve => setTimeout(resolve, 500));
-                    alert(JSON.stringify(values, null, 2));
+                    //alert(JSON.stringify(values, null, 2));
+
+                    //parse and slice off order number
+                    var orderLen = values.length;
+                    var orderNum = values.orderNumber.slice(0,orderLen);
+                    console.log(orderNum);
+                    
+
+                    // Query DB on submission for order number
+                    const { data } = await API.graphql({
+                        query: GQL.GetOrder,
+                        variables: { id : orderNum}                        
+                    })
+
+                    console.log('Order: ', data);
+                    alert(JSON.stringify(data, null, 2));
+
+                    
                 }}
             >
                 {({
@@ -97,7 +121,8 @@ const TrackingBox = () => (
                         <MUI.Button 
                           type="submit" 
                           variant="contained"
-                          disabled={isSubmitting}>
+                          disabled={isSubmitting}
+                          >
                           Submit
                         </MUI.Button>
                       </MUI.FormControl>

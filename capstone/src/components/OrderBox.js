@@ -5,6 +5,8 @@ import { Formik, Form } from "formik";
 import * as Yup from 'yup'
 import styled from "styled-components";
 import * as MUI from '@mui/material'
+import API, { graphqlOperation } from "@aws-amplify/api";
+import * as gql from "../graphql/mutations"
 
 const OrderBox = styled.div`
     height: 600px;
@@ -40,6 +42,36 @@ const validationSchema =
     email: Yup.string().email()
   });
 
+// pass order details in JSON and add order to databse
+const addOrderToDB = (orderDetails) =>{
+  API.graphql(graphqlOperation(gql.createOrder, { input: orderDetails }));
+};
+
+// send order to orderAPI and log it in table
+const sendOrderMQTT = (orderDetails) =>{
+  // query db to get necesary message ID
+  // increment message ID
+
+  // Publish orderDetails to Doug over MQTT
+
+  // store log of message in db
+  
+  // await response from doug
+
+  //
+  return 'Empty Function'
+};
+
+// update table id and order id
+const updateIDs = (orderDetails) =>{
+  let tempID;
+  // query db to get largest orderID
+  
+  // set tempID to that query result
+  // set orderDetails.id & orderDetails.OrderID to tempID 
+  return 'Empty Function'
+};
+
 const OrderForm = () => (
 
   <OrderBox>
@@ -51,7 +83,37 @@ const OrderForm = () => (
 
         onSubmit={async values => {
           await new Promise(resolve => setTimeout(resolve, 500));
-          alert(JSON.stringify(values, null, 2));
+          //alert(JSON.stringify(values, null, 2));
+
+          //Set up for Orders to be added to the database
+          //*id needs an incremented value still*
+          //*OrderId needs an incremented / randomized value still*
+          //*Transaction ID will need an ID from payment system
+          //*For some reason this created a _typename field in database
+          //*Message me to work on more - JH
+          var orderDetails = {
+            id : "5",
+            OrderID: 5,
+            Color: values.color_1,
+            Email: values.email,
+            Name: values.name,
+            OrderStatus: "Created",
+            Quantity: values.quantity_1,
+            TransactionID: 9999999,
+
+          };
+
+
+          
+          // update order IDs
+          await updateIDs(orderDetails);
+          // Add order to database
+          await addOrderToDB(orderDetails);
+          // send order to Doug and log message
+          await sendOrderMQTT(orderDetails);
+
+          alert(JSON.stringify(orderDetails, null, 2));
+
         }}
         enableReinitialize
       >
