@@ -14,6 +14,7 @@ import { Paper } from '@material-ui/core'
 import { IconButton } from '@material-ui/core';
 import PlayArrowIcon  from '@material-ui/icons/PlayArrow';
 import FavoriteIcon  from '@material-ui/icons/Favorite';
+import TrackingStatus from './components/TrackingStatus';
 
 Amplify.configure(awsconfig);
 
@@ -48,6 +49,7 @@ function App() {
             <Route path='/ordering' component={Ordering} />
             <Route path='/tracking' component={Tracking} />
             <Route path='/about' component={About} />
+            <Route path='/TrackingStatus' component={TrackingStatus}/>
 
           </Switch>
       </Router>

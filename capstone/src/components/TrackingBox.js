@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import React, {useState} from "react";
 import reactDom from "react-dom";
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import styled from "styled-components";
 import TrackingStatus from "../components/TrackingStatus";
 import * as MUI from '@mui/material';
@@ -9,7 +9,8 @@ import * as Yup from 'yup';
 import {Formik, Form } from "formik";
 import { listOrders } from "../graphql/queries";
 import  Amplify, {API, graphqlOperation }  from 'aws-amplify';
-import * as GQL from "../graphql/queries"
+import * as GQL from "../graphql/queries";
+import { Trackorder } from "../webpages/tracking";
 
 
 const TrackStyle = styled.div`
@@ -31,19 +32,19 @@ const TrackStyle = styled.div`
 `
 const initialValues = {
     orderNumber: ""
-}
+};
 
 const validationSchema = 
     Yup.object().shape({
         orderNumber: Yup.string().required()
     });
 
+export var orderData = null;
 
 const TrackingBox = () => (
 
-
     <TrackStyle>
-      
+    
         <div className="app">
 
             <Formik
@@ -51,6 +52,7 @@ const TrackingBox = () => (
                 validationSchema={validationSchema}
 
                 onSubmit={async values => {
+                    
                     await new Promise(resolve => setTimeout(resolve, 500));
                     //alert(JSON.stringify(values, null, 2));
 
@@ -59,15 +61,20 @@ const TrackingBox = () => (
                     var orderNum = values.orderNumber.slice(0,orderLen);
                     console.log(orderNum);
                     
+                    //orderData = orderNum;
 
-                    // Query DB on submission for order number
-                    const { data } = await API.graphql({
+                     // Query DB on submission for order number
+                      const { data } = await API.graphql({
                         query: GQL.GetOrder,
                         variables: { id : orderNum}                        
                     })
 
-                    console.log('Order: ', data);
-                    alert(JSON.stringify(data, null, 2));
+                    var tempData = data;
+                    var tempData2 = JSON.stringify(tempData);
+                    orderData = tempData2.slice(13);
+
+                    console.log('Order: ', orderData);
+                    //alert(JSON.stringify(data, null, 2));
 
                     
                 }}

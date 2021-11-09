@@ -1,7 +1,9 @@
 import React, {useState} from "react";
 import {Link} from 'react-router-dom';
 import styled from "styled-components";
-import data from "../components/TrackingBox";
+import { orderData } from "../components/TrackingBox";
+import  Amplify, {API, graphqlOperation }  from 'aws-amplify';
+import * as GQL from "../graphql/queries"
 
 
 const Status = styled.div`
@@ -12,13 +14,20 @@ const Status = styled.div`
     color: #FFFFFF;   
 `
 
+
 const TrackingStatus = () => {
+
+    const[displayData, setDisplay] = useState(0);
+
 
     return(
         <Status>
         <p>Place Holder Tracking Status</p>
-        <data />
-    </Status>
+        <button onClick={() => setDisplay(displayData + 1)}> Show </button>
+        <p> Your Order </p>
+        <p>{JSON.stringify(orderData, null, 2)}</p>
+        
+        </Status>
     )
 }
 
