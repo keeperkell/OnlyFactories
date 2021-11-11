@@ -3,9 +3,10 @@
 import React, {useEffect} from "react";
 import OrderBox from "../components/OrderBox";
 import styled from "styled-components";
+import '../globalStyle.css';
 
 const OrderPageStyle = styled.div `
-    background: #FFFFFF;
+    background: var(--backgroundPrimary);
     align-items: center;
     display: flex;
     align-items: center;
