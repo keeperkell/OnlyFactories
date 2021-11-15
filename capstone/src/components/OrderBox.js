@@ -5,8 +5,17 @@ import { Formik, Form } from "formik";
 import * as Yup from 'yup'
 import styled from "styled-components";
 import * as MUI from '@mui/material'
-import API, { graphqlOperation } from "@aws-amplify/api";
-import * as gql from "../graphql/mutations"
+
+// New RDS connection
+require('dotenv').config();
+var mysql = require('mysql')
+var connection = mysql.createConnection({
+  host      : process.env.RDS_HOSTNAME,
+  user      : process.env.RDS_USERNAME,
+  password  : process.env.RDS_PASSWORD,
+  port      : process.env.RDS_PORT
+})
+
 
 const OrderBox = styled.div`
     height: 600px;
@@ -28,12 +37,9 @@ const OrderBox = styled.div`
 const initialValues = {
   name: "",
   email: "",
-  color_1: "Red",
-  quantity_1: "",
-  color_2: "Blue",
-  quantity_2: "",
-  color_3: "White",  
-  quantity_3: ""
+  quantity_red: 0,
+  quantity_blue: 0,
+  quantity_white: 0
 }
 
 const validationSchema = 
@@ -44,7 +50,27 @@ const validationSchema =
 
 // pass order details in JSON and add order to databse
 const addOrderToDB = (orderDetails) =>{
-  API.graphql(graphqlOperation(gql.createOrder, { input: orderDetails }));
+  
+  //get current time for order creation
+  var currentDate = new Date();
+  orderDetails.createdAt = currentDate.getFullYear() + '/' + (currentDate.getMonth()+1) + '/'
+                  + currentDate.getDate() + ' ' + currentDate.getHours() + ':'
+                  + currentDate.getMinutes() + ':' + currentDate.getSeconds();
+  orderDetails.updatedAt = orderDetails.createdAt;
+
+
+  //connect to db
+  connection.connect(function(err){
+    if(err){
+      console.error('Database connection failed: ' + err.stack);
+      return;
+    }
+
+    console.log('Connected to database.');
+
+  })
+
+  connection.end();
 };
 
 // send order to orderAPI and log it in table
@@ -66,6 +92,7 @@ const sendOrderMQTT = (orderDetails) =>{
 const updateIDs = (orderDetails) =>{
   let tempID;
   // query db to get largest orderID
+  
   
   // set tempID to that query result
   // set orderDetails.id & orderDetails.OrderID to tempID 
@@ -98,9 +125,12 @@ const OrderForm = () => (
             Email: values.email,
             Name: values.name,
             OrderStatus: "Created",
-            Quantity: values.quantity_1,
+            Quantity_Red: values.quantity_red,
+            Quantity_Blue: values.quantity_blue,
+            Quantity_White: values.quantity_white,
             TransactionID: 9999999,
-
+            createdAt: "",
+            updatedAt: ""
           };
 
 
@@ -178,7 +208,7 @@ const OrderForm = () => (
                         name="color_1"
                         placeholder="Red"
                         type="text"
-                        value={values.color_1}
+                        //value={values.color_1}
                         disabled="true"
                     /> 
                   </MUI.FormControl> 
@@ -190,7 +220,7 @@ const OrderForm = () => (
                         name="quantity_1"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantity_1}
+                        value={values.quantity_red}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         required="true"
@@ -208,7 +238,7 @@ const OrderForm = () => (
                         name="color_2"
                         placeholder="Blue"
                         type="text"
-                        value={values.color_2}
+                        //value={values.color_2}
                         disabled="true"
                     /> 
                   </MUI.FormControl> 
@@ -220,7 +250,7 @@ const OrderForm = () => (
                         name="quantity_2"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantity_2}
+                        value={values.quantity_blue}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         required="true"
@@ -238,7 +268,7 @@ const OrderForm = () => (
                         name="color_3"
                         placeholder="White"
                         type="text"
-                        value={values.color_3}
+                        //value={values.color_3}
                         disabled="true"
                     /> 
                   </MUI.FormControl> 
@@ -250,7 +280,7 @@ const OrderForm = () => (
                         name="quantity_3"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantity_3}
+                        value={values.quantity_white}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         required="true"
