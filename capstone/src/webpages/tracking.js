@@ -6,9 +6,11 @@ import TrackingBox from "../components/TrackingBox";
 import TrackingStatus from "../components/TrackingStatus";
 import styled from "styled-components";
 import App from "../App.jsx";
+import '../globalStyle.css';
+
 
 const TrackingPageStyle = styled.div `
-    background: #FFFFFF;
+    background: var(--backgroundPrimary);
     align-items: center;
     display: flex;
     align-items: center;

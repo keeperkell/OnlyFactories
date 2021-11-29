@@ -1,0 +1,41 @@
+:root{
+    /*Visual representations of colors can be found at the 
+      following links:
+      https://www.uidaho.edu/brand-resource-center/visual-style-guide/color-identity
+      https://imci.uidaho.edu/wp-content/uploads/IMCI-Brand-Presentation.pdf
+    */
+
+    /*To use color variables, follow this example:
+
+        import '../globalStyles.css';
+    
+        background: var(--primaryPrideGold);
+        font-family: var(--secondaryFont);
+    
+    */
+
+    /*Temporary Background Colors*/
+    --backgroundPrimary: #ffffff;
+
+    /*Primary UI Colors*/
+    --primaryPrideGold: #f1b300;
+    --primarySilver: #808080;
+    --primaryWhite: #ffffff;
+    --primaryBlack: #191919;
+    
+    /*Accent colors approved by UI. These should not account
+      for more than 25% of the total colors shown. */
+    --accentGarnet: #d22630;
+    --accentWildRose: #e10098;
+    --accentPalouseGreen: #00af66;
+    --accentClearwater: #00aec7;
+    --accentClearwater50: #8bd5e5;
+    --accentPayetteBlue: #003e51;
+    --accentPonderosaPine: #004e42;
+
+    /*Fonts for UI branding. Can not currently use Ringside since it is not free. 
+      I am working on figuring this out. Use secondary font for now. */
+    --primaryFont: Ringside;
+    --secondaryFont: Noto Serif;
+
+}
