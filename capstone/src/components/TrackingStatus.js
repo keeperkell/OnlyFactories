@@ -2,9 +2,6 @@ import React, {useState} from "react";
 import {Link} from 'react-router-dom';
 import styled from "styled-components";
 import { orderData } from "../components/TrackingBox";
-import  Amplify, {API, graphqlOperation }  from 'aws-amplify';
-import * as GQL from "../graphql/queries"
-
 
 const Status = styled.div`
     height: 250px;

@@ -7,9 +7,6 @@ import TrackingStatus from "../components/TrackingStatus";
 import * as MUI from '@mui/material';
 import * as Yup from 'yup';
 import {Formik, Form } from "formik";
-import { listOrders } from "../graphql/queries";
-import  Amplify, {API, graphqlOperation }  from 'aws-amplify';
-import * as GQL from "../graphql/queries";
 import { Trackorder } from "../webpages/tracking";
 
 
@@ -62,12 +59,13 @@ const TrackingBox = () => (
                     console.log(orderNum);
                     
                     //orderData = orderNum;
-
+                    /*
                      // Query DB on submission for order number
                       const { data } = await API.graphql({
                         query: GQL.GetOrder,
                         variables: { id : orderNum}                        
                     })
+                    
 
                     var tempData = data;
                     var tempData2 = JSON.stringify(tempData);
@@ -75,6 +73,7 @@ const TrackingBox = () => (
 
                     console.log('Order: ', orderData);
                     //alert(JSON.stringify(data, null, 2));
+                    */
 
                     
                 }}
