@@ -6,17 +6,6 @@ import * as Yup from 'yup'
 import styled from "styled-components";
 import * as MUI from '@mui/material'
 
-// New RDS connection
-require('dotenv').config();
-var mysql = require('mysql')
-var connection = mysql.createConnection({
-  host      : process.env.RDS_HOSTNAME,
-  user      : process.env.RDS_USERNAME,
-  password  : process.env.RDS_PASSWORD,
-  port      : process.env.RDS_PORT
-})
-
-
 const OrderBox = styled.div`
     height: 600px;
     width: 500px;
@@ -53,6 +42,7 @@ const addOrderToDB = (orderDetails) =>{
   
   //get current time for order creation
   var currentDate = new Date();
+  // timestamp layout: YYYY/MM/DD HH:MM:SS
   orderDetails.createdAt = currentDate.getFullYear() + '/' + (currentDate.getMonth()+1) + '/'
                   + currentDate.getDate() + ' ' + currentDate.getHours() + ':'
                   + currentDate.getMinutes() + ':' + currentDate.getSeconds();
@@ -60,17 +50,7 @@ const addOrderToDB = (orderDetails) =>{
 
 
   //connect to db
-  connection.connect(function(err){
-    if(err){
-      console.error('Database connection failed: ' + err.stack);
-      return;
-    }
-
-    console.log('Connected to database.');
-
-  })
-
-  connection.end();
+  
 };
 
 // send order to orderAPI and log it in table
@@ -134,13 +114,14 @@ const OrderForm = () => (
           };
 
 
-          
+          /*
           // update order IDs
           await updateIDs(orderDetails);
           // Add order to database
           await addOrderToDB(orderDetails);
           // send order to Doug and log message
           await sendOrderMQTT(orderDetails);
+          */
 
           alert(JSON.stringify(orderDetails, null, 2));
 
