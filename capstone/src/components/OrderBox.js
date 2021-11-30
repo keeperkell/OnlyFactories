@@ -6,6 +6,34 @@ import * as Yup from 'yup'
 import styled from "styled-components";
 import * as MUI from '@mui/material'
 import '../globalStyles'
+import * as mqtt from "mqtt";
+
+
+// when form is submitted, send an MQTT message to Doug
+// which will start the factory or add to orders. 
+function sendMQTTOrder(){
+  console.log("inside function")
+
+  //MQTT Setup
+  const url = 'ws://mqtt.eclipseprojects.io:80/mqtt';
+  var client = mqtt.connect(url);
+
+  const sendOrder={
+    msg_type: 'order',
+  }
+  
+  //when connected, send the order to Doug
+  client.on("connect", () => {
+    console.log("connected");
+    var payload = JSON.stringify(sendOrder);
+    console.log(payload);
+    client.publish('UofICapstone_Cloud', payload, (error) =>{
+      if (error){
+        console.error(error)
+      }
+    })
+  })
+}
 
 const OrderBox = styled.div`
     height: 600px;
@@ -50,7 +78,10 @@ const OrderForm = () => (
         validationSchema={validationSchema}
 
         onSubmit={async values => {
+          sendMQTTOrder();
+
           await new Promise(resolve => setTimeout(resolve, 500));
+
           alert(JSON.stringify(values, null, 2));
         }}
         enableReinitialize

@@ -6,8 +6,8 @@ import {Nav, NavLink, Bars, Navmenu, NavBtn, NavBtnLink, NavMenu} from './Navbar
 import ScriptTag from 'react-script-tag'
 
 //Import MQTT into header status
-import PublishMQTT from './MQTT/Publish'
-import SubscribeMQTT from './MQTT/Subscribe'
+//import PublishMQTT from './MQTT/Publish'
+//import SubscribeMQTT from './MQTT/Subscribe'
 
 const Header = () => {
     return(

@@ -2,10 +2,10 @@
 
 const mqtt = require('mqtt');
 const url = 'ws://mqtt.eclipseprojects.io:80/mqtt';
-var client = mqtt.connect(url);
+let client = mqtt.connect(url);
 
 client.on('connect', function(){
-    client.subscribe('UofICapstone_Sim');
+    client.subscribe('UofICapstone_Cloud');
     console.log('Client has subscribed successfully');
 });
 
@@ -22,6 +22,7 @@ function publishResponse(data){
 
 client.on('message', function(topic, message){
     var data = JSON.parse(message);
+
 
     //if ordar status message is received
     if(data.msg_type == 'order status'){

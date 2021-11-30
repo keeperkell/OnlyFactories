@@ -1,4 +1,4 @@
-// command: node ./src/components/MQTT/pub.js
+// command: node ./src/components/MQTT/Publish.js
 
 const mqtt = require("mqtt");
 var _ = require('lodash');
