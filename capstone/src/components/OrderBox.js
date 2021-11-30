@@ -15,7 +15,7 @@ function sendMQTTOrder(){
   console.log("inside function")
 
   //MQTT Setup
-  const url = 'wss://mqtt.eclipseprojects.io:80/mqtt';
+  const url = 'wss://mqtt.eclipseprojects.io:433/mqtt';
   var client = mqtt.connect(url);
 
   const sendOrder={
