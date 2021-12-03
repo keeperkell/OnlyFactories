@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import * as AWS from 'aws-sdk'
-import { ConfigurationOptions } from 'aws-sdk'
+//import { ConfigurationOptions } from 'aws-sdk'
 
 /*
 const configuration: ConfigurationOptions = {

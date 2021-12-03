@@ -4,7 +4,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from 'yup'
 import styled from "styled-components";
-import * as MUI from '@mui/material'
+import * as MUI from '@mui/material';
 
 const OrderBox = styled.div`
     height: 600px;
@@ -112,6 +112,18 @@ const OrderForm = () => (
             createdAt: "",
             updatedAt: ""
           };
+
+          var orderID = 1;
+          var Color = values.color_1;
+          var Email = values.email;
+          var Name = values.name;
+          var OrderStatus = "Created";
+          var Quantity_Red = values.quantity_red;
+          var Quantity_Blue = values.quantity_blue;
+          var Quantity_White = values.quantity_blue.while;
+          var TransactionID = 9999999;
+          var createdAt = "";
+          var updatedAt = "";
 
 
           /*
