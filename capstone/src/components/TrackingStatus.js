@@ -23,7 +23,7 @@ const TrackingStatus = () => {
     return(
         <Status>
         <p>Place Holder Tracking Status</p>
-        <form method='post' action='http://localhost:3306'>
+        <form method='post'action='http://localhost:3306'>
             <div className='name'>
               <label htmlFor='orderID'>Enter Order Number:</label>
               <input type='text' name='orderID'  />

@@ -24,16 +24,16 @@ const OrderBox = styled.div`
 `
 
 const initialValues = {
-  name: "",
+  fullName: "",
   email: "",
-  quantity_red: 0,
-  quantity_blue: 0,
-  quantity_white: 0
+  quantityRED: 0,
+  quantityBLUE: 0,
+  quantityWHITE: 0
 }
 
 const validationSchema = 
   Yup.object().shape({
-    name: Yup.string(),
+    fullName: Yup.string(),
     email: Yup.string().email()
   });
 
@@ -50,6 +50,20 @@ const addOrderToDB = (orderDetails) =>{
 
 
   //connect to db
+  
+};
+
+//Function to generate current time for order creation
+const createTimestamp = () =>{
+  
+  //get current time for order creation
+  var currentDate = new Date();
+  // timestamp layout: YYYY/MM/DD HH:MM:SS
+  var createdAt = currentDate.getFullYear() + '/' + (currentDate.getMonth()+1) + '/'
+                  + currentDate.getDate() + ' ' + currentDate.getHours() + ':'
+                  + currentDate.getMinutes() + ':' + currentDate.getSeconds();
+
+  return createdAt;
   
 };
 
@@ -99,31 +113,43 @@ const OrderForm = () => (
           //*For some reason this created a _typename field in database
           //*Message me to work on more - JH
           var orderDetails = {
-            id : "5",
-            OrderID: 5,
-            Color: values.color_1,
-            Email: values.email,
-            Name: values.name,
-            OrderStatus: "Created",
-            Quantity_Red: values.quantity_red,
-            Quantity_Blue: values.quantity_blue,
-            Quantity_White: values.quantity_white,
-            TransactionID: 9999999,
-            createdAt: "",
-            updatedAt: ""
+            //id : "5",
+            orderID: 2,
+            //Color: values.color_1,
+            email: values.email,
+            fullName: values.name,
+            orderStatus: "Created",
+            quantityRED: values.quantityRED,
+            quantityBLUE: values.quantityBLUE,
+            quantityWHITE: values.quantityWHITE,
+            transactionID: 222222,
+            created_at: createTimestamp(),
+            updated_at: createTimestamp()
           };
 
-          var orderID = 1;
-          var Color = values.color_1;
-          var Email = values.email;
-          var Name = values.name;
-          var OrderStatus = "Created";
-          var Quantity_Red = values.quantity_red;
-          var Quantity_Blue = values.quantity_blue;
-          var Quantity_White = values.quantity_blue.while;
-          var TransactionID = 9999999;
-          var createdAt = "";
-          var updatedAt = "";
+          alert(JSON.stringify(orderDetails, null, 2));
+
+          //Send data to NodeJS(databse) via POST Start
+
+          let response = await fetch(`http://localhost:3306/ordering`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(orderDetails),
+              })
+
+          if (response.errors) {
+          console.error(response.errors)
+          }
+
+          let responseJson = await response.json()
+
+          if (responseJson['message']) {
+          console.log(responseJson['message'])
+          }
+          //Send data to NodeJS(databse) via POST End
 
 
           /*
@@ -134,8 +160,6 @@ const OrderForm = () => (
           // send order to Doug and log message
           await sendOrderMQTT(orderDetails);
           */
-
-          alert(JSON.stringify(orderDetails, null, 2));
 
         }}
         enableReinitialize
@@ -213,7 +237,7 @@ const OrderForm = () => (
                         name="quantity_1"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantity_red}
+                        value={values.quantityRED}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         required="true"
@@ -243,7 +267,7 @@ const OrderForm = () => (
                         name="quantity_2"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantity_blue}
+                        value={values.quantityBLUE}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         required="true"
@@ -273,7 +297,7 @@ const OrderForm = () => (
                         name="quantity_3"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantity_white}
+                        value={values.quantityWHITE}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         required="true"

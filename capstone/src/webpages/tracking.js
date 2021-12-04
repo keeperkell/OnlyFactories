@@ -33,9 +33,9 @@ const TrackingPage = () => {
                 <TrackingBox/>
                 </div>
 
-            <div>
+            {/*<div>
                 <TrackingStatus/>
-                </div>
+            </div>*/}
                   
             </TrackingPageStyle>
     
