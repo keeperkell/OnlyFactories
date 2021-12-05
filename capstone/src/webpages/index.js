@@ -14,7 +14,7 @@ import Home from './home';
 import OrderPage from "./ordering";
 import Tracking from "./tracking";
 import About from "./about";
-import Stats from "./stats";
+import Management from "./management";
 
 const Webpages = () => {
     return(

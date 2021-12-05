@@ -1,51 +1,67 @@
 //file: src/components/StatBox.js
 
 import React from "react";
-import * as MUI from '@mui/material'
+import * as mui from '@mui/material';
 
-function createData(name, email, quantity, color) {
-    return { name, email, quantity, color };
-  }
-  
-const rows = [
-    createData('John', 'fake1@gmail.com', 2, 'red'),
-    createData('Paul', 'fake2@gmail.com', 1, 'blue'),
-    createData('John', 'fake1@gmail.com', 4, 'white'),
-    createData('Sara', 'fake3@gmail.com', 3, 'red'),
-    createData('Sara', 'fake3@gmail.com', 1, 'blue'),
-];
+const StatBox = () => {
+    const [time, setTime] = React.useState(24);
 
-function StatBox() {
+    const handleChange = (event) => {
+        setTime(event.target.value);
+    };
+
+    function createData(name, num) {
+        return { name, num};
+      }
+
+    const rows=[
+        createData('Orders Completed', 10),
+        createData('Orders in Queue', 2)
+    ];
+
     return(
-        <MUI.TableContainer>
-            <MUI.Table sx={{ maxWidth: 650 }} size="small" aria-label="a dense table">
-                <MUI.TableHead>
-                    <MUI.TableRow>
-                        <MUI.TableCell>Name</MUI.TableCell>
-                        <MUI.TableCell align="right">Email</MUI.TableCell>
-                        <MUI.TableCell align="right">Quantity</MUI.TableCell>
-                        <MUI.TableCell align="right">Color</MUI.TableCell>
-                    </MUI.TableRow>
-                </MUI.TableHead>
+        <div>
+        <mui.Box sx={{ maxWidth: 110}}> 
+        <mui.FormControl fullWidth>
+            <mui.InputLabel>Time Frame</mui.InputLabel>
+            <mui.Select
+            
+            value={time}
+            label="Time Frame"
+            onChange={handleChange}
+            >
+            <mui.MenuItem value={24}>1 Day</mui.MenuItem>
+            <mui.MenuItem value={72}>3 Days</mui.MenuItem>
+            <mui.MenuItem value={168}>7 Days</mui.MenuItem>
+            </mui.Select>
+        </mui.FormControl>
+        </mui.Box>
 
-                <MUI.TableBody>
-                    {rows.map((row) => (
-                    <MUI.TableRow
-                        key={row.name}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+        <mui.Box sx={{border:2, borderRadius: 16, p:1, m:1, textAlign:'center'}}>
+            <p style={{color:'red', fontSize:'32px'}}>8</p>
+        </mui.Box>
+        <mui.Box sx={{border:2, borderRadius: 16, p:1, m:1, textAlign:'center'}}>
+            <p style={{color:'blue', fontSize:'32px'}}>10</p>
+        </mui.Box>
+        <mui.Box sx={{border:2, borderRadius: 16, p:1, m:1, textAlign:'center'}}>
+            <p style={{color:'grey', fontSize:'32px'}}>6</p>
+        </mui.Box>
+        <mui.Box sx={{border:2, borderRadius: 16, p:1, m:1, textAlign:'center'}}>
+            <p style={{color:'black', fontSize:'32px'}}>Total: 24</p>
+        </mui.Box>
 
-                        <MUI.TableCell component="th" scope="row">
-                            {row.name}
-                        </MUI.TableCell>
-                        <MUI.TableCell align="right">{row.email}</MUI.TableCell>
-                        <MUI.TableCell align="right">{row.quantity}</MUI.TableCell>
-                        <MUI.TableCell align="right">{row.color}</MUI.TableCell>
-                    </MUI.TableRow>
-                    ))}
-                </MUI.TableBody>
-            </MUI.Table>
-        </MUI.TableContainer>
-    );
+        <mui.TableContainer style={{border:'2px solid', borderRadius:16}}>
+        <mui.TableBody>
+          {rows.map((row) => (
+            <mui.TableRow>
+              <mui.TableCell align="right">{row.name}</mui.TableCell>
+              <mui.TableCell align="right">{row.num}</mui.TableCell>
+            </mui.TableRow>
+          ))}
+        </mui.TableBody>
+        </mui.TableContainer>
+       </div>
+    )
 }
 
-export default StatBox
+export default StatBox;
