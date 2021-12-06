@@ -1,15 +1,13 @@
 import { render } from "@testing-library/react";
 import React, {useState} from "react";
 import reactDom from "react-dom";
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import styled from "styled-components";
 import TrackingStatus from "../components/TrackingStatus";
 import * as MUI from '@mui/material';
 import * as Yup from 'yup';
 import {Formik, Form } from "formik";
-import { listOrders } from "../graphql/queries";
-import  Amplify, {API, graphqlOperation }  from 'aws-amplify';
-import * as GQL from "../graphql/queries"
+import { Trackorder } from "../webpages/tracking";
 
 
 const TrackStyle = styled.div`
@@ -30,20 +28,20 @@ const TrackStyle = styled.div`
 
 `
 const initialValues = {
-    orderNumber: ""
-}
+    orderID: ""
+};
 
 const validationSchema = 
     Yup.object().shape({
-        orderNumber: Yup.string().required()
+        orderID: Yup.string().required()
     });
 
+export var orderData = null;
 
 const TrackingBox = () => (
 
-
     <TrackStyle>
-      
+    
         <div className="app">
 
             <Formik
@@ -51,23 +49,55 @@ const TrackingBox = () => (
                 validationSchema={validationSchema}
 
                 onSubmit={async values => {
+                    
                     await new Promise(resolve => setTimeout(resolve, 500));
                     //alert(JSON.stringify(values, null, 2));
 
                     //parse and slice off order number
                     var orderLen = values.length;
-                    var orderNum = values.orderNumber.slice(0,orderLen);
+                    var orderNum = values.orderID.slice(0,orderLen);
                     console.log(orderNum);
+                    alert(JSON.stringify(orderNum, null,2));
                     
-
-                    // Query DB on submission for order number
-                    const { data } = await API.graphql({
+                    //orderData = orderNum;
+                    /*
+                     // Query DB on submission for order number
+                      const { data } = await API.graphql({
                         query: GQL.GetOrder,
                         variables: { id : orderNum}                        
                     })
+                    
 
-                    console.log('Order: ', data);
-                    alert(JSON.stringify(data, null, 2));
+                    var tempData = data;
+                    var tempData2 = JSON.stringify(tempData);
+                    orderData = tempData2.slice(13);
+
+                    console.log('Order: ', orderData);
+                    //alert(JSON.stringify(data, null, 2));
+                    */
+
+                    //Send POST request to NodeJS over express Start
+
+                    let response = await fetch(`http://localhost:3306/tracking`, {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(values),
+                        })
+
+                    if (response.errors) {
+                    console.error(response.errors)
+                    }
+
+                    let responseJson = await response.json()
+
+                    if (responseJson['message']) {
+                    console.log(responseJson['message'])
+                    }
+                    //Send POST request to NodeJS over express End
+
 
                     
                 }}
@@ -89,7 +119,8 @@ const TrackingBox = () => (
 
                         <MUI.FormControl sx = {{m: 2, minWidth: 450}}>
                             <MUI.TextField
-                                id="orderNumber"
+                                id="orderID"
+                                name="orderID"
                                 placeholder="Enter your Order Number"
                                 label="Order Number"
                                 type="text"

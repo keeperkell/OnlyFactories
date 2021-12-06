@@ -1,12 +1,13 @@
 // file: src/webpages/tracking.js
 
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import reactDom from "react-dom";
-import TrackingBox from "../components/TrackingBox";
+import TrackingBox, { orderData, oSubmit } from "../components/TrackingBox";
 import TrackingStatus from "../components/TrackingStatus";
 import styled from "styled-components";
 import App from "../App.jsx";
 import '../globalStyle.css';
+
 
 
 const TrackingPageStyle = styled.div `
@@ -20,17 +21,27 @@ const TrackingPageStyle = styled.div `
 
 `
 
+
 const TrackingPage = () => {
     useEffect (() => {
         document.title = 'Tracking Page';
     });
 
         return (
+
             <TrackingPageStyle>
-               <TrackingBox />
-                    
+            
+            <div>
+                <TrackingBox/>
+                </div>
+
+            {/*<div>
+                <TrackingStatus/>
+            </div>*/}
+                  
             </TrackingPageStyle>
-        );
+    
+        )
 
 
 };
