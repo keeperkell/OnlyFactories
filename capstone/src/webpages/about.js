@@ -1,7 +1,7 @@
 // file: src/webpages/about.js
 
 import React, {useEffect} from "react";
-import logo from '../images/Vandals_logo.png';
+import logo from '../images/Factory_Logos/4x - Copy/Yellow@4x.png';
 
 const About = () => {
     useEffect (() => {

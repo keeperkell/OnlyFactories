@@ -1,7 +1,7 @@
 //file src/components/Header.js
 
 import React from "react";
-import logo from '../images/Vandals_logo.png';
+import logo from '../images/Factory_Logos_V2/2x/Yellowxhdpi.png';
 import {Nav, NavLink, Bars, Navmenu, NavBtn, NavBtnLink, NavMenu} from './NavbarElements'
 
 const Header = () => {
@@ -10,7 +10,7 @@ const Header = () => {
             <Nav>
                 <NavMenu>
                     <a href="./">
-                        <img className="img-responsive" src={logo} alt="University of Idaho Logo" height="65" padding-right="120" />
+                        <img className="img-responsive" src={logo} alt="University of Idaho Logo" height="85" padding-right="120" />
                     </a>
                 </NavMenu>
                 <NavMenu>

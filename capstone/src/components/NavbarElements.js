@@ -27,7 +27,7 @@ export const NavLink = styled(Link)`
   font-weight: bolder;
   cursor: pointer;
   &.active {
-    color: var(--primaryPrideGold);
+    color: var(--primaryGold);
     font-weight: bolder;
   }
 `;
