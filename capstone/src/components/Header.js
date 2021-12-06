@@ -14,16 +14,16 @@ const Header = () => {
                     </a>
                 </NavMenu>
                 <NavMenu>
-                    <NavLink to='/' activeStyle>Home</NavLink>
+                    <NavLink className="nav-link" activeClassName="active" to='/' exact>Home</NavLink>
                 </NavMenu>
                 <NavMenu>
-                    <NavLink to='/ordering' activeStyle>Order Now</NavLink>
+                    <NavLink className="nav-link" activeClassName="active" to='/ordering'>Order Now</NavLink>
                 </NavMenu>
                 <NavMenu>
-                    <NavLink to='/tracking' activeStyle>Tracking</NavLink>
+                    <NavLink className="nav-link" activeClassName="active" to='/tracking'>Tracking</NavLink>
                 </NavMenu>
                 <NavMenu>
-                    <NavLink to='/about' activeStyle>About</NavLink>
+                    <NavLink className="nav-link" activeClassName="active" to='/about'>About</NavLink>
                 </NavMenu>
                 <NavBtn>
                     <NavBtnLink to='/'>Sign In</NavBtnLink>
