@@ -6,7 +6,7 @@ import Home from './webpages'
 import About from './webpages/about';
 import Ordering from './webpages/ordering'
 import Tracking from './webpages/tracking'
-import Stats from './webpages/stats'
+import Management from './webpages/management';
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <Route path='/ordering' component={Ordering} />
         <Route path='/tracking' component={Tracking} />
         <Route path='/about' component={About} />
-        <Route path='/stats' component={Stats} />
+        <Route path='/management' component={Management} />
 
       </Switch>
     </Router>
