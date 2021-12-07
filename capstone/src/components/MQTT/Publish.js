@@ -2,7 +2,7 @@
 
 const mqtt = require("mqtt");
 var _ = require('lodash');
-const url = 'ws://mqtt.eclipseprojects.io:80/mqtt';
+const url = 'wss://onlyfactoriesmqtt.duckdns.org:9001';
 
 var client = mqtt.connect(url);
 
@@ -85,5 +85,5 @@ client.on("connect", function(){
         client.publish('UofICapstone_Cloud', payload);
         incrementID(random_command);
 
-    },5000 );
+    },2000 );
 });

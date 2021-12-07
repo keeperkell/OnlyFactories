@@ -1,7 +1,7 @@
 // command: node ./src/components/MQTT/sub.js
 
 const mqtt = require('mqtt');
-const url = 'ws://mqtt.eclipseprojects.io:80/mqtt';
+const url = 'wss://onlyfactoriesmqtt.duckdns.org:9001';
 let client = mqtt.connect(url);
 
 client.on('connect', function(){

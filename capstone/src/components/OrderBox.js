@@ -8,19 +8,18 @@ import * as MUI from '@mui/material'
 import '../globalStyles'
 import * as mqtt from "mqtt";
 
+//MQTT Setup
+const url = 'wss://onlyfactoriesmqtt.duckdns.org:9001';
+let client = mqtt.connect(url);
+
+const sendOrder={
+  msg_type: 'order',
+}
 
 // when form is submitted, send an MQTT message to Doug
 // which will start the factory or add to orders. 
 function sendMQTTOrder(){
   console.log("inside function")
-
-  //MQTT Setup
-  const url = 'ws://mqtt.eclipseprojects.io:80/mqtt';
-  var client = mqtt.connect(url);
-
-  const sendOrder={
-    msg_type: 'order',
-  }
   
   //when connected, send the order to Doug
   client.on("connect", () => {
