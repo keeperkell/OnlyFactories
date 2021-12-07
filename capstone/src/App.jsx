@@ -7,6 +7,7 @@ import About from './webpages/about';
 import Ordering from './webpages/ordering'
 import Tracking from './webpages/tracking'
 import TrackingStatus from './components/TrackingStatus';
+import Management from './webpages/management';
 import {ThemeProvider, createTheme} from '@mui/material/styles'
 
 // color override for MUI theme, unable to use css vars here
@@ -38,6 +39,7 @@ function App() {
             <Route path='/tracking' component={Tracking} />
             <Route path='/about' component={About} />
             <Route path='/TrackingStatus' component={TrackingStatus}/>
+            <Route path='/Management' component={Management}/>
 
           </Switch>
       </Router>
