@@ -8,11 +8,28 @@ import Ordering from './webpages/ordering'
 import Tracking from './webpages/tracking'
 import TrackingStatus from './components/TrackingStatus';
 import Management from './webpages/management';
+import {ThemeProvider, createTheme} from '@mui/material/styles'
+
+// color override for MUI theme, unable to use css vars here
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#f1b300', //primaryPrideGold in globalStyle.css
+    },
+    secondary: {
+      main: '#808080', //primarySilver in globalStyle.css
+    }, 
+    error: {
+      main: '#d22630', //accentGarnet in globalStyle.css
+    },
+  },
+});
 
 function App() {
 
   return (
-    <div className='App'>
+    <ThemeProvider theme={theme}>
+      <div className='App'>
 
       <Router>
         <Header />
@@ -27,7 +44,8 @@ function App() {
           </Switch>
       </Router>
 
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }
 
