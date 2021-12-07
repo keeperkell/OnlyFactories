@@ -50,21 +50,74 @@ const OrderBox = styled.div`
 `
 
 const initialValues = {
-  name: "",
+  fullName: "",
   email: "",
-  color_1: "Red",
-  quantity_1: "",
-  color_2: "Blue",
-  quantity_2: "",
-  color_3: "White",  
-  quantity_3: ""
+  quantityRED: 0,
+  quantityBLUE: 0,
+  quantityWHITE: 0
 }
 
 const validationSchema = 
   Yup.object().shape({
-    name: Yup.string(),
+    fullName: Yup.string(),
     email: Yup.string().email()
   });
+
+// pass order details in JSON and add order to databse
+const addOrderToDB = (orderDetails) =>{
+  
+  //get current time for order creation
+  var currentDate = new Date();
+  // timestamp layout: YYYY/MM/DD HH:MM:SS
+  orderDetails.createdAt = currentDate.getFullYear() + '/' + (currentDate.getMonth()+1) + '/'
+                  + currentDate.getDate() + ' ' + currentDate.getHours() + ':'
+                  + currentDate.getMinutes() + ':' + currentDate.getSeconds();
+  orderDetails.updatedAt = orderDetails.createdAt;
+
+
+  //connect to db
+  
+};
+
+//Function to generate current time for order creation
+const createTimestamp = () =>{
+  
+  //get current time for order creation
+  var currentDate = new Date();
+  // timestamp layout: YYYY/MM/DD HH:MM:SS
+  var createdAt = currentDate.getFullYear() + '/' + (currentDate.getMonth()+1) + '/'
+                  + currentDate.getDate() + ' ' + currentDate.getHours() + ':'
+                  + currentDate.getMinutes() + ':' + currentDate.getSeconds();
+
+  return createdAt;
+  
+};
+
+// send order to orderAPI and log it in table
+const sendOrderMQTT = (orderDetails) =>{
+  // query db to get necesary message ID
+  // increment message ID
+
+  // Publish orderDetails to Doug over MQTT
+
+  // store log of message in db
+  
+  // await response from doug
+
+  //
+  return 'Empty Function'
+};
+
+// update table id and order id
+const updateIDs = (orderDetails) =>{
+  let tempID;
+  // query db to get largest orderID
+  
+  
+  // set tempID to that query result
+  // set orderDetails.id & orderDetails.OrderID to tempID 
+  return 'Empty Function'
+};
 
 const OrderForm = () => (
 
@@ -79,8 +132,63 @@ const OrderForm = () => (
           sendMQTTOrder();
 
           await new Promise(resolve => setTimeout(resolve, 500));
+          //alert(JSON.stringify(values, null, 2));
 
-          alert(JSON.stringify(values, null, 2));
+          //Set up for Orders to be added to the database
+          //*id needs an incremented value still*
+          //*OrderId needs an incremented / randomized value still*
+          //*Transaction ID will need an ID from payment system
+          //*For some reason this created a _typename field in database
+          //*Message me to work on more - JH
+          var orderDetails = {
+            //id : "5",
+            orderID: 2,
+            //Color: values.color_1,
+            email: values.email,
+            fullName: values.name,
+            orderStatus: "Created",
+            quantityRED: values.quantityRED,
+            quantityBLUE: values.quantityBLUE,
+            quantityWHITE: values.quantityWHITE,
+            transactionID: 222222,
+            created_at: createTimestamp(),
+            updated_at: createTimestamp()
+          };
+
+          alert(JSON.stringify(orderDetails, null, 2));
+
+          //Send data to NodeJS(databse) via POST Start
+
+          let response = await fetch(`http://ec2-18-217-72-251.us-east-2.compute.amazonaws.com:3306/ordering`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(orderDetails),
+              })
+
+          if (response.errors) {
+          console.error(response.errors)
+          }
+
+          let responseJson = await response.json()
+
+          if (responseJson['message']) {
+          console.log(responseJson['message'])
+          }
+          //Send data to NodeJS(databse) via POST End
+
+
+          /*
+          // update order IDs
+          await updateIDs(orderDetails);
+          // Add order to database
+          await addOrderToDB(orderDetails);
+          // send order to Doug and log message
+          await sendOrderMQTT(orderDetails);
+          */
+
         }}
         enableReinitialize
       >
@@ -145,7 +253,7 @@ const OrderForm = () => (
                         name="color_1"
                         placeholder="Red"
                         type="text"
-                        value={values.color_1}
+                        //value={values.color_1}
                         disabled="true"
                     /> 
                   </MUI.FormControl> 
@@ -157,7 +265,7 @@ const OrderForm = () => (
                         name="quantity_1"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantity_1}
+                        value={values.quantityRED}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         required="true"
@@ -175,7 +283,7 @@ const OrderForm = () => (
                         name="color_2"
                         placeholder="Blue"
                         type="text"
-                        value={values.color_2}
+                        //value={values.color_2}
                         disabled="true"
                     /> 
                   </MUI.FormControl> 
@@ -187,7 +295,7 @@ const OrderForm = () => (
                         name="quantity_2"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantity_2}
+                        value={values.quantityBLUE}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         required="true"
@@ -205,7 +313,7 @@ const OrderForm = () => (
                         name="color_3"
                         placeholder="White"
                         type="text"
-                        value={values.color_3}
+                        //value={values.color_3}
                         disabled="true"
                     /> 
                   </MUI.FormControl> 
@@ -217,7 +325,7 @@ const OrderForm = () => (
                         name="quantity_3"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantity_3}
+                        value={values.quantityWHITE}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         required="true"
