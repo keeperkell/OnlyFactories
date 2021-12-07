@@ -3,6 +3,11 @@
 import React from "react";
 import * as mui from '@mui/material';
 
+var red= 8, blue= 10, white= 3;
+export {red, blue, white};
+
+var completed = 18, inQ = 3;
+
 const StatBox = () => {
     const [time, setTime] = React.useState(24);
 
@@ -15,8 +20,8 @@ const StatBox = () => {
       }
 
     const rows=[
-        createData('Orders Completed', 10),
-        createData('Orders in Queue', 2)
+        createData('Orders Completed', completed),
+        createData('Orders in Queue', inQ)
     ];
 
     return(
@@ -37,17 +42,17 @@ const StatBox = () => {
         </mui.FormControl>
         </mui.Box>
 
-        <mui.Box sx={{border:2, borderRadius: 16, p:1, m:1, textAlign:'center'}}>
-            <p style={{color:'red', fontSize:'32px'}}>8</p>
+        <mui.Box sx={{border:2, borderRadius: 6, p:1, m:1, textAlign:'center'}}>
+            <h1 style={{color:'red', fontSize:'32px'}}>{red}</h1>
         </mui.Box>
-        <mui.Box sx={{border:2, borderRadius: 16, p:1, m:1, textAlign:'center'}}>
-            <p style={{color:'blue', fontSize:'32px'}}>10</p>
+        <mui.Box sx={{border:2, borderRadius: 6, p:1, m:1, textAlign:'center'}}>
+            <h1 style={{color:'blue', fontSize:'32px'}}>{blue}</h1>
         </mui.Box>
-        <mui.Box sx={{border:2, borderRadius: 16, p:1, m:1, textAlign:'center'}}>
-            <p style={{color:'grey', fontSize:'32px'}}>6</p>
+        <mui.Box sx={{border:2, borderRadius: 6, p:1, m:1, textAlign:'center'}}>
+            <h1 style={{color:'grey', fontSize:'32px'}}>{white}</h1>
         </mui.Box>
-        <mui.Box sx={{border:2, borderRadius: 16, p:1, m:1, textAlign:'center'}}>
-            <p style={{color:'black', fontSize:'32px'}}>Total: 24</p>
+        <mui.Box sx={{border:2, borderRadius: 6, p:1, m:1, textAlign:'center'}}>
+            <h1 style={{color:'black', fontSize:'32px'}}>Total: {red+blue+white}</h1>
         </mui.Box>
 
         <mui.TableContainer style={{border:'2px solid', borderRadius:16}}>
