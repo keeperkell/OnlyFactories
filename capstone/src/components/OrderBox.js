@@ -11,6 +11,9 @@ import * as mqtt from "mqtt";
 //MQTT Setup
 const url = 'wss://onlyfactoriesmqtt.duckdns.org:9001';
 let client = mqtt.connect(url);
+client.on("connect", () => {
+  console.log("connected");
+})
 
 const sendOrder={
   msg_type: 'order',
@@ -21,16 +24,12 @@ const sendOrder={
 function sendMQTTOrder(){
   console.log("inside function")
   
-  //when connected, send the order to Doug
-  client.on("connect", () => {
-    console.log("connected");
-    var payload = JSON.stringify(sendOrder);
-    console.log(payload);
-    client.publish('UofICapstone_Cloud', payload, (error) =>{
-      if (error){
-        console.error(error)
-      }
-    })
+  var payload = JSON.stringify(sendOrder);
+  console.log(payload);
+  client.publish('UofICapstone_Cloud', payload, (error) =>{
+    if (error){
+      console.error(error)
+    }
   })
 }
 
