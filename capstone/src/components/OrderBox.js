@@ -9,7 +9,7 @@ import '../globalStyles'
 import * as mqtt from "mqtt";
 
 //MQTT Setup
-const url = 'wss://onlyfactoriesmqtt.duckdns.org:9001';
+const url = 'wss://onlyfactories.duckdns.org:9001';
 let client = mqtt.connect(url);
 client.on("connect", () => {
   console.log("connected");
@@ -159,7 +159,7 @@ const OrderForm = () => (
 
           //Send data to NodeJS(databse) via POST Start
 
-          let response = await fetch(`onlyfactoriesmqtt.duckdns.org:3306/ordering`, {
+          let response = await fetch(`https://onlyfactories.duckdns.org:3306/ordering`, {
               method: 'POST',
               headers: {
                   'Accept': 'application/json',
