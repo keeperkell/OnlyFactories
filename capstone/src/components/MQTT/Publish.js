@@ -2,7 +2,7 @@
 
 const mqtt = require("mqtt");
 var _ = require('lodash');
-const url = 'wss://onlyfactoriesmqtt.duckdns.org:9001';
+const url = 'wss://onlyfactories.duckdns.org:9001';
 
 var client = mqtt.connect(url);
 
