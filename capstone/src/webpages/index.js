@@ -12,8 +12,9 @@ import {
 
 import Home from './home';
 import OrderPage from "./ordering";
-import Tracking from "./tracking";
+import TrackingPage from "./tracking";
 import About from "./about";
+import TrackingStatusPage from "./trackingStatus";
 
 const Webpages = () => {
     return(

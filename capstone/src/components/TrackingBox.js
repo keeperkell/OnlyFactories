@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import React, {useState} from "react";
 import reactDom from "react-dom";
-import {Link, Redirect} from 'react-router-dom';
+import { useLocation, Redirect } from 'react-router-dom';
 import styled from "styled-components";
 import TrackingStatus from "../components/TrackingStatus";
 import * as MUI from '@mui/material';
@@ -27,6 +27,7 @@ const TrackStyle = styled.div`
     }
 
 `
+
 const initialValues = {
     orderID: ""
 };
@@ -36,9 +37,23 @@ const validationSchema =
         orderID: Yup.string().required()
     });
 
+
 export var orderData = null;
 
-const TrackingBox = () => (
+
+const TrackingBox = () => {
+
+    const [submitted, setSubmitted] = useState(false);
+
+    if(submitted){
+        return <Redirect push to={{
+            pathname: '/trackingstatus'
+            //state: {data: data.toString()}
+        }}
+        />
+    }
+
+    return(
 
     <TrackStyle>
     
@@ -57,7 +72,7 @@ const TrackingBox = () => (
                     var orderLen = values.length;
                     var orderNum = values.orderID.slice(0,orderLen);
                     console.log(orderNum);
-                    alert(JSON.stringify(orderNum, null,2));
+                    //alert(JSON.stringify(orderNum, null,2));
                     
                     //orderData = orderNum;
                     /*
@@ -94,10 +109,14 @@ const TrackingBox = () => (
                     let responseJson = await response.json()
 
                     if (responseJson['message']) {
-                    console.log(responseJson['message'])
-                    }
-                    //Send POST request to NodeJS over express End
+                    console.log(responseJson['message']);
+                    orderData = responseJson['message'];
 
+                    }
+                    //Send POST request to NodeJS over express End 
+                    
+                    alert(JSON.stringify(orderData));
+                    setSubmitted(true);
 
                     
                 }}
@@ -163,6 +182,7 @@ const TrackingBox = () => (
             </Formik>
         </div>
     </TrackStyle>
-);
+                            );
+}
 
 export default TrackingBox

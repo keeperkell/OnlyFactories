@@ -37,7 +37,7 @@ function App() {
             <Route path='/ordering' component={Ordering} />
             <Route path='/tracking' component={Tracking} />
             <Route path='/about' component={About} />
-            <Route path='/TrackingStatus' component={TrackingStatus}/>
+            <Route path='/trackingstatus' component={TrackingStatus}/>
 
           </Switch>
       </Router>

@@ -13,7 +13,7 @@ var orderID = 1;
 
 app.use(cors(corsOptions));
 
-// parse requests of content-type - application/json
+// parse requests of content-type - application/json -- middleware
 app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
@@ -30,14 +30,14 @@ app.post('/tracking', (req, res) => {
   var{orderID} = req.body;
   var records = [[req.body.orderID]];
   if(records[0][0]!=null){
-    connection.query(`SELECT * from FactoryOrders WHERE orderID = ${orderID}`, function(err,res,fields){
+    connection.query(`SELECT * from FactoryOrders WHERE orderID = ${orderID}`, function(err,results,fields){
       if(err) throw err;
 
-      console.log(res);
+      console.log(results);
     });
   }
-  res.json('Order found');
-  res.json(records);
+  res.json({ message: 'Order found'});
+  res.json(results);
 })
 //Query END
 
