@@ -8,6 +8,7 @@ import Ordering from './webpages/ordering'
 import Tracking from './webpages/tracking'
 import TrackingStatusPage from './webpages/trackingStatus';
 import GlobalStyle from './globalStyles';
+import TrackingStatusPage from './webpages/trackingStatus';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path='/' exact component={Home} />
         <Route path='/ordering' component={Ordering} />
         <Route path='/tracking' component={Tracking} />
+        <Route path='/trackingStatus' component={TrackingStatusPage} />
         <Route path='/about' component={About} />
         <Route path='/trackingStatus' component={TrackingStatusPage} />
 

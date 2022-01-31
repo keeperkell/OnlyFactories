@@ -3,7 +3,9 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 const connection = require("./models/db.js");
 
-const app = express().use('*', cors());
+//const app = express().use('*', cors());
+
+const app = express();
 
 //var corsOptions = {
  // origin: "http://localhost:3000"
@@ -19,12 +21,12 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
-/*app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Upgrade-Insecure-Requests");
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
   next();
-});*/
+});
 
 // simple route
 app.get("/", (req, res) => {
