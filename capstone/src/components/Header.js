@@ -10,10 +10,10 @@ const Header = () => {
             <Nav>
                 <NavMenu>
                     <a href="./">
-                        <img className="img-responsive" src={logo} alt="University of Idaho Logo" height="65" padding-right="120" />
+                        <img className="img-responsive" src={logo} alt="University of Idaho Logo" height="65" />
                     </a>
                 </NavMenu>
-                <NavMenu>
+                <NavMenu >
                     <NavLink to='/' activeStyle>Home</NavLink>
                 </NavMenu>
                 <NavMenu>
@@ -26,13 +26,13 @@ const Header = () => {
                     <NavLink to='/about' activeStyle>About</NavLink>
                 </NavMenu>
                 <NavMenu>
-                    <NavLink to='/management' activeStyle>Management</NavLink>
+                    <NavLink to='/management' activeStyle>Stats</NavLink>
                 </NavMenu>
                 <NavBtn>
                     <NavBtnLink to='/'>Sign In</NavBtnLink>
                 </NavBtn>
-                
             </Nav>
+            
         </>
     );
 }

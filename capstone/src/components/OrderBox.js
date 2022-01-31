@@ -21,6 +21,10 @@ const OrderBox = styled.div`
     .MUI.FormControl{
       width: 80%
     }
+    @media screen and (max-width: 900px) {
+      flex-basis: calc(100% / 3);
+      scale: 75%;
+    }
 `
 
 const initialValues = {

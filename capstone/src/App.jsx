@@ -8,6 +8,7 @@ import Ordering from './webpages/ordering'
 import Tracking from './webpages/tracking'
 import TrackingStatus from './components/TrackingStatus';
 import Management from './webpages/management';
+import Profit from './webpages/profit';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
             <Route path='/about' component={About} />
             <Route path='/TrackingStatus' component={TrackingStatus}/>
             <Route path='/Management' component={Management}/>
+            <Route path='/Profit' component={Profit}/>
 
           </Switch>
       </Router>

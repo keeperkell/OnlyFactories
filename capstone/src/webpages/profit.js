@@ -1,11 +1,10 @@
-// file: src/webpages/management.js
+// file: src/webpages/profit.js
 
 import React, {useEffect} from "react";
 import styled from "styled-components";
-import Piechart from "../components/Piechart";
-import StatBox from "../components/StatBox";
+import LineC from "../components/LineC";
 
-const ManagementPageStyle = styled.div `
+const ProfitPageStyle = styled.div `
     background: var(--backgroundPrimary);
     align-items: center;
     display: flex;
@@ -18,24 +17,23 @@ const ManagementPageStyle = styled.div `
         display: flex;
         flex-direction: column;
         flex-basis: calc(100% / 3);
-        scale: 50%;
+        scale: 40%;
         padding-top: 0px;
         padding-bottom: 0px;
     }
 
 `
 
-const Management = () => {
+const Profit = () => {
     useEffect(() => {
-        document.title = "Management page"
+        document.title = "Profit page"
     })
 
     return (
-        <ManagementPageStyle>
-            <Piechart />
-            <StatBox />
-        </ManagementPageStyle>
+        <ProfitPageStyle>
+            <LineC />
+        </ProfitPageStyle>
     );
 };
 
-export default Management;
+export default Profit;
