@@ -29,7 +29,8 @@ const TrackingStatus = props => {
     }, trackingData);
 
     const getOrderTrackingData = async () => {
-        const response = await fetch(`http://localhost:3306/api/tracking/` + orderData);
+        //const response = await fetch(`http://localhost:3306/api/tracking/` + orderData);
+        const response = await fetch(`https://onlyfactories.duckdns.org/:3306/api/tracking/` + orderData);
         const jsonData = await response.json();
         //alert(JSON.stringify(jsonData));
         setTrackingData(jsonData);
