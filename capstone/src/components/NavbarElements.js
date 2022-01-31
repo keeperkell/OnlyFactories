@@ -2,9 +2,11 @@
 import { FaBars } from 'react-icons/fa';
 import { NavLink as Link } from 'react-router-dom';
 import styled from 'styled-components';
+import '../globalStyle.css';
+
   
 export const Nav = styled.nav`
-  background: #a0a398;
+  background: var(--primarySilver);
   height: 85px;
   display: flex;
   justify-content: space-between;
@@ -15,7 +17,7 @@ export const Nav = styled.nav`
 `;
   
 export const NavLink = styled(Link)`
-  color: #808080;
+  color: var(--primaryBlack);
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -25,7 +27,8 @@ export const NavLink = styled(Link)`
   font-weight: bolder;
   cursor: pointer;
   &.active {
-    color: #000000;
+    color: var(--primaryPrideGold);
+    font-weight: bolder;
   }
 `;
   

@@ -13,23 +13,27 @@ const Header = () => {
                         <img className="img-responsive" src={logo} alt="University of Idaho Logo" height="65" />
                     </a>
                 </NavMenu>
-                <NavMenu >
+                <NavMenu>
                     <NavLink to='/' activeStyle>Home</NavLink>
                 </NavMenu>
                 <NavMenu>
-                    <NavLink to='/ordering' activeStyle>Order Now</NavLink>
+                    <NavLink className="nav-link" activeClassName="active" to='/' exact>Home</NavLink>
                 </NavMenu>
                 <NavMenu>
-                    <NavLink to='/tracking' activeStyle>Tracking</NavLink>
+                    <NavLink className="nav-link" activeClassName="active" to='/ordering'>Order Now</NavLink>
+                </NavMenu>
+                <NavMenu>
+                    <NavLink className="nav-link" activeClassName="active" to='/tracking'>Tracking</NavLink>
                 </NavMenu>
                 <NavMenu>
                     <NavLink to='/about' activeStyle>About</NavLink>
                 </NavMenu>
                 <NavMenu>
                     <NavLink to='/management' activeStyle>Stats</NavLink>
+                    <NavLink className="nav-link" activeClassName="active" to='/about'>About</NavLink>
                 </NavMenu>
                 <NavBtn>
-                    <NavBtnLink to='/'>Sign In</NavBtnLink>
+                    <NavBtnLink to='/Management'>Sign In</NavBtnLink>
                 </NavBtn>
             </Nav>
             

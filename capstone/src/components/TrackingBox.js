@@ -78,7 +78,7 @@ const TrackingBox = () => (
 
                     //Send POST request to NodeJS over express Start
 
-                    let response = await fetch(`http://localhost:3306/tracking`, {
+                    let response = await fetch(`http://ec2-18-217-72-251.us-east-2.compute.amazonaws.com:3306/tracking`, {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json',

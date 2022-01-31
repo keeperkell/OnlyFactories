@@ -135,7 +135,7 @@ const OrderForm = () => (
 
           //Send data to NodeJS(databse) via POST Start
 
-          let response = await fetch(`http://localhost:3306/ordering`, {
+          let response = await fetch(`http://ec2-18-217-72-251.us-east-2.compute.amazonaws.com:3306/ordering`, {
               method: 'POST',
               headers: {
                   'Accept': 'application/json',
