@@ -47,8 +47,8 @@ const TrackingBox = () => {
 
     if(submitted){
         return <Redirect push to={{
-            pathname: '/trackingstatus'
-            //state: {data: data.toString()}
+            pathname: '/trackingstatus',
+            //state: orderData
         }}
         />
     }
@@ -71,7 +71,9 @@ const TrackingBox = () => {
                     //parse and slice off order number
                     var orderLen = values.length;
                     var orderNum = values.orderID.slice(0,orderLen);
+                    orderData = orderNum;
                     console.log(orderNum);
+
                     //alert(JSON.stringify(orderNum, null,2));
                     
                     //orderData = orderNum;
@@ -93,7 +95,7 @@ const TrackingBox = () => {
 
                     //Send POST request to NodeJS over express Start
 
-                    let response = await fetch(`http://localhost:3306/tracking`, {
+                    /*let response = await fetch(`http://localhost:3306/api/tracking`, {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json',
@@ -110,12 +112,12 @@ const TrackingBox = () => {
 
                     if (responseJson['message']) {
                     console.log(responseJson['message']);
-                    orderData = responseJson['message'];
+                    //orderData = responseJson['message'];
 
                     }
                     //Send POST request to NodeJS over express End 
                     
-                    alert(JSON.stringify(orderData));
+                    alert(JSON.stringify(orderData));*/
                     setSubmitted(true);
 
                     

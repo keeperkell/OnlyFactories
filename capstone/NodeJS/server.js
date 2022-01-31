@@ -19,6 +19,13 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+  next();
+});
+
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "OnlyFactories BD Port!" });
@@ -26,7 +33,7 @@ app.get("/", (req, res) => {
 
 //Query Start for finding an Order by orderID. Sent 
 //from localhost:3000/tracking to localhost:3306/tracking
-app.post('/tracking', (req, res) => {
+/*app.get('/api/tracking/', (req, res) => {
   var{orderID} = req.body;
   var records = [[req.body.orderID]];
   if(records[0][0]!=null){
@@ -36,14 +43,31 @@ app.post('/tracking', (req, res) => {
       console.log(results);
     });
   }
-  res.json({ message: 'Order found'});
   res.json(results);
+  res.json(results);
+})*/
+//Query END
+
+//Query Start for finding an Order by orderID. Sent 
+//from localhost:3000/tracking to localhost:3306/tracking
+app.get('/api/tracking/:id', (req, res) => {
+  const orderID = req.params.id;
+
+  if(orderID != null){
+    connection.query(`SELECT * from FactoryOrders WHERE orderID = ${orderID}`, function(err,results,fields){
+      if(err) throw err;
+
+      console.log(results);
+      res.json(results);
+      return;
+    });
+  }
 })
 //Query END
 
 //Query Start for creating an order. Sent from 
 //localhost:3000/ordering to localhost:3306/ordering
-app.post('/ordering', (req, res) => {
+app.post('/api/ordering', (req, res) => {
   //var{orderID} = 2
   var{orderID, fullName, email, quantityRED, quantityBLUE, quantityWHITE, orderStatus, transactionID, created_at, updated_at} = req.body;
   /*var{email} = req.body.Email;

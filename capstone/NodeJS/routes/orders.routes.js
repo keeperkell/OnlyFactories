@@ -21,5 +21,5 @@ module.exports = app => {
     // Delete all FactoryOrders
     router.delete("/", tutorials.deleteAll);*/
   
-    app.use('/api/orders', router);
+    app.use('/api', router);
   };
