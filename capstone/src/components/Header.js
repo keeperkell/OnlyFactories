@@ -14,9 +14,6 @@ const Header = () => {
                     </a>
                 </NavMenu>
                 <NavMenu>
-                    <NavLink to='/' activeStyle>Home</NavLink>
-                </NavMenu>
-                <NavMenu>
                     <NavLink className="nav-link" activeClassName="active" to='/' exact>Home</NavLink>
                 </NavMenu>
                 <NavMenu>
@@ -26,10 +23,6 @@ const Header = () => {
                     <NavLink className="nav-link" activeClassName="active" to='/tracking'>Tracking</NavLink>
                 </NavMenu>
                 <NavMenu>
-                    <NavLink to='/about' activeStyle>About</NavLink>
-                </NavMenu>
-                <NavMenu>
-                    <NavLink to='/management' activeStyle>Stats</NavLink>
                     <NavLink className="nav-link" activeClassName="active" to='/about'>About</NavLink>
                 </NavMenu>
                 <NavBtn>
