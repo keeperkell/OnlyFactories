@@ -8,7 +8,6 @@ import Ordering from './webpages/ordering'
 import Tracking from './webpages/tracking'
 import TrackingStatusPage from './webpages/trackingStatus';
 import GlobalStyle from './globalStyles';
-import TrackingStatusPage from './webpages/trackingStatus';
 
 function App() {
   return (
