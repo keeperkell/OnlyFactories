@@ -3,10 +3,16 @@
 import React from "react";
 import logo from '../images/Vandals_logo.png';
 import {Nav, NavLink, Bars, Navmenu, NavBtn, NavBtnLink, NavMenu} from './NavbarElements'
+import ScriptTag from 'react-script-tag'
+
+//Import MQTT into header status
+//import PublishMQTT from './MQTT/Publish'
+//import SubscribeMQTT from './MQTT/Subscribe'
 
 const Header = () => {
     return(
         <>
+
             <Nav>
                 <NavMenu>
                     <a href="./">
@@ -26,7 +32,7 @@ const Header = () => {
                     <NavLink className="nav-link" activeClassName="active" to='/about'>About</NavLink>
                 </NavMenu>
                 <NavBtn>
-                    <NavBtnLink to='/'>Sign In</NavBtnLink>
+                    <NavBtnLink to='/Management'>Sign In</NavBtnLink>
                 </NavBtn>
                 
             </Nav>

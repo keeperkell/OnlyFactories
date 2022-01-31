@@ -4,19 +4,45 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from 'yup'
 import styled from "styled-components";
-import * as MUI from '@mui/material';
+import * as MUI from '@mui/material'
+import '../globalStyles'
+import * as mqtt from "mqtt";
+
+//MQTT Setup
+const url = 'wss://onlyfactories.duckdns.org:9001';
+let client = mqtt.connect(url);
+client.on("connect", () => {
+  console.log("connected");
+})
+
+const sendOrder={
+  msg_type: 'order',
+}
+
+// when form is submitted, send an MQTT message to Doug
+// which will start the factory or add to orders. 
+function sendMQTTOrder(){
+  console.log("inside function")
+  
+  var payload = JSON.stringify(sendOrder);
+  console.log(payload);
+  client.publish('UofICapstone_Cloud', payload, (error) =>{
+    if (error){
+      console.error(error)
+    }
+  })
+}
 
 const OrderBox = styled.div`
     height: 600px;
     width: 500px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    //justify-content: center;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: var(--background);
     border-radius: 8px;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
-    color: #333333;
 
     .MUI.FormControl{
       width: 80%
@@ -103,6 +129,8 @@ const OrderForm = () => (
         validationSchema={validationSchema}
 
         onSubmit={async values => {
+          sendMQTTOrder();
+
           await new Promise(resolve => setTimeout(resolve, 500));
           //alert(JSON.stringify(values, null, 2));
 
@@ -131,7 +159,7 @@ const OrderForm = () => (
 
           //Send data to NodeJS(databse) via POST Start
 
-          let response = await fetch(`http://localhost:3306/ordering`, {
+          let response = await fetch(`https://onlyfactories.duckdns.org:3306/ordering`, {
               method: 'POST',
               headers: {
                   'Accept': 'application/json',
@@ -325,7 +353,8 @@ const OrderForm = () => (
                 <MUI.Button 
                   type="submit" 
                   variant="contained"
-                  disabled={isSubmitting}>
+                  disabled={isSubmitting}
+                >
                   Submit
                 </MUI.Button>
               </MUI.FormControl>
