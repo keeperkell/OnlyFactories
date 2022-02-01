@@ -14,15 +14,6 @@ const ManagementPageStyle = styled.div `
     padding-top: 40px;
     padding-bottom: 40px;
 
-    @media screen and (max-width: 1100px) {
-        flex-basis: calc(100% / 3);
-        scale: 70%;
-    }
-    @media screen and (max-width: 780px) {
-        flex-basis: calc(100% / 3);
-        scale: 50%;
-        flex-direction: column;
-    }
 `
 
 const Management = () => {
@@ -32,8 +23,8 @@ const Management = () => {
 
     return (
         <ManagementPageStyle>
-            <Piechart />
             <StatBox />
+            <Piechart />
         </ManagementPageStyle>
     );
 };

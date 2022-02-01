@@ -10,20 +10,12 @@ const ButtonS = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    @media screen and (max-width: 500px) {
-        flex-basis: calc(100% / 3);
-        scale: 85%;
-    }
-    @media screen and (max-width: 400px) {
-        flex-basis: calc(100% / 3);
-        scale: 75%;
-    }
 `
 
 const Button = () =>(
     <ButtonS>
         <div>
-            <MUI.FormControl sx={{m: 2, minWidth: 195}}>
+            <MUI.FormControl sx={{m: 2, minWidth: 210}}>
             <MUI.Button component={Link}
                 to="/ordering"
                 variant="contained">
@@ -31,7 +23,7 @@ const Button = () =>(
             </MUI.Button>
             </MUI.FormControl>
 
-            <MUI.FormControl sx={{m: 2, minWidth: 195}}>
+            <MUI.FormControl sx={{m: 2, minWidth: 210}}>
             <MUI.Button component={Link}
                 to="/tracking"
                 variant="contained">

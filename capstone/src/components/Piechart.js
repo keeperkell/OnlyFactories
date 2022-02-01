@@ -1,9 +1,8 @@
-// file: src/webpages/Piechart.js
+// file: src/webpages/management.js
 
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 import Box from '@mui/material/Box';
-import styled from "styled-components";
 import {red, blue, white} from './StatBox.js'
 
 class Piechart extends React.Component {
@@ -24,7 +23,6 @@ class Piechart extends React.Component {
         }
     ];
 
-    
     CustomTooltip = ({ active, payload, label }) => {
         if (active) {
             return (

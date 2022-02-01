@@ -19,14 +19,6 @@ const TrackingPageStyle = styled.div `
     padding-top: 40px;
     padding-bottom: 40px;
 
-    @media screen and (max-width: 500px) {
-        flex-basis: calc(100% / 3);
-        scale: 85%;
-    }
-    @media screen and (max-width: 400px) {
-        flex-basis: calc(100% / 3);
-        scale: 75%;
-    }
 `
 
 

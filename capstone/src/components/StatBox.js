@@ -2,7 +2,6 @@
 
 import React from "react";
 import * as mui from '@mui/material';
-import {Link} from 'react-router-dom';
 
 var red= 8, blue= 10, white= 3;
 export {red, blue, white};
@@ -66,15 +65,6 @@ const StatBox = () => {
           ))}
         </mui.TableBody>
         </mui.TableContainer>
-        <p />
-
-        <mui.FormControl sx={{m: 2, minWidth: 210}}>
-            <mui.Button component={Link}
-                to="/profit"
-                variant="contained">
-                    Profit
-            </mui.Button>
-        </mui.FormControl>
        </div>
     )
 }

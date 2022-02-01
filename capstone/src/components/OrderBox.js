@@ -337,7 +337,7 @@ const OrderForm = () => (
                     </MUI.Select>
                   </MUI.FormControl>
 
-              <MUI.FormControl sx={{m: 2, minWidth: 195}}>
+              <MUI.FormControl sx={{m: 2, minWidth: 210}}>
                 <MUI.Button
                   variant="contained"
                   type="button"
@@ -349,12 +349,12 @@ const OrderForm = () => (
                 </MUI.Button>
               </MUI.FormControl>
 
-              <MUI.FormControl sx={{m: 2, minWidth: 195}}>
+              <MUI.FormControl sx={{m: 2, minWidth: 210}}>
                 <MUI.Button 
                   type="submit" 
                   variant="contained"
-                  className="outline"
-                  disabled={isSubmitting}>
+                  disabled={isSubmitting}
+                >
                   Submit
                 </MUI.Button>
               </MUI.FormControl>
