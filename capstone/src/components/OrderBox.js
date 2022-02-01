@@ -53,10 +53,14 @@ const initialValues = {
   fullName: "",
   email: "",
   orderID: -1,
-  transactionID: -1,
+  transactionID: -1
+
+  //possible unneeded code
+  /*
   quantityRED: 0,
   quantityBLUE: 0,
   quantityWHITE: 0
+  */
 }
 
 const validationSchema = 
@@ -125,6 +129,20 @@ const updateOrderID = async (initialValues) =>{
   initialValues.orderID = tempNewOrderID;
 };
 
+// get max transaction ID and increment by 173
+const updateTransactionID = async (initialValues) =>{
+
+  // query db to get largest orderID
+  const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxTransactionID`);
+  let tempID = await maxID.json();
+
+  let newID = tempID.map((tempID)=>tempID.transactionID);
+  let  tempNewOrderID = parseInt(newID, 10);
+  tempNewOrderID += 173;
+
+  initialValues.transactionID = tempNewOrderID;
+};
+
 const OrderForm = () => {
 
   const [valueRED, setvalueRED] = useState(0);
@@ -157,6 +175,8 @@ const OrderForm = () => {
 
         onSubmit={async values => {
           sendMQTTOrder();
+          updateOrderID(values);
+          updateTransactionID(values);
 
           await new Promise(resolve => setTimeout(resolve, 500));
           //alert(JSON.stringify(values, null, 2));
@@ -169,7 +189,7 @@ const OrderForm = () => {
           //*Message me to work on more - JH
           var orderDetails = {
             //id : "5",
-            orderID: 2,
+            orderID: values.orderID(),
             //Color: values.color_1,
             email: values.email,
             fullName: values.name,
@@ -177,7 +197,7 @@ const OrderForm = () => {
             quantityRED: valueRED,
             quantityBLUE: valueBLUE,
             quantityWHITE: valueWHITE,
-            transactionID: 222222,
+            transactionID: values.transactionID,
             created_at: createTimestamp(),
             updated_at: createTimestamp()
           };
