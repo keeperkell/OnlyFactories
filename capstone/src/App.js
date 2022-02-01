@@ -8,10 +8,13 @@ import Ordering from './webpages/ordering'
 import Tracking from './webpages/tracking'
 import Management from './webpages/management';
 import Profit from './webpages/profit';
+import TrackingStatusPage from './webpages/trackingStatus';
+import GlobalStyle from './globalStyles';
 
 function App() {
   return (
     <Router>
+      <GlobalStyle />
       <Header />
       <Switch>
         <Route path='/' exact component={Home} />
@@ -20,7 +23,7 @@ function App() {
         <Route path='/about' component={About} />
         <Route path='/management' component={Management} />
         <Route path='/profit' component={Profit} />
-
+        <Route path='/trackingStatus' component={TrackingStatusPage} />
       </Switch>
     </Router>
   );
