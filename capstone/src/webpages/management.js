@@ -14,15 +14,15 @@ const ManagementPageStyle = styled.div `
     padding-top: 40px;
     padding-bottom: 40px;
 
-    @media screen and (max-width: 900px) {
-        display: flex;
-        flex-direction: column;
+    @media screen and (max-width: 1100px) {
+        flex-basis: calc(100% / 3);
+        scale: 70%;
+    }
+    @media screen and (max-width: 780px) {
         flex-basis: calc(100% / 3);
         scale: 50%;
-        padding-top: 0px;
-        padding-bottom: 0px;
+        flex-direction: column;
     }
-
 `
 
 const Management = () => {

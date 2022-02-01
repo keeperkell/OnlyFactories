@@ -13,15 +13,19 @@ const ProfitPageStyle = styled.div `
     padding-top: 40px;
     padding-bottom: 40px;
 
-    @media screen and (max-width: 900px) {
-        display: flex;
-        flex-direction: column;
+    @media screen and (max-width: 1024px) {
         flex-basis: calc(100% / 3);
-        scale: 40%;
-        padding-top: 0px;
-        padding-bottom: 0px;
+        scale: 70%;
     }
-
+    @media screen and (max-width: 767px) {
+        flex-basis: calc(100% / 3);
+        scale: 50%;
+    }
+    @media screen and (max-width: 520px) {
+        flex-basis: calc(100% / 3);
+        scale: 35%;
+        flex-direction: column;
+    }
 `
 
 const Profit = () => {

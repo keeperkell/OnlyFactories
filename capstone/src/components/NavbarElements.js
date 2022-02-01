@@ -55,12 +55,14 @@ export const NavMenu = styled.div`
   /* Third Nav */
   /* width: 100vw;
   white-space: nowrap; */
-  @media screen and (max-width: 900px) {
-    flex-direction: column;
+  @media screen and (max-width: 1024px) {
     flex-basis: calc(100% / 3);
+    scale: 85%;
+}
+@media screen and (max-width: 767px) {
+    flex-basis: calc(100% / 2);
     scale: 75%;
-    width: 71px;
-  }
+}
 `;
   
 export const NavBtn = styled.nav`

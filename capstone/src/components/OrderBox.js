@@ -21,10 +21,6 @@ const OrderBox = styled.div`
     .MUI.FormControl{
       width: 80%
     }
-    @media screen and (max-width: 900px) {
-      flex-basis: calc(100% / 3);
-      scale: 75%;
-    }
 `
 
 const initialValues = {
@@ -313,7 +309,7 @@ const OrderForm = () => (
                     </MUI.Select>
                   </MUI.FormControl>
 
-              <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+              <MUI.FormControl sx={{m: 2, minWidth: 195}}>
                 <MUI.Button
                   variant="contained"
                   type="button"
@@ -325,10 +321,11 @@ const OrderForm = () => (
                 </MUI.Button>
               </MUI.FormControl>
 
-              <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+              <MUI.FormControl sx={{m: 2, minWidth: 195}}>
                 <MUI.Button 
                   type="submit" 
                   variant="contained"
+                  className="outline"
                   disabled={isSubmitting}>
                   Submit
                 </MUI.Button>
