@@ -52,6 +52,8 @@ const OrderBox = styled.div`
 const initialValues = {
   fullName: "",
   email: "",
+  orderID: -1,
+  transactionID: -1,
   quantityRED: 0,
   quantityBLUE: 0,
   quantityWHITE: 0
@@ -108,15 +110,19 @@ const sendOrderMQTT = (orderDetails) =>{
   return 'Empty Function'
 };
 
-// update table id and order id
-const updateIDs = (orderDetails) =>{
-  let tempID;
+
+// get max orderID and increment by 1
+const updateOrderID = async (initialValues) =>{
+
   // query db to get largest orderID
-  
-  
-  // set tempID to that query result
-  // set orderDetails.id & orderDetails.OrderID to tempID 
-  return 'Empty Function'
+  const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxOrderID`);
+  let tempID = await maxID.json();
+
+  let newID = tempID.map((tempID)=>tempID.orderID);
+  let  tempNewOrderID = parseInt(newID, 10);
+  tempNewOrderID += 1;
+
+  initialValues.orderID = tempNewOrderID;
 };
 
 const OrderForm = () => {
@@ -180,7 +186,7 @@ const OrderForm = () => {
 
           //Send data to NodeJS(databse) via POST Start
 
-          let response = await fetch(`https://onlyfactories.duckdns.org:3306/ordering`, {
+          let response = await fetch(`https://onlyfactories.duckdns.org:3306/api/ordering`, {
               method: 'POST',
               headers: {
                   'Accept': 'application/json',
@@ -270,9 +276,9 @@ const OrderForm = () => {
                   
                   <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
                     <MUI.TextField
-                        id="color_1"
-                        name="color_1"
-                        placeholder="Red"
+                        id="name"
+                        placeholder="Enter your name"
+                        label="Name"
                         type="text"
                         //value={values.color_1}
                         disabled="true"
@@ -290,22 +296,11 @@ const OrderForm = () => {
                         onChange={handleSelectRED}
                         onBlur={handleBlur}
                         required="true"
-                    >
-                        <MUI.MenuItem value={0}>0</MUI.MenuItem> 
-                        <MUI.MenuItem value={1}>1</MUI.MenuItem>
-                        <MUI.MenuItem value={2}>2</MUI.MenuItem>
-                        <MUI.MenuItem value={3}>3</MUI.MenuItem>
-                    </MUI.Select>
-                  </MUI.FormControl>
-
-                  <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
-                    <MUI.TextField
-                        id="color_2"
-                        name="color_2"
-                        placeholder="Blue"
-                        type="text"
-                        //value={values.color_2}
-                        disabled="true"
+                        className={
+                            errors.name && touched.name
+                            ? "text-input error"
+                            : "text-input"
+                        }
                     /> 
                   </MUI.FormControl> 
 
@@ -330,9 +325,9 @@ const OrderForm = () => {
 
                   <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
                     <MUI.TextField
-                        id="color_3"
-                        name="color_3"
-                        placeholder="White"
+                        id="email"
+                        placeholder="Enter your email"
+                        label="Email"
                         type="text"
                         //value={values.color_3}
                         disabled="true"
