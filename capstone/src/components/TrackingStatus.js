@@ -20,8 +20,8 @@ const TrackingStatus = props => {
     useEffect(()=>{
         const timer = setTimeout(() =>{
             getOrderTrackingData();
-        }, 15000);
-    }, trackingData);
+        }, 5000);
+    }, [trackingData]);
 
     const getOrderTrackingData = async () => {
 
