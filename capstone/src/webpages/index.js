@@ -16,6 +16,7 @@ import TrackingPage from "./tracking";
 import About from "./about";
 import TrackingStatusPage from "./trackingStatus";
 import Management from "./management";
+import Profit from "./profit";
 
 const Webpages = () => {
     return(
