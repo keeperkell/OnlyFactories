@@ -52,6 +52,8 @@ const OrderBox = styled.div`
 const initialValues = {
   fullName: "",
   email: "",
+  orderID: -1,
+  transactionID: -1,
   quantityRED: 0,
   quantityBLUE: 0,
   quantityWHITE: 0
@@ -108,262 +110,276 @@ const sendOrderMQTT = (orderDetails) =>{
   return 'Empty Function'
 };
 
-// update table id and order id
-const updateIDs = (orderDetails) =>{
-  let tempID;
+
+// get max orderID and increment by 1
+const updateOrderID = async (initialValues) =>{
+
   // query db to get largest orderID
-  
-  
-  // set tempID to that query result
-  // set orderDetails.id & orderDetails.OrderID to tempID 
-  return 'Empty Function'
+  const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxOrderID`);
+  let tempID = await maxID.json();
+
+  let newID = tempID.map((tempID)=>tempID.orderID);
+  let  tempNewOrderID = parseInt(newID, 10);
+  tempNewOrderID += 1;
+
+  initialValues.orderID = tempNewOrderID;
 };
 
-const OrderForm = () => (
+// get max transaction ID and increment by 173
+const updateTransactionID = async (initialValues) =>{
 
-  <OrderBox>
-    <div className="app">
+  // query db to get largest orderID
+  const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxTransactionID`);
+  let tempID = await maxID.json();
 
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
+  let newID = tempID.map((tempID)=>tempID.transactionID);
+  let  tempNewOrderID = parseInt(newID, 10);
+  tempNewOrderID += 173;
 
-        onSubmit={async values => {
-          sendMQTTOrder();
+  initialValues.transactionID = tempNewOrderID;
+};
 
-          await new Promise(resolve => setTimeout(resolve, 500));
-          //alert(JSON.stringify(values, null, 2));
+const OrderForm = () => {
 
-          //Set up for Orders to be added to the database
-          //*id needs an incremented value still*
-          //*OrderId needs an incremented / randomized value still*
-          //*Transaction ID will need an ID from payment system
-          //*For some reason this created a _typename field in database
-          //*Message me to work on more - JH
-          var orderDetails = {
-            //id : "5",
-            orderID: 2,
-            //Color: values.color_1,
-            email: values.email,
-            fullName: values.name,
-            orderStatus: "Created",
-            quantityRED: values.quantityRED,
-            quantityBLUE: values.quantityBLUE,
-            quantityWHITE: values.quantityWHITE,
-            transactionID: 222222,
-            created_at: createTimestamp(),
-            updated_at: createTimestamp()
-          };
+  return(
+    <OrderBox>
+      <div className="app">
 
-          alert(JSON.stringify(orderDetails, null, 2));
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
 
-          //Send data to NodeJS(databse) via POST Start
+          onSubmit={async values => {
+            sendMQTTOrder();
+            updateOrderID(values);
+            updateTransactionID(values);
 
-          let response = await fetch(`https://onlyfactories.duckdns.org:3306/api/ordering`, {
-              method: 'POST',
-              headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(orderDetails),
-              })
+            await new Promise(resolve => setTimeout(resolve, 500));
+            //alert(JSON.stringify(values, null, 2));
 
-          if (response.errors) {
-          console.error(response.errors)
-          }
+            //Set up for Orders to be added to the database
+            //*Transaction ID will need an ID from payment system
+            //*For some reason this created a _typename field in database
+            //*Message me to work on more - JH
+            var orderDetails = {
+              //id : "5",
+              orderID: values.orderID,
+              //Color: values.color_1,
+              email: values.email,
+              fullName: values.name,
+              orderStatus: "Created",
+              quantityRED: values.quantityRED,
+              quantityBLUE: values.quantityBLUE,
+              quantityWHITE: values.quantityWHITE,
+              transactionID: values.transactionID,
+              created_at: createTimestamp(),
+              updated_at: createTimestamp()
+            };
 
-          let responseJson = await response.json()
+            alert(JSON.stringify(orderDetails, null, 2));
 
-          if (responseJson['message']) {
-          console.log(responseJson['message'])
-          }
-          //Send data to NodeJS(databse) via POST End
+            //Send data to NodeJS(databse) via POST Start
 
+            let response = await fetch(`https://onlyfactories.duckdns.org:3306/api/ordering`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderDetails),
+                })
 
-          /*
-          // update order IDs
-          await updateIDs(orderDetails);
-          // Add order to database
-          await addOrderToDB(orderDetails);
-          // send order to Doug and log message
-          await sendOrderMQTT(orderDetails);
-          */
+            if (response.errors) {
+            console.error(response.errors)
+            }
 
-        }}
-        enableReinitialize
-      >
-        
-        {({
-            values,
-            touched,
-            errors,
-            dirty,
-            isSubmitting,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            handleReset
-          }) => (
+            let responseJson = await response.json()
 
-                <Form autoComplete="off" onSubmit={handleSubmit}>
-                  <MUI.Typography variant="h3" component="h3" align='center'>
-                    Order Form
-                  </MUI.Typography>
+            if (responseJson['message']) {
+            console.log(responseJson['message'])
+            }
 
-                  <MUI.FormControl sx={{m: 2, minWidth: 450}}>
-                  <MUI.TextField
-                      id="name"
-                      placeholder="Enter your name"
-                      label="Name"
-                      type="text"
-                      value={values.name}
-                      onChange={handleChange}
-                      required="true"
-                      className={
-                          errors.name && touched.name
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                  /> 
-                  </MUI.FormControl> 
+            /*
+            // send order to Doug and log message
+            await sendOrderMQTT(orderDetails);
+            */
 
-                  <MUI.FormControl sx={{m: 2, minWidth: 450}}>
-                  <MUI.TextField
-                      id="email"
-                      placeholder="Enter your email"
-                      label="Email"
-                      type="text"
-                      value={values.email}
-                      onChange={handleChange}
-                      required="true"
-                      className={
-                          errors.email && touched.email
-                          ? "text-input error"
-                          : "text-input"
-                      }
-                  />
-                  {errors.email && touched.email && (
-                  <div className="input-feedback">{errors.email}</div>
-                  )}
-                  </MUI.FormControl>
-                  
-                  <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
+          }}
+          enableReinitialize
+        >
+          
+          {({
+              values,
+              touched,
+              errors,
+              dirty,
+              isSubmitting,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              handleReset
+            }) => (
+
+                  <Form autoComplete="off" onSubmit={handleSubmit}>
+                    <MUI.Typography variant="h3" component="h3" align='center'>
+                      Order Form
+                    </MUI.Typography>
+
+                    <MUI.FormControl sx={{m: 2, minWidth: 450}}>
                     <MUI.TextField
-                        id="color_1"
-                        name="color_1"
-                        placeholder="Red"
+                        id="name"
+                        placeholder="Enter your name"
+                        label="Name"
                         type="text"
-                        //value={values.color_1}
-                        disabled="true"
-                    /> 
-                  </MUI.FormControl> 
-
-                  <MUI.FormControl sx={{m: 1.45, minWidth: 210}}>
-                    <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
-                    <MUI.Select
-                        id="quantity_1"
-                        name="quantity_1"
-                        labelId="quantity-select-label"
-                        type="select"
-                        value={values.quantityRED}
+                        value={values.name}
                         onChange={handleChange}
-                        onBlur={handleBlur}
                         required="true"
-                    >
-                        <MUI.MenuItem value={0}>0</MUI.MenuItem> 
-                        <MUI.MenuItem value={1}>1</MUI.MenuItem>
-                        <MUI.MenuItem value={2}>2</MUI.MenuItem>
-                        <MUI.MenuItem value={3}>3</MUI.MenuItem>
-                    </MUI.Select>
-                  </MUI.FormControl>
+                        className={
+                            errors.name && touched.name
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                    /> 
+                    </MUI.FormControl> 
 
-                  <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
+                    <MUI.FormControl sx={{m: 2, minWidth: 450}}>
                     <MUI.TextField
-                        id="color_2"
-                        name="color_2"
-                        placeholder="Blue"
+                        id="email"
+                        placeholder="Enter your email"
+                        label="Email"
                         type="text"
-                        //value={values.color_2}
-                        disabled="true"
-                    /> 
-                  </MUI.FormControl> 
-
-                  <MUI.FormControl sx={{m: 2, minWidth: 210}}>
-                    <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
-                    <MUI.Select
-                        id="quantity_2"
-                        name="quantity_2"
-                        labelId="quantity-select-label"
-                        type="select"
-                        value={values.quantityBLUE}
+                        value={values.email}
                         onChange={handleChange}
-                        onBlur={handleBlur}
                         required="true"
-                    >
-                        <MUI.MenuItem value={0}>0</MUI.MenuItem> 
-                        <MUI.MenuItem value={1}>1</MUI.MenuItem>
-                        <MUI.MenuItem value={2}>2</MUI.MenuItem>
-                        <MUI.MenuItem value={3}>3</MUI.MenuItem>
-                    </MUI.Select>
-                  </MUI.FormControl>
+                        className={
+                            errors.email && touched.email
+                            ? "text-input error"
+                            : "text-input"
+                        }
+                    />
+                    {errors.email && touched.email && (
+                    <div className="input-feedback">{errors.email}</div>
+                    )}
+                    </MUI.FormControl>
+                    
+                    <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
+                      <MUI.TextField
+                          id="color_1"
+                          name="color_1"
+                          placeholder="Red"
+                          type="text"
+                          //value={values.color_1}
+                          disabled="true"
+                      /> 
+                    </MUI.FormControl> 
 
-                  <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
-                    <MUI.TextField
-                        id="color_3"
-                        name="color_3"
-                        placeholder="White"
-                        type="text"
-                        //value={values.color_3}
-                        disabled="true"
-                    /> 
-                  </MUI.FormControl> 
+                    <MUI.FormControl sx={{m: 1.45, minWidth: 210}}>
+                      <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
+                      <MUI.Select
+                          id="quantity_1"
+                          name="quantity_1"
+                          labelId="quantity-select-label"
+                          type="select"
+                          value={values.quantityRED}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          required="true"
+                      >
+                          <MUI.MenuItem value={0}>0</MUI.MenuItem> 
+                          <MUI.MenuItem value={1}>1</MUI.MenuItem>
+                          <MUI.MenuItem value={2}>2</MUI.MenuItem>
+                          <MUI.MenuItem value={3}>3</MUI.MenuItem>
+                      </MUI.Select>
+                    </MUI.FormControl>
 
-                  <MUI.FormControl sx={{m: 2, minWidth: 210}}>
-                    <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
-                    <MUI.Select
-                        id="quantity_3"
-                        name="quantity_3"
-                        labelId="quantity-select-label"
-                        type="select"
-                        value={values.quantityWHITE}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        required="true"
-                    >
-                        <MUI.MenuItem value={0}>0</MUI.MenuItem> 
-                        <MUI.MenuItem value={1}>1</MUI.MenuItem>
-                        <MUI.MenuItem value={2}>2</MUI.MenuItem>
-                        <MUI.MenuItem value={3}>3</MUI.MenuItem>
-                    </MUI.Select>
-                  </MUI.FormControl>
+                    <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
+                      <MUI.TextField
+                          id="color_2"
+                          name="color_2"
+                          placeholder="Blue"
+                          type="text"
+                          //value={values.color_2}
+                          disabled="true"
+                      /> 
+                    </MUI.FormControl> 
 
-              <MUI.FormControl sx={{m: 2, minWidth: 195}}>
-                <MUI.Button
-                  variant="contained"
-                  type="button"
-                  className="outline"
-                  onClick={handleReset}
-                  disabled={!dirty || isSubmitting}
-                >
-                  Reset
-                </MUI.Button>
-              </MUI.FormControl>
+                    <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+                      <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
+                      <MUI.Select
+                          id="quantity_2"
+                          name="quantity_2"
+                          labelId="quantity-select-label"
+                          type="select"
+                          value={values.quantityBLUE}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          required="true"
+                      >
+                          <MUI.MenuItem value={0}>0</MUI.MenuItem> 
+                          <MUI.MenuItem value={1}>1</MUI.MenuItem>
+                          <MUI.MenuItem value={2}>2</MUI.MenuItem>
+                          <MUI.MenuItem value={3}>3</MUI.MenuItem>
+                      </MUI.Select>
+                    </MUI.FormControl>
 
-              <MUI.FormControl sx={{m: 2, minWidth: 195}}>
-                <MUI.Button 
-                  type="submit" 
-                  variant="contained"
-                  className="outline"
-                  disabled={isSubmitting}>
-                  Submit
-                </MUI.Button>
-              </MUI.FormControl>
+                    <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
+                      <MUI.TextField
+                          id="color_3"
+                          name="color_3"
+                          placeholder="White"
+                          type="text"
+                          //value={values.color_3}
+                          disabled="true"
+                      /> 
+                    </MUI.FormControl> 
 
-            </Form>
-          )}
-      </Formik>
-    </div>
-  </OrderBox>
-);
+                    <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+                      <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
+                      <MUI.Select
+                          id="quantity_3"
+                          name="quantity_3"
+                          labelId="quantity-select-label"
+                          type="select"
+                          value={values.quantityWHITE}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          required="true"
+                      >
+                          <MUI.MenuItem value={0}>0</MUI.MenuItem> 
+                          <MUI.MenuItem value={1}>1</MUI.MenuItem>
+                          <MUI.MenuItem value={2}>2</MUI.MenuItem>
+                          <MUI.MenuItem value={3}>3</MUI.MenuItem>
+                      </MUI.Select>
+                    </MUI.FormControl>
+
+                <MUI.FormControl sx={{m: 2, minWidth: 195}}>
+                  <MUI.Button
+                    variant="contained"
+                    type="button"
+                    className="outline"
+                    onClick={handleReset}
+                    disabled={!dirty || isSubmitting}
+                  >
+                    Reset
+                  </MUI.Button>
+                </MUI.FormControl>
+
+                <MUI.FormControl sx={{m: 2, minWidth: 195}}>
+                  <MUI.Button 
+                    type="submit" 
+                    variant="contained"
+                    className="outline"
+                    disabled={isSubmitting}>
+                    Submit
+                  </MUI.Button>
+                </MUI.FormControl>
+
+              </Form>
+            )}
+        </Formik>
+      </div>
+    </OrderBox>
+  );
+}
 
 export default OrderForm
