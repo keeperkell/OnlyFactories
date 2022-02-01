@@ -8,6 +8,7 @@ import * as MUI from '@mui/material';
 import * as Yup from 'yup';
 import {Formik, Form } from "formik";
 import { Trackorder } from "../webpages/tracking";
+import { useHistory } from "react-router-dom";
 
 
 const TrackStyle = styled.div`
@@ -45,11 +46,15 @@ const TrackingBox = () => {
 
     const [submitted, setSubmitted] = useState(false);
 
+    const history = useHistory();
+
     if(submitted){
         return <Redirect push to={{
             pathname: '/trackingstatus',
         }}
         />
+
+        history.push('/tracking', { from: 'tracking box page'});
     }
 
     return(
@@ -71,7 +76,7 @@ const TrackingBox = () => {
                     var orderLen = values.length;
                     var orderNum = values.orderID.slice(0,orderLen);
                     orderData = orderNum;
-                    console.log(orderNum);
+                    //console.log(orderNum);
 
                     //set state for order being submitted
                     setSubmitted(true);

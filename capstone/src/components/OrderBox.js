@@ -7,6 +7,8 @@ import styled from "styled-components";
 import * as MUI from '@mui/material'
 import '../globalStyles'
 import * as mqtt from "mqtt";
+//import { orderData } from "../components/TrackingBox";
+import { Redirect } from "react-router-dom";
 
 //MQTT Setup
 const url = 'wss://onlyfactories.duckdns.org:9001';
@@ -160,11 +162,14 @@ const updateTransactionID = async (initialValues) =>{
   initialValues.transactionID = tempNewOrderID;
 };
 
+export var orderBoxOrderData = null;
+
 const OrderForm = () => {
 
   const [valueRED, setvalueRED] = useState(0);
   const [valueBLUE, setvalueBLUE] = useState(0);
   const [valueWHITE, setvalueWHITE] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
   
   const handleSelectRED = e => {
     const colorValue = e.target.value;
@@ -181,6 +186,14 @@ const OrderForm = () => {
     setvalueWHITE(colorValue);
   }
 
+  if(submitted){
+      return <Redirect push to={{
+          pathname: '/trackingstatus',
+      }}
+      />
+  }
+
+
   return (
 
   <OrderBox>
@@ -194,6 +207,7 @@ const OrderForm = () => {
           sendMQTTOrder();
           updateOrderID(values);
           updateTransactionID(values);
+
 
           await new Promise(resolve => setTimeout(resolve, 500));
           //alert(JSON.stringify(values, null, 2));
@@ -219,6 +233,9 @@ const OrderForm = () => {
             updated_at: createTimestamp()
           };
 
+          orderBoxOrderData = values.orderID;
+          console.log(orderBoxOrderData);
+
           alert(JSON.stringify(orderDetails, null, 2));
 
           //Send data to NodeJS(databse) via POST Start
@@ -242,6 +259,7 @@ const OrderForm = () => {
           console.log(responseJson['message'])
           }
           //Send data to NodeJS(databse) via POST End
+          setSubmitted(true);
 
 
           /*

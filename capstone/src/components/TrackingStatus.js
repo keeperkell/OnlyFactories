@@ -3,6 +3,8 @@ import React, {useEffect, useState} from "react";
 import {Link} from 'react-router-dom';
 import styled from "styled-components";
 import { orderData } from "../components/TrackingBox";
+import { orderBoxOrderData } from "../components/OrderBox";
+import { useHistory } from "react-router-dom";
 
 const Status = styled.div`
     width: 500px;
@@ -41,9 +43,34 @@ const WebcamBox = styled.div`
     color: #333333; 
 `
 
+const checkOrigin = (orderData, orderBoxOrderData) =>{
+    var currentURLID;
+
+    if (orderBoxOrderData != null ){
+
+        currentURLID = orderBoxOrderData;
+        console.log(currentURLID);
+        orderBoxOrderData = null;
+        console.log(orderBoxOrderData);
+        return currentURLID;
+        
+    }
+
+    else if (orderData != null){
+        currentURLID = orderData;
+        orderData = null;
+        console.log(orderData);
+        return currentURLID;
+
+    }
+}
+
 const TrackingStatus = props => {
 
    const [trackingData, setTrackingData] = useState([]);
+   const [orderURL, setURL] = useState(0);
+
+   var urlID = checkOrigin(orderData, orderBoxOrderData);
 
     useEffect(()=>{
         const timer = setTimeout(() =>{
@@ -51,25 +78,29 @@ const TrackingStatus = props => {
         }, 5000);
     }, [trackingData]);
 
+    //const history = useHistory();
+
+    //const prevPath = history.location.state.from;
+    
+    //const prevPath = history.pop;
+    
+
+    //console.log(prevPath);
+
+    
+
     const getOrderTrackingData = async () => {
 
         //Keep the line below this for local host testing -- fetch order data
         //const response = await fetch(`http://localhost:3306/api/tracking/` + orderData);
         //Keep line below this for testing over live connection -- fetch order data
-        const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/tracking/` + orderData);
+        const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/tracking/` + urlID);
 
         //put response into json format
         const jsonData = await response.json();
 
         //Set trackingData state to data received from database (orderData)
         setTrackingData(jsonData);
-
-        let testOrderID = jsonData.map((jsonData) => jsonData.orderID);
-        let testOrderAsInt = parseInt(testOrderID, 10);
-        testOrderAsInt += 1;
-        console.log(testOrderAsInt);
-
-
     }
 
     return(
