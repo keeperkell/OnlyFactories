@@ -1,7 +1,8 @@
 //file src/components/Header.js
 
 import React from "react";
-import logo from '../images/Vandals_logo.png';
+import logo from '../images/Logos_V2/4x/Yellow_ogxxxhdpi.png';
+import logo2 from '../images/Logos_V2/4x/Yellowxxxhdpi.png';
 import {Nav, NavLink, Bars, Navmenu, NavBtn, NavBtnLink, NavMenu} from './NavbarElements'
 import ScriptTag from 'react-script-tag'
 
@@ -16,7 +17,7 @@ const Header = () => {
             <Nav>
                 <NavMenu>
                     <a href="./">
-                        <img className="img-responsive" src={logo} alt="University of Idaho Logo" height="65" />
+                        <img className="img-responsive" src={logo} alt="University of Idaho Logo" height="75" />
                     </a>
                 </NavMenu>
                 <NavMenu>
