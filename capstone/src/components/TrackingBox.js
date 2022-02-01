@@ -48,7 +48,6 @@ const TrackingBox = () => {
     if(submitted){
         return <Redirect push to={{
             pathname: '/trackingstatus',
-            //state: orderData
         }}
         />
     }
@@ -74,50 +73,7 @@ const TrackingBox = () => {
                     orderData = orderNum;
                     console.log(orderNum);
 
-                    //alert(JSON.stringify(orderNum, null,2));
-                    
-                    //orderData = orderNum;
-                    /*
-                     // Query DB on submission for order number
-                      const { data } = await API.graphql({
-                        query: GQL.GetOrder,
-                        variables: { id : orderNum}                        
-                    })
-                    
-
-                    var tempData = data;
-                    var tempData2 = JSON.stringify(tempData);
-                    orderData = tempData2.slice(13);
-
-                    console.log('Order: ', orderData);
-                    //alert(JSON.stringify(data, null, 2));
-                    */
-
-                    //Send POST request to NodeJS over express Start
-
-                    /*let response = await fetch(`http://localhost:3306/api/tracking`, {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(values),
-                        })
-
-                    if (response.errors) {
-                    console.error(response.errors)
-                    }
-
-                    let responseJson = await response.json()
-
-                    if (responseJson['message']) {
-                    console.log(responseJson['message']);
-                    //orderData = responseJson['message'];
-
-                    }
-                    //Send POST request to NodeJS over express End 
-                    
-                    alert(JSON.stringify(orderData));*/
+                    //set state for order being submitted
                     setSubmitted(true);
 
                     
