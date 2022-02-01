@@ -159,7 +159,7 @@ const OrderForm = () => (
 
           //Send data to NodeJS(databse) via POST Start
 
-          let response = await fetch(`https://onlyfactories.duckdns.org:3306/ordering`, {
+          let response = await fetch(`https://onlyfactories.duckdns.org:3306/api/ordering`, {
               method: 'POST',
               headers: {
                   'Accept': 'application/json',
