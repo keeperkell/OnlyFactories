@@ -6,6 +6,8 @@ import Home from './webpages'
 import About from './webpages/about';
 import Ordering from './webpages/ordering'
 import Tracking from './webpages/tracking'
+import Management from './webpages/management';
+import Profit from './webpages/profit';
 import TrackingStatusPage from './webpages/trackingStatus';
 import GlobalStyle from './globalStyles';
 
@@ -18,10 +20,10 @@ function App() {
         <Route path='/' exact component={Home} />
         <Route path='/ordering' component={Ordering} />
         <Route path='/tracking' component={Tracking} />
-        <Route path='/trackingStatus' component={TrackingStatusPage} />
         <Route path='/about' component={About} />
+        <Route path='/management' component={Management} />
+        <Route path='/profit' component={Profit} />
         <Route path='/trackingStatus' component={TrackingStatusPage} />
-
       </Switch>
     </Router>
   );

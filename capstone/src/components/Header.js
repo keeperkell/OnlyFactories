@@ -16,7 +16,7 @@ const Header = () => {
             <Nav>
                 <NavMenu>
                     <a href="./">
-                        <img className="img-responsive" src={logo} alt="University of Idaho Logo" height="65" padding-right="120" />
+                        <img className="img-responsive" src={logo} alt="University of Idaho Logo" height="65" />
                     </a>
                 </NavMenu>
                 <NavMenu>
@@ -34,8 +34,8 @@ const Header = () => {
                 <NavBtn>
                     <NavBtnLink to='/Management'>Sign In</NavBtnLink>
                 </NavBtn>
-                
             </Nav>
+            
         </>
     );
 }
