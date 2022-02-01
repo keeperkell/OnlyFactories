@@ -1,6 +1,6 @@
 //file: src/components/OrderBox.js
 
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from 'yup'
 import styled from "styled-components";
@@ -119,7 +119,28 @@ const updateIDs = (orderDetails) =>{
   return 'Empty Function'
 };
 
-const OrderForm = () => (
+const OrderForm = () => {
+
+  const [valueRED, setvalueRED] = useState(0);
+  const [valueBLUE, setvalueBLUE] = useState(0);
+  const [valueWHITE, setvalueWHITE] = useState(0);
+  
+  const handleSelectRED = e => {
+    const colorValue = e.target.value;
+    setvalueRED(colorValue);
+  }
+
+  const handleSelectBLUE = e => {
+    const colorValue = e.target.value;
+    setvalueBLUE(colorValue);
+  }
+
+  const handleSelectWHITE = e => {
+    const colorValue = e.target.value;
+    setvalueWHITE(colorValue);
+  }
+
+  return (
 
   <OrderBox>
     <div className="app">
@@ -147,9 +168,9 @@ const OrderForm = () => (
             email: values.email,
             fullName: values.name,
             orderStatus: "Created",
-            quantityRED: values.quantityRED,
-            quantityBLUE: values.quantityBLUE,
-            quantityWHITE: values.quantityWHITE,
+            quantityRED: valueRED,
+            quantityBLUE: valueBLUE,
+            quantityWHITE: valueWHITE,
             transactionID: 222222,
             created_at: createTimestamp(),
             updated_at: createTimestamp()
@@ -265,8 +286,8 @@ const OrderForm = () => (
                         name="quantity_1"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantityRED}
-                        onChange={handleChange}
+                        value={valueRED}
+                        onChange={handleSelectRED}
                         onBlur={handleBlur}
                         required="true"
                     >
@@ -295,8 +316,8 @@ const OrderForm = () => (
                         name="quantity_2"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantityBLUE}
-                        onChange={handleChange}
+                        value={valueBLUE}
+                        onChange={handleSelectBLUE}
                         onBlur={handleBlur}
                         required="true"
                     >
@@ -325,8 +346,8 @@ const OrderForm = () => (
                         name="quantity_3"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantityWHITE}
-                        onChange={handleChange}
+                        value={valueWHITE}
+                        onChange={handleSelectWHITE}
                         onBlur={handleBlur}
                         required="true"
                     >
@@ -365,5 +386,6 @@ const OrderForm = () => (
     </div>
   </OrderBox>
 );
+}
 
 export default OrderForm

@@ -5,13 +5,41 @@ import styled from "styled-components";
 import { orderData } from "../components/TrackingBox";
 
 const Status = styled.div`
-    height: 250px;
     width: 500px;
-    background: #F1B300;
-
-    color: #FFFFFF;   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+    color: #333333;   
+`
+const OrderNS = styled.div`
+    height: 100px;
+    width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px 0px;
+    color: #333333; 
 `
 
+const WebcamBox = styled.div`
+    height: 400px;
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+    color: #333333; 
+`
 
 const TrackingStatus = props => {
 
@@ -36,25 +64,38 @@ const TrackingStatus = props => {
         //Set trackingData state to data received from database (orderData)
         setTrackingData(jsonData);
 
+        let testOrderID = jsonData.map((jsonData) => jsonData.orderID);
+        let testOrderAsInt = parseInt(testOrderID, 10);
+        testOrderAsInt += 1;
+        console.log(testOrderAsInt);
+
+
     }
 
-
     return(
-        <Status>
 
-        <p>Place Holder Tracking Status</p> 
-        {trackingData.map((trackingData) => (
-            <li key={trackingData.orderID}>
-                <p>
-                    Order Number: {trackingData.orderID}
-                </p>
-                <p>
-                    Order Status: {trackingData.orderStatus}
-                </p>
-            </li>
-        ))}
-        
+        <div>
+        <Status>
+            <h1>Tracking Status</h1> 
         </Status>
+        <Status>
+            {trackingData.map((trackingData, index) => (
+                <div key={index}>
+                    <OrderNS>
+                    <h3>
+                      Order Number: {trackingData.orderID}
+                    </h3>
+                    </OrderNS>
+                    <WebcamBox><h1>Webcam Goes Here</h1></WebcamBox>
+                    <OrderNS>
+                    <h3>
+                     Order Status: {trackingData.orderStatus}
+                    </h3>
+                    </OrderNS>
+                </div>
+            ))}       
+        </Status>
+        </div>
     )
 }
 

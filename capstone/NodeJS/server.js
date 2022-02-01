@@ -34,7 +34,7 @@ app.get('/api/tracking/:id', (req, res) => {
   const orderID = req.params.id;
 
   if(orderID != null){
-    connection.query(`SELECT * from FactoryOrders WHERE orderID = ${orderID}`, function(err,results,fields){
+    connection.query(`SELECT * FROM FactoryOrders WHERE orderID = ${orderID}`, function(err,results,fields){
       if(err) throw err;
 
       console.log(results);
