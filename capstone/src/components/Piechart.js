@@ -40,8 +40,18 @@ class Piechart extends React.Component {
         return (
             <Box sx={{border:3, borderRadius:16, p:1, m:1}}>
                 <h2 style={{textAlign:"center"}}>Product Sold by Color</h2>
-            <PieChart width={830} height={540}>
+            <PieChart width={830} height={540} className='pc1'>
                 <Pie data={this.data} color="#000000" dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={200}>
+                    {
+                        this.data.map((entry, index) => <Cell key={`cell-${index}`} fill={this.colors[index % this.colors.length]} />)
+                    }
+                </Pie>
+                <Tooltip content={<this.CustomTooltip />} />
+                Legend
+            </PieChart>
+
+            <PieChart width={300} height={440} className='pc2'>
+                <Pie data={this.data} color="#000000" dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={150} >
                     {
                         this.data.map((entry, index) => <Cell key={`cell-${index}`} fill={this.colors[index % this.colors.length]} />)
                     }

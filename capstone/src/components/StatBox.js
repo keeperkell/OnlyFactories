@@ -27,7 +27,7 @@ const StatBox = () => {
 
     return(
         <div>
-        <mui.Box sx={{ maxWidth: 110}}> 
+        <mui.Box sx={{ maxWidth: 110}} className='sb'> 
         <mui.FormControl fullWidth>
             <mui.InputLabel>Time Frame</mui.InputLabel>
             <mui.Select

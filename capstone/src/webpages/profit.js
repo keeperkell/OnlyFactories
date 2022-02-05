@@ -14,7 +14,7 @@ const ProfitPageStyle = styled.div `
     padding-bottom: 40px;
 
     @media screen and (min-width: 1025px) {
-        .c2 {
+        .lc2 {
             display: none;
         }
     }
@@ -22,7 +22,7 @@ const ProfitPageStyle = styled.div `
         flex-basis: calc(100% / 3);
         scale: 70%;
         transform-origin: top;
-        .c2 {
+        .lc2 {
             display: none;
         }
     }
@@ -30,17 +30,17 @@ const ProfitPageStyle = styled.div `
         flex-basis: calc(100% / 3);
         scale: 50%;
         transform-origin: top;
-        .c2 {
+        .lc2 {
             display: none;
         }
     }
     @media screen and (max-width: 520px) {
         flex-basis: calc(100% / 3);
         scale: 100%;
-        .c1 {
+        .lc1 {
             display: none;
         }
-        .c2 {
+        .lc2 {
             display: block;
         }
     }
