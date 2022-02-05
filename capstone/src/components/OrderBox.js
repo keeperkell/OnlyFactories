@@ -1,12 +1,14 @@
 //file: src/components/OrderBox.js
 
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from 'yup'
 import styled from "styled-components";
 import * as MUI from '@mui/material'
 import '../globalStyles'
 import * as mqtt from "mqtt";
+//import { orderData } from "../components/TrackingBox";
+import { Redirect } from "react-router-dom";
 
 //MQTT Setup
 const url = 'wss://onlyfactories.duckdns.org:9001';
@@ -52,9 +54,15 @@ const OrderBox = styled.div`
 const initialValues = {
   fullName: "",
   email: "",
+  orderID: -1,
+  transactionID: -1
+
+  //possible unneeded code
+  /*
   quantityRED: 0,
   quantityBLUE: 0,
   quantityWHITE: 0
+  */
 }
 
 const validationSchema = 
@@ -108,18 +116,85 @@ const sendOrderMQTT = (orderDetails) =>{
   return 'Empty Function'
 };
 
-// update table id and order id
-const updateIDs = (orderDetails) =>{
-  let tempID;
+
+// get max orderID and increment by 1
+const updateOrderID = async (initialValues) =>{
+
+  let tempNewOrderID;
   // query db to get largest orderID
+  const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxOrderID`);
+  let tempID = await maxID.json();
+
+  let newID = tempID.map((tempID)=>tempID.orderID);
   
-  
-  // set tempID to that query result
-  // set orderDetails.id & orderDetails.OrderID to tempID 
-  return 'Empty Function'
+  if( newID == '' ){
+    tempNewOrderID = 0;
+  }
+  else{
+    tempNewOrderID = parseInt(newID, 10);  
+  }
+
+  tempNewOrderID += 1;
+
+  initialValues.orderID = tempNewOrderID;
 };
 
-const OrderForm = () => (
+// get max transaction ID and increment by 173
+const updateTransactionID = async (initialValues) =>{
+  let tempNewOrderID;
+
+  // query db to get largest orderID
+  const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxTransactionID`);
+  let tempID = await maxID.json();
+
+  let newID = tempID.map((tempID)=>tempID.transactionID);
+
+  if( newID == '' ){
+    tempNewOrderID = 0;
+  }
+  else{
+    tempNewOrderID = parseInt(newID, 10);  
+  }
+  
+  
+  tempNewOrderID += 173;
+
+  initialValues.transactionID = tempNewOrderID;
+};
+
+export var orderBoxOrderData = null;
+
+const OrderForm = () => {
+
+  const [valueRED, setvalueRED] = useState(0);
+  const [valueBLUE, setvalueBLUE] = useState(0);
+  const [valueWHITE, setvalueWHITE] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
+  
+  const handleSelectRED = e => {
+    const colorValue = e.target.value;
+    setvalueRED(colorValue);
+  }
+
+  const handleSelectBLUE = e => {
+    const colorValue = e.target.value;
+    setvalueBLUE(colorValue);
+  }
+
+  const handleSelectWHITE = e => {
+    const colorValue = e.target.value;
+    setvalueWHITE(colorValue);
+  }
+
+  if(submitted){
+      return <Redirect push to={{
+          pathname: '/trackingstatus',
+      }}
+      />
+  }
+
+
+  return (
 
   <OrderBox>
     <div className="app">
@@ -130,6 +205,9 @@ const OrderForm = () => (
 
         onSubmit={async values => {
           sendMQTTOrder();
+          updateOrderID(values);
+          updateTransactionID(values);
+
 
           await new Promise(resolve => setTimeout(resolve, 500));
           //alert(JSON.stringify(values, null, 2));
@@ -142,18 +220,21 @@ const OrderForm = () => (
           //*Message me to work on more - JH
           var orderDetails = {
             //id : "5",
-            orderID: 2,
+            orderID: values.orderID,
             //Color: values.color_1,
             email: values.email,
             fullName: values.name,
             orderStatus: "Created",
-            quantityRED: values.quantityRED,
-            quantityBLUE: values.quantityBLUE,
-            quantityWHITE: values.quantityWHITE,
-            transactionID: 222222,
+            quantityRED: valueRED,
+            quantityBLUE: valueBLUE,
+            quantityWHITE: valueWHITE,
+            transactionID: values.transactionID,
             created_at: createTimestamp(),
             updated_at: createTimestamp()
           };
+
+          orderBoxOrderData = values.orderID;
+          console.log(orderBoxOrderData);
 
           alert(JSON.stringify(orderDetails, null, 2));
 
@@ -178,6 +259,7 @@ const OrderForm = () => (
           console.log(responseJson['message'])
           }
           //Send data to NodeJS(databse) via POST End
+          setSubmitted(true);
 
 
           /*
@@ -192,6 +274,7 @@ const OrderForm = () => (
         }}
         enableReinitialize
       >
+        
         
         {({
             values,
@@ -265,8 +348,8 @@ const OrderForm = () => (
                         name="quantity_1"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantityRED}
-                        onChange={handleChange}
+                        value={valueRED}
+                        onChange={handleSelectRED}
                         onBlur={handleBlur}
                         required="true"
                     >
@@ -295,8 +378,8 @@ const OrderForm = () => (
                         name="quantity_2"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantityBLUE}
-                        onChange={handleChange}
+                        value={valueBLUE}
+                        onChange={handleSelectBLUE}
                         onBlur={handleBlur}
                         required="true"
                     >
@@ -325,8 +408,8 @@ const OrderForm = () => (
                         name="quantity_3"
                         labelId="quantity-select-label"
                         type="select"
-                        value={values.quantityWHITE}
-                        onChange={handleChange}
+                        value={valueWHITE}
+                        onChange={handleSelectWHITE}
                         onBlur={handleBlur}
                         required="true"
                     >
@@ -337,7 +420,7 @@ const OrderForm = () => (
                     </MUI.Select>
                   </MUI.FormControl>
 
-              <MUI.FormControl sx={{m: 2, minWidth: 195}}>
+              <MUI.FormControl sx={{m: 2, minWidth: 210}}>
                 <MUI.Button
                   variant="contained"
                   type="button"
@@ -349,12 +432,12 @@ const OrderForm = () => (
                 </MUI.Button>
               </MUI.FormControl>
 
-              <MUI.FormControl sx={{m: 2, minWidth: 195}}>
+              <MUI.FormControl sx={{m: 2, minWidth: 210}}>
                 <MUI.Button 
                   type="submit" 
                   variant="contained"
-                  className="outline"
-                  disabled={isSubmitting}>
+                  disabled={isSubmitting}
+                >
                   Submit
                 </MUI.Button>
               </MUI.FormControl>
@@ -365,5 +448,6 @@ const OrderForm = () => (
     </div>
   </OrderBox>
 );
+}
 
 export default OrderForm
