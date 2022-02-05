@@ -5,6 +5,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { Box, FormControl, Button} from '@mui/material';
 import {Link} from 'react-router-dom';
 
+
 class LineC extends PureComponent {
   data = [
     {
@@ -41,10 +42,26 @@ class LineC extends PureComponent {
       return (
       <div>
         <Box sx={{border:3, borderRadius:16, p:1, m:1}}>
-          <h2 style={{textAlign:"center"}}>Profit per Day</h2>
+          <h2 style={{textAlign:"center"}}>Profit per Day (Contribution Margin)</h2>
           <LineChart
+            className='c1'
             width={1000}
             height={600}
+            data={this.data}
+            margin={{top: 5, right: 30, left: 20,bottom: 5,}}
+          >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="Profit" stroke="#EAAB00" strokeWidth={2} activeDot={{ r: 8 }} />
+          </LineChart>
+
+          <LineChart
+            className='c2'
+            width={350}
+            height={400}
             data={this.data}
             margin={{top: 5, right: 30, left: 20,bottom: 5,}}
           >

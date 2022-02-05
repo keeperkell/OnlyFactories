@@ -17,11 +17,13 @@ const ManagementPageStyle = styled.div `
     @media screen and (max-width: 1100px) {
         flex-basis: calc(100% / 3);
         scale: 70%;
+        transform-origin: top;
     }
     @media screen and (max-width: 780px) {
         flex-basis: calc(100% / 3);
         scale: 50%;
         flex-direction: column;
+        transform-origin: top;
     }
 `
 
