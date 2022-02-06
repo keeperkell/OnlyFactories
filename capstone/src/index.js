@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import * as AWS from 'aws-sdk'
+//import * as AWS from 'aws-sdk'
 //import { ConfigurationOptions } from 'aws-sdk'
 
 /*

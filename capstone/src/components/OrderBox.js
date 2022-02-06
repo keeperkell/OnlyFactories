@@ -127,7 +127,7 @@ const updateOrderID = async (initialValues) =>{
 
   let newID = tempID.map((tempID)=>tempID.orderID);
   
-  if( newID == '' ){
+  if( newID === '' ){
     tempNewOrderID = 0;
   }
   else{
@@ -149,7 +149,7 @@ const updateTransactionID = async (initialValues) =>{
 
   let newID = tempID.map((tempID)=>tempID.transactionID);
 
-  if( newID == '' ){
+  if( newID === '' ){
     tempNewOrderID = 0;
   }
   else{

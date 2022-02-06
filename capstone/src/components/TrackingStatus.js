@@ -1,10 +1,10 @@
-import { selectInput } from "aws-amplify";
+//import { selectInput } from "aws-amplify";
 import React, {useEffect, useState} from "react";
-import {Link} from 'react-router-dom';
+//import {Link} from 'react-router-dom';
 import styled from "styled-components";
 import { orderData } from "../components/TrackingBox";
 import { orderBoxOrderData } from "../components/OrderBox";
-import { useHistory } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
 
 const Status = styled.div`
     width: 500px;

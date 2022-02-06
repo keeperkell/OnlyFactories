@@ -19,7 +19,7 @@ const About = () => {
             <p>It tracks and updates the orders as they go through the
                 factory and keeps record of current and past orders online.</p>
 
-            <img src={logo} height="250"></img>
+            <img src={logo} height="250" alt="University of Idaho Logo"></img>
         </div>
     );
 };

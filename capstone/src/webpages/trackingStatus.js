@@ -1,11 +1,11 @@
 // file: src/webpages/trackingStatus.js
 
-import React, {useEffect, useState} from "react";
-import reactDom from "react-dom";
-import TrackingBox, { orderData, oSubmit } from "../components/TrackingBox";
+import React, {useEffect} from "react";
+//import reactDom from "react-dom";
+//import TrackingBox, { orderData, oSubmit } from "../components/TrackingBox";
 import TrackingStatus from "../components/TrackingStatus";
 import styled from "styled-components";
-import App from "../App.jsx";
+//import App from "../App.jsx";
 import '../globalStyle.css';
 
 
