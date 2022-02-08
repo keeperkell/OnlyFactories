@@ -109,9 +109,9 @@ const updateOrderID = async (initialValues) =>{
   let tempNewOrderID;
 
   //Keep the line below this for local host testing -- fetch order data
-  const maxID = await fetch(`http://localhost:3306/api/getMaxOrderID`);
+  //const maxID = await fetch(`http://localhost:3306/api/getMaxOrderID`);
   // query db to get largest orderID
-  //const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxOrderID`);
+  const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxOrderID`);
   
   let tempID = [await maxID.json()];
   var newID;
@@ -139,9 +139,9 @@ const updateTransactionID = async (initialValues) =>{
   let tempNewOrderID;
   
   //Keep the line below this for local host testing -- fetch order data
-  const maxID = await fetch(`http://localhost:3306/api/getMaxTransactionID`);
+  //const maxID = await fetch(`http://localhost:3306/api/getMaxTransactionID`);
   // query db to get largest orderID
-  //const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxTransactionID`);
+  const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxTransactionID`);
   
   let tempID = [await maxID.json()];
 
@@ -243,6 +243,7 @@ const OrderForm = () => {
 
           //Send data to NodeJS(databse) via POST Start
 
+          /*
           //Keep the line below this for local host testing -- fetch order data
           const response = await fetch(`http://localhost:3306/api/ordering`,{
               method: 'POST',
@@ -252,10 +253,10 @@ const OrderForm = () => {
               },
               body: JSON.stringify(orderDetails),
               })
-
+          */
           
           //Keep line below this for testing over live connection -- fetch order data
-          /*
+          
           const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/ordering`, {
               method: 'POST',
               headers: {
@@ -264,7 +265,7 @@ const OrderForm = () => {
               },
               body: JSON.stringify(orderDetails),
               })
-          */
+          
 
           if (response.errors) {
           console.error(response.errors)
