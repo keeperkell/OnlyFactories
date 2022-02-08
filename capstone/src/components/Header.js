@@ -2,9 +2,8 @@
 
 import React from "react";
 import logo from '../images/Logos_V2/4x/Yellow_ogxxxhdpi.png';
-import logo2 from '../images/Logos_V2/4x/Yellowxxxhdpi.png';
-import {Nav, NavLink, Bars, Navmenu, NavBtn, NavBtnLink, NavMenu} from './NavbarElements'
-import ScriptTag from 'react-script-tag'
+//import logo2 from '../images/Logos_V2/4x/Yellowxxxhdpi.png';
+import {Nav, NavLink, NavBtn, NavBtnLink, NavMenu} from './NavbarElements'
 
 //Import MQTT into header status
 //import PublishMQTT from './MQTT/Publish'

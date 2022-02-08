@@ -1,7 +1,7 @@
 // file: src/webpages/LineC.js
 
 import React, { PureComponent } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend /*, ResponsiveContainer */} from 'recharts';
 import { Box, FormControl, Button} from '@mui/material';
 import {Link} from 'react-router-dom';
 

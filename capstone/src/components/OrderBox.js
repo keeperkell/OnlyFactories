@@ -71,22 +71,6 @@ const validationSchema =
     email: Yup.string().email()
   });
 
-// pass order details in JSON and add order to databse
-const addOrderToDB = (orderDetails) =>{
-  
-  //get current time for order creation
-  var currentDate = new Date();
-  // timestamp layout: YYYY/MM/DD HH:MM:SS
-  orderDetails.createdAt = currentDate.getFullYear() + '/' + (currentDate.getMonth()+1) + '/'
-                  + currentDate.getDate() + ' ' + currentDate.getHours() + ':'
-                  + currentDate.getMinutes() + ':' + currentDate.getSeconds();
-  orderDetails.updatedAt = orderDetails.createdAt;
-
-
-  //connect to db
-  
-};
-
 //Function to generate current time for order creation
 const createTimestamp = () =>{
   
@@ -127,7 +111,7 @@ const updateOrderID = async (initialValues) =>{
 
   let newID = tempID.map((tempID)=>tempID.orderID);
   
-  if( newID == '' ){
+  if( newID === '' ){
     tempNewOrderID = 0;
   }
   else{
@@ -149,7 +133,7 @@ const updateTransactionID = async (initialValues) =>{
 
   let newID = tempID.map((tempID)=>tempID.transactionID);
 
-  if( newID == '' ){
+  if( newID === '' ){
     tempNewOrderID = 0;
   }
   else{
