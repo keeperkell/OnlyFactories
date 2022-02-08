@@ -118,7 +118,8 @@ const updateOrderID = async (initialValues) =>{
     tempNewOrderID = parseInt(newID, 10);  
   }
 
-  tempNewOrderID += 1;
+  let randomNum = Math.floor(Math.random() * 1000);
+  tempNewOrderID += randomNum;
 
   initialValues.orderID = tempNewOrderID;
 };
@@ -140,8 +141,8 @@ const updateTransactionID = async (initialValues) =>{
     tempNewOrderID = parseInt(newID, 10);  
   }
   
-  
-  tempNewOrderID += 173;
+  let randomNum = Math.floor(Math.random() * 1000);
+  tempNewOrderID += randomNum;
 
   initialValues.transactionID = tempNewOrderID;
 };
