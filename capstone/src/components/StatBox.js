@@ -9,21 +9,22 @@ var red, blue, white;
 
 const StatBox = () => {
     const [time, setTime] = useState(1);
-
-    const [jData, setData] = useState([]);
+    const [jData, setData] = useState([]);    
 
     const getQuantities = async () => {
         //local
-        //const response = await fetch(`http://localhost:3306/api/orderQuantities/` + time);
+        const response = await fetch(`http://localhost:3306/api/orderQuantities/` + time);
         //server
-        const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/orderQuantities/` + time);
+        //const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/orderQuantities/` + time);
 
         const jsonData = await response.json();
+        console.log(jsonData);
         setData(jsonData);
+
     }
 
     const handleChange = (event) => {
-        setTime(event.target.value);
+        setTime(event.target.value);        
     };
 
     function createData(name, num) {
@@ -36,19 +37,20 @@ const StatBox = () => {
     ];
 
     {jData.map((jData, index) => (
-                <l key={index}> 
-                {red = jData.numRed,
-                blue = jData.numBlue,
-                white = jData.numWhite}
-                </l>
-    ))}
+        <l key={index}> 
+        {red = jData.numRed,
+        blue = jData.numBlue,
+        white = jData.numWhite}
+        </l>
+    ))} 
 
     if(red == null) red = 0
     if(blue == null) blue = 0
     if(white == null) white = 0
-    getQuantities();
+    //getQuantities();
 
     return(
+        
         <div>
         <mui.Box sx={{ maxWidth: 110}} className='sb'> 
         <mui.FormControl fullWidth>

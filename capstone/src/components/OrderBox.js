@@ -10,6 +10,7 @@ import * as mqtt from "mqtt";
 //import { orderData } from "../components/TrackingBox";
 import { Redirect } from "react-router-dom";
 
+/*
 //MQTT Setup
 const url = 'wss://onlyfactories.duckdns.org:9001';
 let client = mqtt.connect(url);
@@ -34,6 +35,7 @@ function sendMQTTOrder(){
     }
   })
 }
+*/
 
 const OrderBox = styled.div`
     height: 600px;
@@ -105,11 +107,19 @@ const sendOrderMQTT = (orderDetails) =>{
 const updateOrderID = async (initialValues) =>{
 
   let tempNewOrderID;
-  // query db to get largest orderID
-  const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxOrderID`);
-  let tempID = await maxID.json();
 
-  let newID = tempID.map((tempID)=>tempID.orderID);
+  //Keep the line below this for local host testing -- fetch order data
+  const maxID = await fetch(`http://localhost:3306/api/getMaxOrderID`);
+  // query db to get largest orderID
+  //const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxOrderID`);
+  
+  let tempID = [await maxID.json()];
+  var newID;
+  {tempID.map((tempID)=>(
+    <l>
+      { newID = tempID.orderID}
+    </l>
+))}
   
   if( newID === '' ){
     tempNewOrderID = 0;
@@ -127,12 +137,20 @@ const updateOrderID = async (initialValues) =>{
 // get max transaction ID and increment by 173
 const updateTransactionID = async (initialValues) =>{
   let tempNewOrderID;
-
+  
+  //Keep the line below this for local host testing -- fetch order data
+  const maxID = await fetch(`http://localhost:3306/api/getMaxTransactionID`);
   // query db to get largest orderID
-  const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxTransactionID`);
-  let tempID = await maxID.json();
+  //const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxTransactionID`);
+  
+  let tempID = [await maxID.json()];
 
-  let newID = tempID.map((tempID)=>tempID.transactionID);
+  var newID;
+  {tempID.map((tempID)=>(
+      <l>
+        {newID = tempID.transactionID}
+      </l>
+  ))}
 
   if( newID === '' ){
     tempNewOrderID = 0;
@@ -189,7 +207,7 @@ const OrderForm = () => {
         validationSchema={validationSchema}
 
         onSubmit={async values => {
-          sendMQTTOrder();
+          //sendMQTTOrder();
           updateOrderID(values);
           updateTransactionID(values);
 
@@ -225,7 +243,8 @@ const OrderForm = () => {
 
           //Send data to NodeJS(databse) via POST Start
 
-          let response = await fetch(`https://onlyfactories.duckdns.org:3306/api/ordering`, {
+          //Keep the line below this for local host testing -- fetch order data
+          const response = await fetch(`http://localhost:3306/api/ordering`,{
               method: 'POST',
               headers: {
                   'Accept': 'application/json',
@@ -233,6 +252,19 @@ const OrderForm = () => {
               },
               body: JSON.stringify(orderDetails),
               })
+
+          
+          //Keep line below this for testing over live connection -- fetch order data
+          /*
+          const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/ordering`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(orderDetails),
+              })
+          */
 
           if (response.errors) {
           console.error(response.errors)
@@ -322,7 +354,7 @@ const OrderForm = () => {
                         placeholder="Red"
                         type="text"
                         //value={values.color_1}
-                        disabled="true"
+                        disabled={true}
                     /> 
                   </MUI.FormControl> 
 
@@ -352,7 +384,7 @@ const OrderForm = () => {
                         placeholder="Blue"
                         type="text"
                         //value={values.color_2}
-                        disabled="true"
+                        disabled={true}
                     /> 
                   </MUI.FormControl> 
 
@@ -382,7 +414,7 @@ const OrderForm = () => {
                         placeholder="White"
                         type="text"
                         //value={values.color_3}
-                        disabled="true"
+                        disabled={true}
                     /> 
                   </MUI.FormControl> 
 

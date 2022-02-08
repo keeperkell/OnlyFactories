@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import {red, blue, white} from './StatBox.js'
 
 class Piechart extends React.Component {
+
     
     colors = ['red', 'blue', 'grey'];
     data = [
