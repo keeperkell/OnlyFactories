@@ -14,14 +14,30 @@ const ManagementPageStyle = styled.div `
     padding-top: 40px;
     padding-bottom: 40px;
 
+    @media screen and (min-width: 1101px) {
+        .pc2 {
+            display: none;
+        }
+    }
     @media screen and (max-width: 1100px) {
         flex-basis: calc(100% / 3);
         scale: 70%;
+        transform-origin: top;
+        .pc2 {
+            display: none;
+        }
     }
     @media screen and (max-width: 780px) {
         flex-basis: calc(100% / 3);
-        scale: 50%;
+        transform-origin: top;
         flex-direction: column;
+        scale: 100%;
+        .pc1 {
+            display: none;
+        }
+        .pc2 {
+            display: flex;
+        }
     }
 `
 

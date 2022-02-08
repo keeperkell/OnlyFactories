@@ -1,16 +1,26 @@
 //file: src/components/StatBox.js
 
-import React from "react";
+import React, {useEffect, useState} from "react";
 import * as mui from '@mui/material';
 import {Link} from 'react-router-dom';
 
-var red= 8, blue= 10, white= 3;
-export {red, blue, white};
-
 var completed = 18, inQ = 3;
+var red, blue, white;
 
 const StatBox = () => {
-    const [time, setTime] = React.useState(24);
+    const [time, setTime] = useState(1);
+
+    const [jData, setData] = useState([]);
+
+    const getQuantities = async () => {
+        //local
+        //const response = await fetch(`http://localhost:3306/api/orderQuantities/` + time);
+        //server
+        const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/orderQuantities/` + time);
+
+        const jsonData = await response.json();
+        setData(jsonData);
+    }
 
     const handleChange = (event) => {
         setTime(event.target.value);
@@ -25,20 +35,32 @@ const StatBox = () => {
         createData('Orders in Queue', inQ)
     ];
 
+    {jData.map((jData, index) => (
+                <l key={index}> 
+                {red = jData.numRed,
+                blue = jData.numBlue,
+                white = jData.numWhite}
+                </l>
+    ))}
+
+    if(red == null) red = 0
+    if(blue == null) blue = 0
+    if(white == null) white = 0
+    getQuantities();
+
     return(
         <div>
-        <mui.Box sx={{ maxWidth: 110}}> 
+        <mui.Box sx={{ maxWidth: 110}} className='sb'> 
         <mui.FormControl fullWidth>
             <mui.InputLabel>Time Frame</mui.InputLabel>
             <mui.Select
-            
             value={time}
             label="Time Frame"
             onChange={handleChange}
             >
-            <mui.MenuItem value={24}>1 Day</mui.MenuItem>
-            <mui.MenuItem value={72}>3 Days</mui.MenuItem>
-            <mui.MenuItem value={168}>7 Days</mui.MenuItem>
+            <mui.MenuItem value={1} onClick={getQuantities}>1 Day</mui.MenuItem>
+            <mui.MenuItem value={3} onClick={getQuantities}>3 Days</mui.MenuItem>
+            <mui.MenuItem value={7} onClick={getQuantities}>7 Days</mui.MenuItem>
             </mui.Select>
         </mui.FormControl>
         </mui.Box>
@@ -79,4 +101,6 @@ const StatBox = () => {
     )
 }
 
+
 export default StatBox;
+export {red, blue, white};
