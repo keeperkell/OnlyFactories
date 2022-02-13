@@ -5,51 +5,34 @@ const url = 'wss://onlyfactories.duckdns.org:9001';
 let client = mqtt.connect(url);
 
 client.on('connect', function(){
-    client.subscribe('UofICapstone_Cloud');
+    client.subscribe('Factory/Echo');
+    client.subscribe('Factory/Inventory');
+    client.subscribe('Factory/Status');
+    client.subscribe('Factory/Job_notice');
+
     console.log('Client has subscribed successfully');
 });
 
-function publishResponse(data){
-    var prefix = data.sim_msg_id.slice(0,1)
-    var id = data.sim_msg_id.slice(2)
-
-    //concat msg type ID with incremented value
-    data.sim_msg_id = prefix + String(Number(id) + 1)
-    var payload = JSON.stringify(data)
-
-    client.publish('UofICapstoneSim', payload)
-}
-
 client.on('message', function(topic, message){
-    var data = JSON.parse(message);
+    // var data = JSON.parse(message);
 
+    msg = JSON.parse(message);
 
     //if ordar status message is received
-    if(data.msg_type == 'order status'){
-        console.log(data)
+    if(topic === 'Factory/Echo'){
+        console.log("Echo message Received")
+        console.log(msg)
     }
-    //if status message is received
-    else if(data.msg_type == 'status'){
-        console.log(data)
+    if(topic == 'Factory/Inventory'){
+        console.log("Inventory message Received")
+        console.log(msg)
     }
-    //if inventory is received
-    else if(data.msg_type == 'inventory'){
-        console.log(data)
+    if(topic == 'Factory/Status'){
+        console.log("Factory Status received")
+        console.log(msg);
     }
-    //if cancel status is received
-    else if(data.msg_type == 'cancel status'){
-        console.log(data)
+    if(topic == 'Factory/Job_notice'){
+        console.log("Job Notice received")
+        console.log(msg);
     }
-    //if webcam status is received
-    else if(data.msg_type == 'request status'){
-        console.log(data)
-    }
-    //?????????
-    else if(data.msg_type == 'factory status'){
-        console.log(data)
-    }
-    else {
-        console.log(data)
-    }
-
 });
