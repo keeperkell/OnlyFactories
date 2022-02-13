@@ -59,12 +59,6 @@ const initialValues = {
   orderID: -1,
   transactionID: -1
 
-  //possible unneeded code
-  /*
-  quantityRED: 0,
-  quantityBLUE: 0,
-  quantityWHITE: 0
-  */
 }
 
 const validationSchema = 
@@ -217,10 +211,7 @@ const OrderForm = () => {
 
           //Set up for Orders to be added to the database
           //*id needs an incremented value still*
-          //*OrderId needs an incremented / randomized value still*
           //*Transaction ID will need an ID from payment system
-          //*For some reason this created a _typename field in database
-          //*Message me to work on more - JH
           var orderDetails = {
             //id : "5",
             orderID: values.orderID,
