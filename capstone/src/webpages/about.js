@@ -1,7 +1,9 @@
 // file: src/webpages/about.js
 
 import React, {useEffect} from "react";
-import logo from '../images/Vandals_logo.png';
+import Keller_HS from '../images/Vandals_logo.png';
+import Justin_HS from '../images/Vandals_logo.png';
+import Parker_HS from '../images/Vandals_logo.png';
 
 const About = () => {
     useEffect (() => {
@@ -10,16 +12,33 @@ const About = () => {
 
     return (
         <div style={{textAlign: "center"}}>
-            <h1>OnlyFactories</h1>
+            <h1>About the Team</h1>
 
-            <p>This is a senior capstone project from the University of Idaho and uses
-                a miniture factory that simulates things that a real factory 
-                would do.</p> 
+            <p>The team consists of 3 students from the University of Idaho. </p> 
 
-            <p>It tracks and updates the orders as they go through the
-                factory and keeps record of current and past orders online.</p>
+            <table >
+                <tr>
+                    <th><img src={Keller_HS} height="130" /></th>
+                    <th><img src={Justin_HS} height="130" /></th>
+                    <th><img src={Parker_HS} height="130" /></th>
+                </tr>
+                <tr>
+                    <th>Keller Lawson</th>
+                    <th>Justin Harris</th>
+                    <th>Parker Weisel</th>
+                </tr>
+                <tr>
+                    <td>Computer Science</td>
+                    <td>Computer Science</td>
+                    <td>Computer Science</td>
+                </tr>
+                <tr>
+                    <td>Team Lead</td>
+                    <td>Developer</td>
+                    <td>Developer</td>
+                </tr>
+            </table>
 
-            <img src={logo} height="250" alt="University of Idaho Logo"></img>
         </div>
     );
 };
