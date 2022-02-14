@@ -1,6 +1,6 @@
 // command: node ./src/components/MQTT/sub.js
 
-const fetch = require("node-fetch");
+//const fetch = require("node-fetch");
 
 const { reduce, update } = require('lodash');
 const mqtt = require('mqtt');
@@ -15,32 +15,6 @@ client.on('connect', function(){
 
     console.log('Client has subscribed successfully');
 });
-
-updateInventory = async (inventoryDetails) =>{
-    /*
-    const response = await fetch(`https://onlyfactories.duckdns.org:3306/mqtt/updateInventory`, {
-              method: 'PUT',
-              headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(inventoryDetails),
-            });
-    */
-
-    const response = await fetch(`http://localhost:3306/mqtt/updateInventory`, {
-        method: 'PUT',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(inventoryDetails),
-    });
-          
-    console.log("Inventory Updated at: ", inventoryDetails.updated_at)
-}
-
-
 
 client.on('message', function(topic, message){
 
@@ -87,10 +61,6 @@ client.on('message', function(topic, message){
                     + currentDate.getMinutes() + ':' + currentDate.getSeconds();
 
             console.log(msg.Inventory)
-            console.log("# Red:   " + r);
-            console.log("# Blue:  " + b);
-            console.log("# White: " + w);
-            console.log("Time: ", updated_at);
 
             let inventoryDetails = {
                 quantityRed: r,
@@ -99,8 +69,7 @@ client.on('message', function(topic, message){
                 updated_at: updated_at
             }
 
-            updateInventory(inventoryDetails);
-            
+            console.log(inventoryDetails)
         }
         if(topic == 'Factory/Status'){
             console.log("Factory Status received")

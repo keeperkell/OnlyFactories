@@ -27,6 +27,13 @@ CREATE TABLE IF NOT EXISTS CustomerAccounts(
     accountType VARCHAR(15) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS FactoryStatus(
+    factory_status VARCHAR(15) NOT NULL,
+    current_job INT UNSIGNED NOT NULL,
+    job_queue_len INT UNSIGNED NOT NULL,
+    updated_at TIMESTAMP NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS FactoryJobs(
     jobID BIGINT UNSIGNED UNIQUE PRIMARY KEY NOT NULL,
     orderID BIGINT UNSIGNED NOT NULL,
