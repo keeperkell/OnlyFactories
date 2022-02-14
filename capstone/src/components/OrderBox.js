@@ -82,22 +82,83 @@ const createTimestamp = () =>{
 };
 
 // send order to orderAPI and log it in table
-const sendOrderMQTT = (orderDetails) =>{
-  // query db to get necesary message ID
-  // increment message ID
+async function(orderDetails) =>{
 
-  // Publish orderDetails to Doug over MQTT
+  let r,w,b;
+ 
 
-  // store log of message in db
+  for(r=0; r<orderDetails.quantityRED; r++){
+
+    let newJob = {
+      jobID: updateJobID(),
+      orderID: orderDetails.orderID,
+      disk_color: 'red';
+      jobStatus: 'created';
+    }
+
+    /*
+    const addToDB = await fetch(`https://onlyfactories.duckdns.org:3306/mqtt/addJobToDb`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(newJob),
+              });
+    */
+
+    const addToDB = await fetch(`http://localhost:3306/mqtt/addJobToDb`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(newJob),
+              });
+    
+    if (addToDB.errors) {
+      console.error(addToDB.errors)
+    }
+    else{
+
+      let newSendJob = {
+        msg_type: 'new_job',
+        payload: {
+          jobID: newJob.jobID,
+          orderID: newJob.orderID,
+          color: newJob.disk_color,
+          cook_time: 15,
+          slice: true
+        }
+      };
+
+      /*
+      const response = await fetch(`https://onlyfactories.duckdns.org:3306/mqtt/sendNewJob`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(newSendJob),
+              });
+      */
+
+      const response = await fetch(`http://localhost:3306/mqtt/sendNewJob`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(newSendJob),
+              });
+    }
+  }
   
-  // await response from doug
-
-  //
-  return 'Empty Function'
+  return;
 };
 
 
-// get max orderID and increment by 1
+// get max orderID and increment by random value between 1-1000
 const updateOrderID = async (initialValues) =>{
 
   let tempNewOrderID;
@@ -105,6 +166,7 @@ const updateOrderID = async (initialValues) =>{
   //Keep the line below this for local host testing -- fetch order data
   //const maxID = await fetch(`http://localhost:3306/api/getMaxOrderID`);
   // query db to get largest orderID
+  
   const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxOrderID`);
   
   let tempID = [await maxID.json()];
@@ -128,7 +190,7 @@ const updateOrderID = async (initialValues) =>{
   initialValues.orderID = tempNewOrderID;
 };
 
-// get max transaction ID and increment by 173
+// get max transaction ID and increment by random value between 1-1000
 const updateTransactionID = async (initialValues) =>{
   let tempNewOrderID;
   
@@ -157,6 +219,31 @@ const updateTransactionID = async (initialValues) =>{
   tempNewOrderID += randomNum;
 
   initialValues.transactionID = tempNewOrderID;
+};
+
+// get max jobID and increment by 1
+const updateJobID = async () =>{
+  const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxJobID`);
+  
+  let tempID = [await maxID.json()];
+
+  var newID;
+  {tempID.map((tempID)=>(
+      <l>
+        {newID = tempID.jobID}
+      </l>
+  ))}
+
+  if( newID === '' ){
+    tempNewJobID = 0;
+  }
+  else{
+    tempNewJobID = parseInt(newID, 10);  
+  }
+  
+  tempNewJobID += 1;
+
+  return tempNewJobID;
 };
 
 export var orderBoxOrderData = null;
@@ -257,15 +344,16 @@ const OrderForm = () => {
               body: JSON.stringify(orderDetails),
               })
           
+          await sendNewJob(orderDetails);
 
           if (response.errors) {
-          console.error(response.errors)
+            console.error(response.errors)
           }
 
           let responseJson = await response.json()
 
           if (responseJson['message']) {
-          console.log(responseJson['message'])
+            console.log(responseJson['message'])
           }
           //Send data to NodeJS(databse) via POST End
           setSubmitted(true);
