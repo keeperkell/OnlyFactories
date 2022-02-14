@@ -1,7 +1,7 @@
 //file: src/components/OrderBox.js
 
 import React, { useState } from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, connect } from "formik";
 import * as Yup from 'yup'
 import styled from "styled-components";
 import * as MUI from '@mui/material'
@@ -82,22 +82,36 @@ const createTimestamp = () =>{
 };
 
 // send order to orderAPI and log it in table
-async function(orderDetails) =>{
+const sendMQTTOrder = async (orderDetails) => {
 
   let r,w,b;
- 
 
   for(r=0; r<orderDetails.quantityRED; r++){
+    const currentJobID = {
+      jobID: -1
+    };
+
+    await updateJobID(currentJobID);
 
     let newJob = {
-      jobID: updateJobID(),
+      jobID: currentJobID.jobID,
       orderID: orderDetails.orderID,
-      disk_color: 'red';
-      jobStatus: 'created';
-    }
+      disk_color: 'red',
+      jobStatus: 'created'
+    };
 
-    /*
+    
     const addToDB = await fetch(`https://onlyfactories.duckdns.org:3306/mqtt/addJobToDb`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(newJob),
+              });
+    
+    /*
+    const addToDB = await fetch(`http://localhost:3306/mqtt/addJobToDB`, {
               method: 'POST',
               headers: {
                   'Accept': 'application/json',
@@ -107,7 +121,61 @@ async function(orderDetails) =>{
               });
     */
 
-    const addToDB = await fetch(`http://localhost:3306/mqtt/addJobToDb`, {
+    if (addToDB.errors) {
+      console.error(addToDB.errors)
+    }
+    else{
+
+      let newSendJob = {
+        msg_type: 'new_job',
+        payload: {
+          jobID: newJob.jobID,
+          orderID: newJob.orderID,
+          color: newJob.disk_color,
+          cook_time: 15,
+          slice: true
+        }
+      };
+
+      
+      const response = await fetch(`https://onlyfactories.duckdns.org:3306/mqtt/sendNewJob`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(newSendJob),
+              });
+      
+      /*
+      const response = await fetch(`http://localhost:3306/mqtt/sendNewJob`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(newSendJob),
+              });
+      */
+    }
+  }
+
+  for(w=0; w<orderDetails.quantityWHITE; w++){
+    const currentJobID = {
+      jobID: -1
+    };
+
+    await updateJobID(currentJobID);
+
+    let newJob = {
+      jobID: currentJobID.jobID,
+      orderID: orderDetails.orderID,
+      disk_color: 'white',
+      jobStatus: 'created'
+    };
+
+    
+    const addToDB = await fetch(`https://onlyfactories.duckdns.org:3306/mqtt/addJobToDb`, {
               method: 'POST',
               headers: {
                   'Accept': 'application/json',
@@ -115,6 +183,17 @@ async function(orderDetails) =>{
               },
               body: JSON.stringify(newJob),
               });
+    
+    /*          
+    const addToDB = await fetch(`http://localhost:3306/mqtt/addJobToDB`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(newJob),
+              });
+    */
     
     if (addToDB.errors) {
       console.error(addToDB.errors)
@@ -132,7 +211,7 @@ async function(orderDetails) =>{
         }
       };
 
-      /*
+      
       const response = await fetch(`https://onlyfactories.duckdns.org:3306/mqtt/sendNewJob`, {
               method: 'POST',
               headers: {
@@ -141,8 +220,8 @@ async function(orderDetails) =>{
               },
               body: JSON.stringify(newSendJob),
               });
-      */
-
+      
+      /*
       const response = await fetch(`http://localhost:3306/mqtt/sendNewJob`, {
               method: 'POST',
               headers: {
@@ -151,12 +230,86 @@ async function(orderDetails) =>{
               },
               body: JSON.stringify(newSendJob),
               });
+      */
+    }
+  }
+
+  for(b=0; b<orderDetails.quantityBLUE; b++){
+    const currentJobID = {
+      jobID: -1
+    };
+
+    await updateJobID(currentJobID);
+
+    let newJob = {
+      jobID: currentJobID.jobID,
+      orderID: orderDetails.orderID,
+      disk_color: 'blue',
+      jobStatus: 'created'
+    };
+
+    
+    const addToDB = await fetch(`https://onlyfactories.duckdns.org:3306/mqtt/addJobToDb`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(newJob),
+              });
+    
+    /*
+    const addToDB = await fetch(`http://localhost:3306/mqtt/addJobToDB`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(newJob),
+              });
+    */
+    
+    if (addToDB.errors) {
+      console.error(addToDB.errors)
+    }
+    else{
+
+      let newSendJob = {
+        msg_type: 'new_job',
+        payload: {
+          jobID: newJob.jobID,
+          orderID: newJob.orderID,
+          color: newJob.disk_color,
+          cook_time: 15,
+          slice: true
+        }
+      };
+
+      
+      const response = await fetch(`https://onlyfactories.duckdns.org:3306/mqtt/sendNewJob`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(newSendJob),
+              });
+      
+      /*
+      const response = await fetch(`http://localhost:3306/mqtt/sendNewJob`, {
+              method: 'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(newSendJob),
+              });
+      */
     }
   }
   
   return;
 };
-
 
 // get max orderID and increment by random value between 1-1000
 const updateOrderID = async (initialValues) =>{
@@ -222,9 +375,13 @@ const updateTransactionID = async (initialValues) =>{
 };
 
 // get max jobID and increment by 1
-const updateJobID = async () =>{
+const updateJobID = async (initialValues) =>{
+  //Keep the line below this for local host testing -- fetch order data
+  //const maxID = await fetch(`http://localhost:3306/api/getMaxJobID`);
+  // query db to get largest jobID
   const maxID = await fetch(`https://onlyfactories.duckdns.org:3306/api/getMaxJobID`);
   
+  let tempNewJobID;
   let tempID = [await maxID.json()];
 
   var newID;
@@ -242,8 +399,11 @@ const updateJobID = async () =>{
   }
   
   tempNewJobID += 1;
+  console.log(tempNewJobID);
 
-  return tempNewJobID;
+  initialValues.jobID = tempNewJobID;
+  console.log(initialValues);
+
 };
 
 export var orderBoxOrderData = null;
@@ -288,10 +448,9 @@ const OrderForm = () => {
         validationSchema={validationSchema}
 
         onSubmit={async values => {
-          //sendMQTTOrder();
+        
           updateOrderID(values);
           updateTransactionID(values);
-
 
           await new Promise(resolve => setTimeout(resolve, 500));
           //alert(JSON.stringify(values, null, 2));
@@ -333,7 +492,9 @@ const OrderForm = () => {
               })
           */
           
+          
           //Keep line below this for testing over live connection -- fetch order data
+          
           
           const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/ordering`, {
               method: 'POST',
@@ -344,10 +505,12 @@ const OrderForm = () => {
               body: JSON.stringify(orderDetails),
               })
           
-          await sendNewJob(orderDetails);
 
           if (response.errors) {
             console.error(response.errors)
+          }
+          else{
+            await sendMQTTOrder(orderDetails);
           }
 
           let responseJson = await response.json()
