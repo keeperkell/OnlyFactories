@@ -35,7 +35,10 @@ class WebcamStream extends React.Component {
 
 
   async getVideo() {
-    const video = ;
+    const video = await navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: true
+    });
     this.setState({ video });
   }
 
