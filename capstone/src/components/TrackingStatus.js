@@ -4,6 +4,9 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import { orderData } from "../components/TrackingBox";
 import { orderBoxOrderData } from "../components/OrderBox";
+import WebcamStream from "./WebcamStream";
+
+const LiveFeed = "https://511ny.org/map/Cctv/4616667--17";
 //import { json } from "express";
 
 //import { useHistory } from "react-router-dom";
@@ -120,7 +123,11 @@ const TrackingStatus = props => {
                       Order Number: {trackingData.orderID}
                     </h3>
                     </OrderNS>
-                    <WebcamBox><h1>Webcam Goes Here</h1></WebcamBox>
+                    <WebcamBox>
+                        
+                        <WebcamStream />
+                        
+                    </WebcamBox>
                     <OrderNS>
                     <h3>
                      Order Status: {trackingData.orderStatus}
