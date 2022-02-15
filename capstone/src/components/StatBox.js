@@ -5,13 +5,18 @@ import * as mui from '@mui/material';
 import {Link} from 'react-router-dom';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-
 var completed = 0, inQ = 0;
 var red = 0, blue = 0, white = 0;
 
 const StatBox = () => {
     const [time, setTime] = useState(1)
     const [jData, setData] = useState([])
+
+    useEffect(()=>{
+        const timer = setTimeout(() =>{
+            getQuantities();
+        }, 5000);
+    });
 
     const getQuantities = async () => {
         //local
@@ -22,11 +27,12 @@ const StatBox = () => {
         const jsonData = await response.json();
         console.log(jsonData);
         setData(jsonData);
+        //alert(JSON.stringify(jsonData))
     }
 
     //dropdown menu
     const handleChange = (event) => {
-        setTime(event.target.value)
+        setTime(event.target.value);
     };
 
     const CustomTooltip = ({ active, payload, label }) => {
@@ -106,9 +112,9 @@ const StatBox = () => {
             label="Time Frame"
             onChange={handleChange}
             >
-            <mui.MenuItem value={1} onSelect={getQuantities()}>1 Day</mui.MenuItem>
-            <mui.MenuItem value={3} onSelect={getQuantities()}>3 Days</mui.MenuItem>
-            <mui.MenuItem value={7} onSelect={getQuantities()}>7 Days</mui.MenuItem>
+            <mui.MenuItem value={1}>1 Day</mui.MenuItem>
+            <mui.MenuItem value={3}>3 Days</mui.MenuItem>
+            <mui.MenuItem value={7}>7 Days</mui.MenuItem>
             </mui.Select>
         </mui.FormControl>
         </mui.Box>
