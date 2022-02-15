@@ -13,6 +13,7 @@ import  Confirm  from "./PaymentPopUp";
 import Container from "react-modal-promise";
 import ConfirmStatusChange from "./PaymentPopUp";
 import PaymentPopUp from "./PaymentPopUp";
+import { cardNumber, expDate, cvc } from "./CreditCardForm";
 
 /*
 //MQTT Setup
@@ -169,6 +170,57 @@ const updateTransactionID = async (initialValues) =>{
   initialValues.transactionID = tempNewOrderID;
 };
 
+const sendPaymentData = async (values, cardNumber, expDate) =>{
+
+  console.log(cardNumber);
+  console.log(expDate);
+
+  var paymentDetails = {
+    orderID: values.orderID,
+    transactionID: values.transactionID,
+    ccNumber: cardNumber,
+    ccExp: expDate,
+    orderTotal: 10.23
+  };
+
+  alert(JSON.stringify(paymentDetails, null, 2));
+
+                //Keep the line below this for local host testing -- fetch order data
+                const response = await fetch(`http://localhost:3306/api/transactions`,{
+                  method: 'POST',
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(paymentDetails),
+                  })
+              
+              /*
+              //Keep line below this for testing over live connection -- fetch order data
+              
+              const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/transactions`, {
+                  method: 'POST',
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(paymentDetails),
+                  })
+              */
+    
+              if (response.errors) {
+              console.error(response.errors)
+              }
+    
+              let responseJson = await response.json()
+    
+              if (responseJson['message']) {
+              console.log(responseJson['message'])
+              }
+
+
+}
+
 export var orderBoxOrderData = null;
 
 const OrderForm = () => {
@@ -263,6 +315,9 @@ const OrderForm = () => {
               if (responseJson['message']) {
               console.log(responseJson['message'])
               }
+
+              sendPaymentData(values, cardNumber, expDate);
+
               //Send data to NodeJS(databse) via POST End
               setSubmitted(true);
     
@@ -411,7 +466,7 @@ const OrderForm = () => {
             handleReset
           }) => (
 
-            <PaymentPopUp title="Order Payment">
+            <PaymentPopUp title="Payment Information">
             {confirm => (
                 <Form id="OrderForm" autoComplete="off" onSubmit={confirm(handlePopSubmit)}>
                   <MUI.Typography variant="h3" component="h3" align='center'>
@@ -422,7 +477,7 @@ const OrderForm = () => {
                   <MUI.TextField
                       id="name"
                       placeholder="Enter your name"
-                      label="Name"
+                      label=""
                       type="text"
                       value={nameEntry}
                       onChange={(e) => setFullName(e.target.value)}
@@ -439,7 +494,7 @@ const OrderForm = () => {
                   <MUI.TextField
                       id="email"
                       placeholder="Enter your email"
-                      label="Email"
+                      label=""
                       type="text"
                       value={emailEntry}
                       onChange={(e)=> setEmail(e.target.value)}
@@ -467,7 +522,7 @@ const OrderForm = () => {
                   </MUI.FormControl> 
 
                   <MUI.FormControl sx={{m: 1.45, minWidth: 210}}>
-                    <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
+                    <MUI.InputLabel id="quantity-select-label"></MUI.InputLabel>
                     <MUI.Select
                         id="quantity_1"
                         name="quantity_1"
@@ -497,7 +552,7 @@ const OrderForm = () => {
                   </MUI.FormControl> 
 
                   <MUI.FormControl sx={{m: 2, minWidth: 210}}>
-                    <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
+                    <MUI.InputLabel id="quantity-select-label"></MUI.InputLabel>
                     <MUI.Select
                         id="quantity_2"
                         name="quantity_2"
@@ -527,7 +582,7 @@ const OrderForm = () => {
                   </MUI.FormControl> 
 
                   <MUI.FormControl sx={{m: 2, minWidth: 210}}>
-                    <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
+                    <MUI.InputLabel id="quantity-select-label"></MUI.InputLabel>
                     <MUI.Select
                         id="quantity_3"
                         name="quantity_3"

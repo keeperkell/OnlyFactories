@@ -1,6 +1,24 @@
 import * as React from "react"
-import { Dialog } from "@reach/dialog"
+import { Dialog, DialogOverlay } from "@reach/dialog"
+//import Dialog from "@material-ui/core/Dialog";
 import "@reach/dialog/styles.css";
+import styled from "styled-components";
+import * as MUI from '@mui/material'
+import '../globalStyles'
+import * as Yup from 'yup';
+import {Formik, Form } from "formik";
+import { PaymentInputsWrapper, usePaymentInputs } from 'react-payment-inputs';
+import images from 'react-payment-inputs/images';
+import PaymentInputs from "./CreditCardForm";
+
+const MyDialog = styled(Dialog)`
+  border: solid 5px black;
+  background-color: rgba(255, 255, 255, 1);
+  color: black;  
+  }
+`
+
+
 
 export default class PaymentPopUp extends React.Component {
   state = {
@@ -35,13 +53,66 @@ export default class PaymentPopUp extends React.Component {
         {this.props.children(this.show)}
 
         {this.state.open && (
-          <Dialog aria-label="Dialog box">
-            <h1>{this.props.title}</h1>
-            <p>{this.props.description}</p>
+        <MyDialog aria-label="Payment PopUp">
+          <div className="app">
+            <Formik
 
-            <button onClick={this.hide}>Cancel</button>
-            <button onClick={this.confirm}>OK</button>
-          </Dialog>
+                onSubmit={async values => {
+                    
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    
+                }}
+            >
+                {({
+                    values,
+                    touched,
+                    errors,
+                    dirty,
+                    isSubmitting,
+                    handleChange,
+                    handleSubmit,
+                    handleReset
+                }) => (
+                    <Form autoComplete="off" onSubmit={handleSubmit}>
+                        <MUI.Typography variant = "h4" component="h4" align ="center">
+                            Payment Information
+                        </MUI.Typography>
+
+                        <MUI.FormControl sx = {{m: 2, minWidth: 350}}>
+
+                        <PaymentInputs/>
+
+                        </MUI.FormControl>
+
+                        <MUI.FormControl sx={{m: 2, minWidth: 150}}>
+                        <MUI.Button
+                          variant="contained"
+                          type="button"
+                          className="outline"
+                          onClick={this.hide}
+                          //disabled={!dirty || isSubmitting}
+                        >
+                          Cancel
+                        </MUI.Button>
+                      </MUI.FormControl>
+
+                      <MUI.FormControl sx={{m: 2, minWidth: 150}}>
+                        <MUI.Button 
+                          type="submit" 
+                          variant="contained"
+                          disabled={isSubmitting}
+                          onClick={this.confirm}
+                          >
+                          Submit
+                        </MUI.Button>
+                      </MUI.FormControl>
+                    
+                    </Form>
+                )}
+            </Formik>
+          </div>
+
+        </MyDialog>
         )}
       </React.Fragment>
     )
