@@ -10,33 +10,6 @@ import * as mqtt from "mqtt";
 //import { orderData } from "../components/TrackingBox";
 import { Redirect } from "react-router-dom";
 
-/*
-//MQTT Setup
-const url = 'wss://onlyfactories.duckdns.org:9001';
-let client = mqtt.connect(url);
-client.on("connect", () => {
-  console.log("connected");
-})
-
-const sendOrder={
-  msg_type: 'order',
-}
-
-// when form is submitted, send an MQTT message to Doug
-// which will start the factory or add to orders. 
-function sendMQTTOrder(){
-  console.log("inside function")
-  
-  var payload = JSON.stringify(sendOrder);
-  console.log(payload);
-  client.publish('UofICapstone_Cloud', payload, (error) =>{
-    if (error){
-      console.error(error)
-    }
-  })
-}
-*/
-
 const OrderBox = styled.div`
     height: 600px;
     width: 500px;
