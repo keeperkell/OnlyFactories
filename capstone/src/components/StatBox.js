@@ -6,8 +6,8 @@ import {Link} from 'react-router-dom';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 
-var completed = 18, inQ = 3;
-var red, blue, white;
+var completed = 0, inQ = 0;
+var red = 0, blue = 0, white = 0;
 
 const StatBox = () => {
     const [time, setTime] = useState(1)
@@ -40,33 +40,23 @@ const StatBox = () => {
 
         return null;
     };
+    
+    jData.map((jData, index) => (
+        <l key={index}> {red = jData.numRed,
+            blue = jData.numBlue,
+            white = jData.numWhite,
+            inQ = jData.inQue,
+            completed = jData.completed} </l>
+    ))
 
     function createData(name, num) {
         return { name, num};
-      }
+    }
 
     const rows=[
         createData('Orders Completed', completed),
         createData('Orders in Queue', inQ)
     ];
-
-    if(red == null) red = 0
-    else
-    {jData.map((jData, index) => (
-        <l key={index}> {red = jData.numRed} </l>
-    ))}
-    
-    if(blue == null) blue = 0
-    else
-    {jData.map((jData, index) => (
-        <l key={index}> {blue = jData.numBlue} </l>
-    ))}
-
-    if(white == null) white = 0
-    else
-    {jData.map((jData, index) => (
-        <l key={index}> {white = jData.numWhite} </l>
-    ))}
 
     var colors = ['red', 'blue', 'grey'];
     var data = [
