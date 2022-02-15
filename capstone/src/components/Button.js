@@ -26,7 +26,7 @@ const Button = () =>(
             <MUI.Button component={Link}
                 to="/ordering"
                 variant="contained">
-                    Ordering
+                    Order
             </MUI.Button>
             </MUI.FormControl>
 
@@ -34,7 +34,7 @@ const Button = () =>(
             <MUI.Button component={Link}
                 to="/tracking"
                 variant="contained">
-                    Tracking
+                    Track
             </MUI.Button>
             </MUI.FormControl>
         </div>

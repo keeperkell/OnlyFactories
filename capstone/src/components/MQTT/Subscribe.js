@@ -8,7 +8,7 @@ const url = 'wss://onlyfactories.duckdns.org:9001';
 let client = mqtt.connect(url);
 
 client.on('connect', function(){
-    client.subscribe('UofICapstone_Cloud_test');
+    client.subscribe('UofICapstone_Cloud');
 
     console.log('Client has subscribed successfully');
 });
