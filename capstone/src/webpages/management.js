@@ -2,7 +2,6 @@
 
 import React, {useEffect} from "react";
 import styled from "styled-components";
-import Piechart from "../components/Piechart";
 import StatBox from "../components/StatBox";
 
 const ManagementPageStyle = styled.div `
@@ -14,12 +13,12 @@ const ManagementPageStyle = styled.div `
     padding-top: 40px;
     padding-bottom: 40px;
 
-    @media screen and (min-width: 1101px) {
+    @media screen and (min-width: 1118px) {
         .pc2 {
             display: none;
         }
     }
-    @media screen and (max-width: 1100px) {
+    @media screen and (max-width: 1117px) {
         flex-basis: calc(100% / 3);
         scale: 70%;
         transform-origin: top;
@@ -48,7 +47,6 @@ const Management = () => {
 
     return (
         <ManagementPageStyle>
-            <Piechart />
             <StatBox />
         </ManagementPageStyle>
     );
