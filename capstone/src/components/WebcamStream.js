@@ -1,3 +1,6 @@
+// https://codepen.io/Chenzo/pen/QXXVvr
+// https://stackoverflow.com/questions/57047692/reactjs-video-stream-from-webcam-not-working
+
 import React from "react";
 
 class VideoOutput extends React.Component {
@@ -32,10 +35,7 @@ class WebcamStream extends React.Component {
 
 
   async getVideo() {
-    const video = await navigator.mediaDevices.getUserMedia({
-      audio: false,
-      video: true
-    });
+    const video = ;
     this.setState({ video });
   }
 
