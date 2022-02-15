@@ -14,6 +14,7 @@ const Home = () => {
     return (
         <div style={{textAlign: "center"}}>
             <h1> Welcome to OnlyFactories</h1>
+            <p><br></br></p>
             <p> Make orders and track them. </p>
             <p> This is a senior capstone project from the University of Idaho and allows customers
                 to order red, blue, and white disks from a Fischer-Technik Factory located in
@@ -26,7 +27,7 @@ const Home = () => {
             <Button />
 
             <p><br></br><br></br></p>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/pfOQQBFJTTs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="720" height="405" src="https://www.youtube.com/embed/pfOQQBFJTTs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     );
 };
