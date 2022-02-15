@@ -25,12 +25,20 @@ export default function PaymentInputs() {
   } = usePaymentInputs();
 
   return (
-    <PaymentInputsWrapper {...wrapperProps}>
-      <svg {...getCardImageProps({ images })} />
-      <input {...getCardNumberProps({onChange: handleCcChange})}  />
-      <input {...getExpiryDateProps({onChange: handleExpChange})}  />
-      <input {...getCVCProps()} value={cvc} />
-    </PaymentInputsWrapper>
+      <div>
+        <PaymentInputsWrapper {...wrapperProps} style={{width: "450px"}}>
+          <svg {...getCardImageProps({ images })} />
+          <input {...getCardNumberProps({onChange: handleCcChange})}  />
+        </PaymentInputsWrapper>
+
+        <PaymentInputsWrapper {...wrapperProps} style={{width: "150px"}}>
+          <input {...getExpiryDateProps({onChange: handleExpChange})}  />
+        </PaymentInputsWrapper>
+
+      <PaymentInputsWrapper {...wrapperProps} style={{width: "100px"}}>
+        <input {...getCVCProps()} value={cvc} />
+      </PaymentInputsWrapper>
+    </div>
   );
 }
 

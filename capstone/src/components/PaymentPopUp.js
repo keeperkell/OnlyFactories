@@ -15,6 +15,12 @@ const MyDialog = styled(Dialog)`
   border: solid 5px black;
   background-color: rgba(255, 255, 255, 1);
   color: black;  
+  height: 300px;
+  width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
   }
 `
 
@@ -49,6 +55,7 @@ export default class PaymentPopUp extends React.Component {
 
   render() {
     return (
+    <div>
       <React.Fragment>
         {this.props.children(this.show)}
 
@@ -115,6 +122,7 @@ export default class PaymentPopUp extends React.Component {
         </MyDialog>
         )}
       </React.Fragment>
+      </div>
     )
   }
 }
