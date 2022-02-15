@@ -1,3 +1,7 @@
+/*import MUI font-famly and icons for testing modal*/
+@import "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap";
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

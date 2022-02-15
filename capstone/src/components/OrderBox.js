@@ -9,6 +9,11 @@ import '../globalStyles'
 import * as mqtt from "mqtt";
 //import { orderData } from "../components/TrackingBox";
 import { Redirect } from "react-router-dom";
+import  Confirm  from "./PaymentPopUp";
+import Container from "react-modal-promise";
+import ConfirmStatusChange from "./PaymentPopUp";
+import PaymentPopUp from "./PaymentPopUp";
+import { cardNumber, expDate, cvc } from "./CreditCardForm";
 
 const OrderBox = styled.div`
     height: 600px;
@@ -378,6 +383,58 @@ const updateJobID = async (initialValues) =>{
   console.log(initialValues);
 
 };
+const sendPaymentData = async (values, cardNumber, expDate) =>{
+
+  console.log(cardNumber);
+  console.log(expDate);
+
+  var paymentDetails = {
+    orderID: values.orderID,
+    transactionID: values.transactionID,
+    ccNumber: cardNumber,
+    ccExp: expDate,
+    orderTotal: 10.23
+  };
+
+  alert(JSON.stringify(paymentDetails, null, 2));
+
+                /*
+                //Keep the line below this for local host testing -- fetch order data
+                const response = await fetch(`http://localhost:3306/api/transactions`,{
+                  method: 'POST',
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(paymentDetails),
+                  })
+                  */
+              
+              
+              //Keep line below this for testing over live connection -- fetch order data
+              
+              const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/transactions`, {
+                  method: 'POST',
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(paymentDetails),
+                  })
+              
+    
+              if (response.errors) {
+              console.error(response.errors)
+              }
+    
+              let responseJson = await response.json()
+    
+              if (responseJson['message']) {
+              console.log(responseJson['message'])
+              }
+
+
+}
 
 export var orderBoxOrderData = null;
 
@@ -387,6 +444,8 @@ const OrderForm = () => {
   const [valueBLUE, setvalueBLUE] = useState(0);
   const [valueWHITE, setvalueWHITE] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const [nameEntry, setFullName] = useState("");
+  const [emailEntry,setEmail ] = useState("");
   
   const handleSelectRED = e => {
     const colorValue = e.target.value;
@@ -403,6 +462,92 @@ const OrderForm = () => {
     setvalueWHITE(colorValue);
   }
 
+  const handlePopSubmit = async (values) => {
+              //sendMQTTOrder();
+              updateOrderID(values);
+              updateTransactionID(values);
+    
+              await new Promise(resolve => setTimeout(resolve, 500));
+              
+              
+              //alert(JSON.stringify(values, null, 2));
+    
+              //Set up for Orders to be added to the database
+              //*id needs an incremented value still*
+              //*OrderId needs an incremented / randomized value still*
+              //*Transaction ID will need an ID from payment system
+              //*For some reason this created a _typename field in database
+              //*Message me to work on more - JH
+              var orderDetails = {
+                orderID: values.orderID,
+                email: emailEntry,
+                fullName: nameEntry,
+                orderStatus: "Created",
+                quantityRED: valueRED,
+                quantityBLUE: valueBLUE,
+                quantityWHITE: valueWHITE,
+                transactionID: values.transactionID,
+                created_at: createTimestamp(),
+                updated_at: createTimestamp()
+              };
+    
+              orderBoxOrderData = values.orderID;
+              console.log(orderBoxOrderData);
+    
+              alert(JSON.stringify(orderDetails, null, 2));
+    
+              //Send data to NodeJS(databse) via POST Start
+              
+              /*
+              //Keep the line below this for local host testing -- fetch order data
+              const response = await fetch(`http://localhost:3306/api/ordering`,{
+                  method: 'POST',
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(orderDetails),
+                  })
+              */
+              
+              //Keep line below this for testing over live connection -- fetch order data
+              
+              const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/ordering`, {
+                  method: 'POST',
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(orderDetails),
+                  })
+              
+    
+              if (response.errors) {
+                console.error(response.errors)
+              }
+              else{
+                await sendMQTTOrder(orderDetails);
+              }
+    
+              let responseJson = await response.json()
+    
+              if (responseJson['message']) {
+                console.log(responseJson['message'])
+              }
+
+              sendPaymentData(values, cardNumber, expDate);
+
+              //Send data to NodeJS(databse) via POST End
+              setSubmitted(true);
+    
+  }
+
+  const handlePopUpChange = e => {
+    this.setState({select: e.target.value})
+  }
+
+  const handleReset = e => alert("Resetted")
+
   if(submitted){
       return <Redirect push to={{
           pathname: '/trackingstatus',
@@ -413,98 +558,13 @@ const OrderForm = () => {
 
   return (
 
+
   <OrderBox>
     <div className="app">
 
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-
-        onSubmit={async values => {
-        
-          updateOrderID(values);
-          updateTransactionID(values);
-
-          await new Promise(resolve => setTimeout(resolve, 500));
-          //alert(JSON.stringify(values, null, 2));
-
-          //Set up for Orders to be added to the database
-          //*id needs an incremented value still*
-          //*Transaction ID will need an ID from payment system
-          var orderDetails = {
-            //id : "5",
-            orderID: values.orderID,
-            //Color: values.color_1,
-            email: values.email,
-            fullName: values.name,
-            orderStatus: "Created",
-            quantityRED: valueRED,
-            quantityBLUE: valueBLUE,
-            quantityWHITE: valueWHITE,
-            transactionID: values.transactionID,
-            created_at: createTimestamp(),
-            updated_at: createTimestamp()
-          };
-
-          orderBoxOrderData = values.orderID;
-          console.log(orderBoxOrderData);
-
-          alert(JSON.stringify(orderDetails, null, 2));
-
-          //Send data to NodeJS(databse) via POST Start
-
-          /*
-          //Keep the line below this for local host testing -- fetch order data
-          const response = await fetch(`http://localhost:3306/api/ordering`,{
-              method: 'POST',
-              headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(orderDetails),
-              })
-          */
-          
-          
-          //Keep line below this for testing over live connection -- fetch order data
-          
-          
-          const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/ordering`, {
-              method: 'POST',
-              headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(orderDetails),
-              })
-          
-
-          if (response.errors) {
-            console.error(response.errors)
-          }
-          else{
-            await sendMQTTOrder(orderDetails);
-          }
-
-          let responseJson = await response.json()
-
-          if (responseJson['message']) {
-            console.log(responseJson['message'])
-          }
-          //Send data to NodeJS(databse) via POST End
-          setSubmitted(true);
-
-
-          /*
-          // update order IDs
-          await updateIDs(orderDetails);
-          // Add order to database
-          await addOrderToDB(orderDetails);
-          // send order to Doug and log message
-          await sendOrderMQTT(orderDetails);
-          */
-
-        }}
         enableReinitialize
       >
         
@@ -521,7 +581,9 @@ const OrderForm = () => {
             handleReset
           }) => (
 
-                <Form autoComplete="off" onSubmit={handleSubmit}>
+            <PaymentPopUp title="Payment Information">
+            {confirm => (
+                <Form id="OrderForm" autoComplete="off" onSubmit={confirm(handlePopSubmit)}>
                   <MUI.Typography variant="h3" component="h3" align='center'>
                     Order Form
                   </MUI.Typography>
@@ -530,10 +592,10 @@ const OrderForm = () => {
                   <MUI.TextField
                       id="name"
                       placeholder="Enter your name"
-                      label="Name"
+                      label=""
                       type="text"
-                      value={values.name}
-                      onChange={handleChange}
+                      value={nameEntry}
+                      onChange={(e) => setFullName(e.target.value)}
                       required="true"
                       className={
                           errors.name && touched.name
@@ -547,10 +609,10 @@ const OrderForm = () => {
                   <MUI.TextField
                       id="email"
                       placeholder="Enter your email"
-                      label="Email"
+                      label=""
                       type="text"
-                      value={values.email}
-                      onChange={handleChange}
+                      value={emailEntry}
+                      onChange={(e)=> setEmail(e.target.value)}
                       required="true"
                       className={
                           errors.email && touched.email
@@ -575,7 +637,7 @@ const OrderForm = () => {
                   </MUI.FormControl> 
 
                   <MUI.FormControl sx={{m: 1.45, minWidth: 210}}>
-                    <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
+                    <MUI.InputLabel id="quantity-select-label"></MUI.InputLabel>
                     <MUI.Select
                         id="quantity_1"
                         name="quantity_1"
@@ -605,7 +667,7 @@ const OrderForm = () => {
                   </MUI.FormControl> 
 
                   <MUI.FormControl sx={{m: 2, minWidth: 210}}>
-                    <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
+                    <MUI.InputLabel id="quantity-select-label"></MUI.InputLabel>
                     <MUI.Select
                         id="quantity_2"
                         name="quantity_2"
@@ -635,7 +697,7 @@ const OrderForm = () => {
                   </MUI.FormControl> 
 
                   <MUI.FormControl sx={{m: 2, minWidth: 210}}>
-                    <MUI.InputLabel id="quantity-select-label">Quantity</MUI.InputLabel>
+                    <MUI.InputLabel id="quantity-select-label"></MUI.InputLabel>
                     <MUI.Select
                         id="quantity_3"
                         name="quantity_3"
@@ -673,11 +735,15 @@ const OrderForm = () => {
                 >
                   Submit
                 </MUI.Button>
-              </MUI.FormControl>
-
+              </MUI.FormControl>             
             </Form>
+            )}
+          </PaymentPopUp>
+            
           )}
+          
       </Formik>
+
     </div>
   </OrderBox>
 );

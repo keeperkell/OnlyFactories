@@ -94,10 +94,10 @@ const TrackingStatus = props => {
     const getOrderTrackingData = async () => {
 
         //Keep the line below this for local host testing -- fetch order data
-        //const response = await fetch(`http://localhost:3306/api/tracking/` + urlID);
+        const response = await fetch(`http://localhost:3306/api/tracking/` + urlID);
 
         //Keep line below this for testing over live connection -- fetch order data
-        const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/tracking/` + urlID);
+        //const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/tracking/` + urlID);
 
         //put response into json format
         const jsonData = await response.json();
