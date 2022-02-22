@@ -15,7 +15,7 @@ const StatBox = () => {
     useEffect(()=>{
         const timer = setTimeout(() =>{
             getQuantities();
-        }, 5000);
+        }, 1500);
     });
 
     const getQuantities = async () => {
