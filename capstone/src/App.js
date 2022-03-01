@@ -10,6 +10,8 @@ import Management from './webpages/management';
 import Profit from './webpages/profit';
 import TrackingStatusPage from './webpages/trackingStatus';
 import GlobalStyle from './globalStyles';
+import Login from './webpages/login';
+
 
 function App() {
   return (
@@ -24,6 +26,7 @@ function App() {
         <Route path='/management' component={Management} />
         <Route path='/profit' component={Profit} />
         <Route path='/trackingStatus' component={TrackingStatusPage} />
+        <Route path='/login' component={Login} />
       </Switch>
     </Router>
   );
