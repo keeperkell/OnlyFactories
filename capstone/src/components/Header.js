@@ -32,7 +32,7 @@ const Header = () => {
                     <NavLink className="nav-link" activeClassName="active" to='/about'>About</NavLink>
                 </NavMenu>
                 <NavBtn>
-                    <NavBtnLink to='/Management'>Sign In</NavBtnLink>
+                    <NavBtnLink to='/login'>Sign In</NavBtnLink>
                 </NavBtn>
             </Nav>
             
