@@ -15,7 +15,7 @@ const SignIn = () => {
         //local
         //const response = await fetch(`http://localhost:3306/api/checkLogin/` + user + ':' + pass);
         //server
-        const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/checkLogin/` + user +'&'+ pass);
+        const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/checkLogin/` + user +':'+ pass);
 
         const jsonData = await response.json();
         console.log(jsonData);
