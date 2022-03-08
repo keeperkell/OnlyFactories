@@ -477,9 +477,9 @@ const OrderForm = () => {
 //fetch data
 const getQuantities = async () => {
   //local
-  const response = await fetch(`http://localhost:3306/api/itemPrices/`);
+  //const response = await fetch(`http://localhost:3306/api/itemPrices/`);
   //server
-  //const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/itemPrices/`);
+  const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/itemPrices/`);
   
   const jsonData = await response.json();
   console.log(jsonData);
