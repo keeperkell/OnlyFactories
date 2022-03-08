@@ -1,6 +1,6 @@
 //file: src/components/OrderBox.js
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, connect } from "formik";
 import * as Yup from 'yup'
 import styled from "styled-components";
@@ -17,7 +17,7 @@ import { cardNumber, expDate, cvc } from "./CreditCardForm";
 
 const OrderBox = styled.div`
     height: 600px;
-    width: 500px;
+    width: 710px;
     display: flex;
     align-items: center;
     //justify-content: center;
@@ -38,6 +38,9 @@ const initialValues = {
   transactionID: -1
 
 }
+
+//variables for item prices
+var red_price = 0.00, blue_price=0.00, white_price = 0.00;
 
 const validationSchema = 
   Yup.object().shape({
@@ -383,7 +386,7 @@ const updateJobID = async (initialValues) =>{
   console.log(initialValues);
 
 };
-const sendPaymentData = async (values, cardNumber, expDate) =>{
+const sendPaymentData = async (values, cardNumber, expDate, totalPrice) =>{
 
   console.log(cardNumber);
   console.log(expDate);
@@ -393,7 +396,7 @@ const sendPaymentData = async (values, cardNumber, expDate) =>{
     transactionID: values.transactionID,
     ccNumber: cardNumber,
     ccExp: expDate,
-    orderTotal: 10.23
+    orderTotal: totalPrice
   };
 
   alert(JSON.stringify(paymentDetails, null, 2));
@@ -446,6 +449,15 @@ const OrderForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [nameEntry, setFullName] = useState("");
   const [emailEntry,setEmail ] = useState("");
+  const [itemPrices, setPrices] = useState([]);
+  //const [tempRed, setTempRed] = useState(0);
+
+  //query prices with very long delay
+  useEffect(()=>{
+    const timer = setTimeout(() =>{
+        getQuantities();
+    }, 10000);
+});
   
   const handleSelectRED = e => {
     const colorValue = e.target.value;
@@ -462,10 +474,34 @@ const OrderForm = () => {
     setvalueWHITE(colorValue);
   }
 
+//fetch data
+const getQuantities = async () => {
+  //local
+  const response = await fetch(`http://localhost:3306/api/itemPrices/`);
+  //server
+  //const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/itemPrices/`);
+  
+  const jsonData = await response.json();
+  console.log(jsonData);
+  setPrices(jsonData);
+  //alert(JSON.stringify(jsonData))
+  }
+  
+  //mapping JSON data
+  itemPrices.map((jData, index) => (
+    <l key={index}> {red_price = itemPrices[0].cust_price,
+        blue_price = itemPrices[1].cust_price,
+        white_price = itemPrices[2].cust_price}
+    </l>
+  ))
+
   const handlePopSubmit = async (values) => {
               //sendMQTTOrder();
               updateOrderID(values);
               updateTransactionID(values);
+
+              //calculate total price
+              let totalPrice = (valueRED*red_price) + (valueBLUE*blue_price) + (valueWHITE*white_price);
     
               await new Promise(resolve => setTimeout(resolve, 500));
               
@@ -535,7 +571,7 @@ const OrderForm = () => {
                 console.log(responseJson['message'])
               }
 
-              sendPaymentData(values, cardNumber, expDate);
+              sendPaymentData(values, cardNumber, expDate, totalPrice);
 
               //Send data to NodeJS(databse) via POST End
               setSubmitted(true);
@@ -588,7 +624,7 @@ const OrderForm = () => {
                     Order Form
                   </MUI.Typography>
 
-                  <MUI.FormControl sx={{m: 2, minWidth: 450}}>
+                  <MUI.FormControl sx={{m: 2, minWidth: 675}}>
                   <MUI.TextField
                       id="name"
                       placeholder="Enter your name"
@@ -605,7 +641,7 @@ const OrderForm = () => {
                   /> 
                   </MUI.FormControl> 
 
-                  <MUI.FormControl sx={{m: 2, minWidth: 450}}>
+                  <MUI.FormControl sx={{m: 2, minWidth: 675}}>
                   <MUI.TextField
                       id="email"
                       placeholder="Enter your email"
@@ -624,6 +660,7 @@ const OrderForm = () => {
                   <div className="input-feedback">{errors.email}</div>
                   )}
                   </MUI.FormControl>
+                  <br/>
                   
                   <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
                     <MUI.TextField
@@ -631,8 +668,25 @@ const OrderForm = () => {
                         name="color_1"
                         placeholder="Red"
                         type="text"
-                        //value={values.color_1}
-                        disabled={true}
+                        value="Red"
+                        //disabled={true}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                    /> 
+                  </MUI.FormControl> 
+
+                  <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
+                    <MUI.TextField
+                        id="red_price"
+                        name="red_price"
+                        placeholder="$0.00 Per Unit"
+                        type="text"
+                        value={red_price}
+                        //disabled={true}
+                        InputProps={{
+                          readOnly: true,
+                        }}
                     /> 
                   </MUI.FormControl> 
 
@@ -661,12 +715,29 @@ const OrderForm = () => {
                         name="color_2"
                         placeholder="Blue"
                         type="text"
-                        //value={values.color_2}
-                        disabled={true}
+                        value="Blue"
+                        //disabled={true}
+                        InputProps={{
+                          readOnly: true,
+                        }}
                     /> 
                   </MUI.FormControl> 
 
-                  <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+                  <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
+                    <MUI.TextField
+                        id="blue_price"
+                        name="blue_price"
+                        placeholder="$0.00 Per Unit"
+                        type="text"
+                        value={blue_price}
+                        //disabled={true}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                    /> 
+                  </MUI.FormControl> 
+
+                  <MUI.FormControl sx={{m: 1.45, minWidth: 210}}>
                     <MUI.InputLabel id="quantity-select-label"></MUI.InputLabel>
                     <MUI.Select
                         id="quantity_2"
@@ -691,12 +762,29 @@ const OrderForm = () => {
                         name="color_3"
                         placeholder="White"
                         type="text"
-                        //value={values.color_3}
-                        disabled={true}
+                        value="White"
+                        //disabled={true}
+                        InputProps={{
+                          readOnly: true,
+                        }}
                     /> 
                   </MUI.FormControl> 
 
-                  <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+                  <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
+                    <MUI.TextField
+                        id="white_price"
+                        name="white_price"
+                        placeholder="$0.00 Per Unit"
+                        type="text"
+                        value={white_price}
+                        //disabled={true}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                    /> 
+                  </MUI.FormControl> 
+
+                  <MUI.FormControl sx={{m: 1.45, minWidth: 210}}>
                     <MUI.InputLabel id="quantity-select-label"></MUI.InputLabel>
                     <MUI.Select
                         id="quantity_3"
@@ -714,6 +802,48 @@ const OrderForm = () => {
                         <MUI.MenuItem value={3}>3</MUI.MenuItem>
                     </MUI.Select>
                   </MUI.FormControl>
+
+                  <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
+                    <MUI.TextField
+                        id="totals"
+                        name="totals"
+                        placeholder="Totals"
+                        type="text"
+                        value="Totals"
+                        //disabled={true}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                    /> 
+                  </MUI.FormControl> 
+
+                  <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
+                    <MUI.TextField
+                        id="total_price"
+                        name="total_price"
+                        placeholder="Total Price"
+                        type="text"
+                        value={(valueRED*red_price) + (valueBLUE*blue_price) + (valueWHITE*white_price)}
+                        //disabled={true}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                    /> 
+                  </MUI.FormControl> 
+
+                  <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
+                    <MUI.TextField
+                        id="total_quantity"
+                        name="total_quantity"
+                        placeholder="Total Quantity"
+                        type="text"
+                        value={valueRED + valueBLUE + valueWHITE}
+                        //disabled={true}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                    /> 
+                  </MUI.FormControl> 
 
               <MUI.FormControl sx={{m: 2, minWidth: 210}}>
                 <MUI.Button
