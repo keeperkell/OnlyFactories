@@ -1,6 +1,6 @@
 //file: src/components/StatBox.js
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import * as mui from '@mui/material';
 import {Link} from 'react-router-dom';
 import { PieChart, Pie, Cell } from 'recharts';
