@@ -40,7 +40,7 @@ const initialValues = {
 }
 
 //variables for item prices
-var red_price = 0, blue_price=0, white_price = 0, total_price = 0;
+var red_price = '0.00', blue_price='0.00', white_price = '0.00', total_price = '0.00';
 
 //variables to display item prices in format $ price.xx
 var redP_display, blueP_display, whiteP_display, totalP_display;
@@ -457,10 +457,8 @@ const OrderForm = () => {
 
   //query prices with very long delay
   useEffect(()=>{
-    const timer = setTimeout(() =>{
-        getItemPricing();
-    }, 10000);
-});
+    getItemPricing();
+}, []);
   
   const handleSelectRED = e => {
     const colorValue = e.target.value;
@@ -480,30 +478,32 @@ const OrderForm = () => {
 //fetch data
 const getItemPricing = async () => {
   //local
-  //const response = await fetch(`http://localhost:3306/api/itemPrices/`);
+  const response = await fetch(`http://localhost:3306/api/itemPrices/`);
   //server
-  const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/itemPrices/`);
+  //const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/itemPrices/`);
   
   const jsonData = await response.json();
   console.log(jsonData);
   setPrices(jsonData);
   //alert(JSON.stringify(jsonData))
 
-  //mapping JSON data
-  itemPrices.map((jData, index) => (
-    <l key={index}> {red_price = itemPrices[0].cust_price,
-        blue_price = itemPrices[1].cust_price,
-        white_price = itemPrices[2].cust_price}
-    </l>
+  }
 
-  ))
+    //mapping JSON data
+    itemPrices.map((jData, index) => (
+      <l key={index}> {red_price = itemPrices[0].cust_price,
+          blue_price = itemPrices[1].cust_price,
+          white_price = itemPrices[2].cust_price}
+      </l>
+  
+    ))
 
   /////////////////Start Pricing Display////////////////////////////////
   //format prices for proper display
   //get to 2 decimal places
-  red_price = red_price.toFixed(2);
-  blue_price = blue_price.toFixed(2);
-  white_price = white_price.toFixed(2);
+  red_price = typeof red_price === 'number' ? red_price.toFixed(2) : 0.00;
+  blue_price = typeof blue_price === 'number' ? blue_price.toFixed(2) : 0.00;
+  white_price = typeof white_price === 'number' ? white_price.toFixed(2) : 0.00;
   total_price = ((valueRED*red_price) + (valueBLUE*blue_price) + (valueWHITE*white_price)).toFixed(2);
 
   //add $ to display out
@@ -513,8 +513,6 @@ const getItemPricing = async () => {
   totalP_display = "${0}".replace('{0}', total_price);
 
   /////////////////End Pricing display///////////////////////////////
-
-  }
 
 
   const handlePopSubmit = async (values) => {
