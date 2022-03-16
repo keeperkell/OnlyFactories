@@ -103,7 +103,7 @@ const StatBox = () => {
 
     return(
     <div>
-        <mui.Box sx={{border:3, borderRadius:16, p:1, m:1, display:"inline-block"}}>
+        <mui.Box sx={{p:1, m:1, boxShadow:"0 0 15px 0 rgba(0, 0, 0, 0.25)", border:2, borderRadius:6, display:"inline-block"}}>
             <h2 style={{textAlign:"center"}}>Product Sold by Color</h2>
 
             <PieChart width={830} height={540} className='pc1' Key={data.value}>
@@ -133,6 +133,7 @@ const StatBox = () => {
                             value={time}
                             label="Time Frame"
                             onChange={handleChange}
+                            sx={{boxShadow:"0 0 10px 0 rgba(0, 0, 0, 0.25)"}}
                         >
                         <mui.MenuItem value={1}>1 Day</mui.MenuItem>
                         <mui.MenuItem value={3}>3 Days</mui.MenuItem>
@@ -141,23 +142,23 @@ const StatBox = () => {
                 </mui.FormControl>
             </mui.Box>
 
-            <mui.Box sx={{border:2, borderRadius: 6, p:1, m:1, textAlign:'center', maxWidth:205}}>
+            <mui.Box sx={{border:2, boxShadow:"0 0 15px 0 rgba(0, 0, 0, 0.25)", borderRadius: 6, p:1, m:1, textAlign:'center', maxWidth:205}}>
                 <h1 style={{color:'red', fontSize:'27px'}}>{red}</h1>
             </mui.Box>
 
-            <mui.Box sx={{border:2, borderRadius: 6, p:1, m:1, textAlign:'center', maxWidth:205}}>
+            <mui.Box sx={{border:2, boxShadow:"0 0 15px 0 rgba(0, 0, 0, 0.25)", borderRadius: 6, p:1, m:1, textAlign:'center', maxWidth:205}}>
                 <h1 style={{color:'blue', fontSize:'27px'}}>{blue}</h1>
             </mui.Box>
 
-            <mui.Box sx={{border:2, borderRadius: 6, p:1, m:1, textAlign:'center', maxWidth:205}}>
+            <mui.Box sx={{border:2, boxShadow:"0 0 15px 0 rgba(0, 0, 0, 0.25)", borderRadius: 6, p:1, m:1, textAlign:'center', maxWidth:205}}>
                 <h1 style={{color:'grey', fontSize:'27px'}}>{white}</h1>
             </mui.Box>
 
-            <mui.Box sx={{border:2, borderRadius: 6, p:1, m:1, textAlign:'center', maxWidth:205}}>
+            <mui.Box sx={{border:2, boxShadow:"0 0 15px 0 rgba(0, 0, 0, 0.25)", borderRadius: 6, p:1, m:1, textAlign:'center', maxWidth:205}}>
                 <h1 style={{color:'black', fontSize:'27px'}}>Total: {red+blue+white}</h1>
             </mui.Box>
 
-            <mui.TableContainer sx={{border:2, borderRadius:6, p:1, m:1, textAlign:'center', maxWidth:205}}>
+            <mui.TableContainer sx={{border:2, boxShadow:"0 0 15px 0 rgba(0, 0, 0, 0.25)", borderRadius:6, p:1, m:1, textAlign:'center', maxWidth:205}}>
                 <mui.Table>
                     {rows.map((row) => (
                         <mui.TableRow>
@@ -173,7 +174,8 @@ const StatBox = () => {
             <mui.FormControl sx={{m: 2, minWidth: 210}}>
                 <mui.Button component={Link}
                     to="/profit"
-                    variant="contained">
+                    variant="contained"
+                    style={{backgroundColor: "#EAAB00", WebkitTextFillColor:"black"}}>
                         Profit
                 </mui.Button>
             </mui.FormControl>
