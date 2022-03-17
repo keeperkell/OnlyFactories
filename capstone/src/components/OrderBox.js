@@ -889,7 +889,7 @@ const getItemPricing = async () => {
                     /> 
                   </MUI.FormControl> 
 
-              <MUI.FormControl sx={{m: 1.45, minWidth: 210}}>
+              <MUI.FormControl sx={{m: 1.45, minWidth: 210, pr: 30}}>
                 <MUI.Button
                   variant="contained"
                   type="button"
