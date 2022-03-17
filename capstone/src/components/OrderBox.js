@@ -16,7 +16,7 @@ import PaymentPopUp from "./PaymentPopUp";
 import { cardNumber, expDate, cvc } from "./CreditCardForm";
 
 const OrderBox = styled.div`
-    height: 600px;
+    height: 800px;
     width: 710px;
     display: flex;
     align-items: center;
@@ -40,7 +40,10 @@ const initialValues = {
 }
 
 //variables for item prices
-var red_price = 0.00, blue_price=0.00, white_price = 0.00;
+var red_price = '0.00', blue_price='0.00', white_price = '0.00', total_price = '0.00';
+
+//variables to display item prices in format $ price.xx
+var redP_display, blueP_display, whiteP_display, totalP_display;
 
 const validationSchema = 
   Yup.object().shape({
@@ -452,12 +455,10 @@ const OrderForm = () => {
   const [itemPrices, setPrices] = useState([]);
   //const [tempRed, setTempRed] = useState(0);
 
-  //query prices with very long delay
+  //query prices--only once when component loads
   useEffect(()=>{
-    const timer = setTimeout(() =>{
-        getQuantities();
-    }, 10000);
-});
+    getItemPricing();
+}, []);
   
   const handleSelectRED = e => {
     const colorValue = e.target.value;
@@ -475,7 +476,7 @@ const OrderForm = () => {
   }
 
 //fetch data
-const getQuantities = async () => {
+const getItemPricing = async () => {
   //local
   //const response = await fetch(`http://localhost:3306/api/itemPrices/`);
   //server
@@ -485,15 +486,34 @@ const getQuantities = async () => {
   console.log(jsonData);
   setPrices(jsonData);
   //alert(JSON.stringify(jsonData))
+
   }
+
+    //mapping JSON data
+    itemPrices.map((jData, index) => (
+      <l key={index}> {red_price = itemPrices[0].cust_price,
+          blue_price = itemPrices[1].cust_price,
+          white_price = itemPrices[2].cust_price}
+      </l>
   
-  //mapping JSON data
-  itemPrices.map((jData, index) => (
-    <l key={index}> {red_price = itemPrices[0].cust_price,
-        blue_price = itemPrices[1].cust_price,
-        white_price = itemPrices[2].cust_price}
-    </l>
-  ))
+    ))
+
+  /////////////////Start Pricing Display////////////////////////////////
+  //format prices for proper display
+  //get to 2 decimal places
+  red_price = typeof red_price === 'number' ? red_price.toFixed(2) : 0.00;
+  blue_price = typeof blue_price === 'number' ? blue_price.toFixed(2) : 0.00;
+  white_price = typeof white_price === 'number' ? white_price.toFixed(2) : 0.00;
+  total_price = ((valueRED*red_price) + (valueBLUE*blue_price) + (valueWHITE*white_price)).toFixed(2);
+
+  //add $ to display out
+  redP_display = "${0}  Per Unit".replace('{0}', red_price);
+  blueP_display = "${0}  Per Unit".replace('{0}', blue_price);
+  whiteP_display = "${0}  Per Unit".replace('{0}', white_price);
+  totalP_display = "${0}".replace('{0}', total_price);
+
+  /////////////////End Pricing display///////////////////////////////
+
 
   const handlePopSubmit = async (values) => {
               //sendMQTTOrder();
@@ -534,17 +554,17 @@ const getQuantities = async () => {
     
               //Send data to NodeJS(databse) via POST Start
               
-              /*
+              
               //Keep the line below this for local host testing -- fetch order data
-              const response = await fetch(`http://localhost:3306/api/ordering`,{
+              /*const response = await fetch(`http://localhost:3306/api/ordering`,{
                   method: 'POST',
                   headers: {
                       'Accept': 'application/json',
                       'Content-Type': 'application/json',
                   },
                   body: JSON.stringify(orderDetails),
-                  })
-              */
+                  })*/
+              
               
               //Keep line below this for testing over live connection -- fetch order data
               
@@ -623,6 +643,11 @@ const getQuantities = async () => {
                   <MUI.Typography variant="h3" component="h3" align='center'>
                     Order Form
                   </MUI.Typography>
+                  <br/>
+
+                  <MUI.FormControl sx={{m:0.5, pl:2, fontWeight: 'bold', fontSize: 22}}>
+                    Name
+                  </MUI.FormControl>
 
                   <MUI.FormControl sx={{m: 2, minWidth: 675}}>
                   <MUI.TextField
@@ -640,6 +665,12 @@ const getQuantities = async () => {
                       }
                   /> 
                   </MUI.FormControl> 
+                  <br/>
+                  <br/>
+
+                  <MUI.FormControl sx={{m:0.5, pl:2, fontWeight: 'bold', fontSize: 22}}>
+                    Email
+                  </MUI.FormControl>
 
                   <MUI.FormControl sx={{m: 2, minWidth: 675}}>
                   <MUI.TextField
@@ -661,6 +692,19 @@ const getQuantities = async () => {
                   )}
                   </MUI.FormControl>
                   <br/>
+                  <br/>
+
+                  <MUI.FormControl sx={{m:1.45, pl:8, pr:14, fontWeight: 'bold', fontSize: 22}}>
+                    Colors
+                  </MUI.FormControl>
+
+                  <MUI.FormControl sx={{m:1.45, pl: 4, pr:16 , fontWeight: 'bold', fontSize: 22}}>
+                    Quantity
+                  </MUI.FormControl>
+
+                  <MUI.FormControl sx={{m:1.45, pr: 2, fontWeight: 'bold', fontSize: 22}}>
+                    Price
+                  </MUI.FormControl>
                   
                   <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
                     <MUI.TextField
@@ -674,21 +718,7 @@ const getQuantities = async () => {
                           readOnly: true,
                         }}
                     /> 
-                  </MUI.FormControl> 
-
-                  <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
-                    <MUI.TextField
-                        id="red_price"
-                        name="red_price"
-                        placeholder="$0.00 Per Unit"
-                        type="text"
-                        value={red_price}
-                        //disabled={true}
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                    /> 
-                  </MUI.FormControl> 
+                    </MUI.FormControl>
 
                   <MUI.FormControl sx={{m: 1.45, minWidth: 210}}>
                     <MUI.InputLabel id="quantity-select-label"></MUI.InputLabel>
@@ -711,11 +741,11 @@ const getQuantities = async () => {
 
                   <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
                     <MUI.TextField
-                        id="color_2"
-                        name="color_2"
-                        placeholder="Blue"
+                        id="red_price"
+                        name="red_price"
+                        placeholder="$0.00 Per Unit"
                         type="text"
-                        value="Blue"
+                        value={redP_display}
                         //disabled={true}
                         InputProps={{
                           readOnly: true,
@@ -725,11 +755,11 @@ const getQuantities = async () => {
 
                   <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
                     <MUI.TextField
-                        id="blue_price"
-                        name="blue_price"
-                        placeholder="$0.00 Per Unit"
+                        id="color_2"
+                        name="color_2"
+                        placeholder="Blue"
                         type="text"
-                        value={blue_price}
+                        value="Blue"
                         //disabled={true}
                         InputProps={{
                           readOnly: true,
@@ -758,11 +788,11 @@ const getQuantities = async () => {
 
                   <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
                     <MUI.TextField
-                        id="color_3"
-                        name="color_3"
-                        placeholder="White"
+                        id="blue_price"
+                        name="blue_price"
+                        placeholder="$0.00 Per Unit"
                         type="text"
-                        value="White"
+                        value={blueP_display}
                         //disabled={true}
                         InputProps={{
                           readOnly: true,
@@ -772,11 +802,11 @@ const getQuantities = async () => {
 
                   <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
                     <MUI.TextField
-                        id="white_price"
-                        name="white_price"
-                        placeholder="$0.00 Per Unit"
+                        id="color_3"
+                        name="color_3"
+                        placeholder="White"
                         type="text"
-                        value={white_price}
+                        value="White"
                         //disabled={true}
                         InputProps={{
                           readOnly: true,
@@ -805,11 +835,11 @@ const getQuantities = async () => {
 
                   <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
                     <MUI.TextField
-                        id="totals"
-                        name="totals"
-                        placeholder="Totals"
+                        id="white_price"
+                        name="white_price"
+                        placeholder="$0.00 Per Unit"
                         type="text"
-                        value="Totals"
+                        value={whiteP_display}
                         //disabled={true}
                         InputProps={{
                           readOnly: true,
@@ -819,11 +849,11 @@ const getQuantities = async () => {
 
                   <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
                     <MUI.TextField
-                        id="total_price"
-                        name="total_price"
-                        placeholder="Total Price"
+                        id="totals"
+                        name="totals"
+                        placeholder="Total"
                         type="text"
-                        value={(valueRED*red_price) + (valueBLUE*blue_price) + (valueWHITE*white_price)}
+                        value="Total"
                         //disabled={true}
                         InputProps={{
                           readOnly: true,
@@ -845,7 +875,21 @@ const getQuantities = async () => {
                     /> 
                   </MUI.FormControl> 
 
-              <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+                  <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
+                    <MUI.TextField
+                        id="total_price"
+                        name="total_price"
+                        placeholder="Total Price"
+                        type="text"
+                        value={totalP_display}
+                        //disabled={true}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                    /> 
+                  </MUI.FormControl> 
+
+              <MUI.FormControl sx={{m: 1.45, minWidth: 210, pr: 30}}>
                 <MUI.Button
                   variant="contained"
                   type="button"
@@ -857,7 +901,7 @@ const getQuantities = async () => {
                 </MUI.Button>
               </MUI.FormControl>
 
-              <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+              <MUI.FormControl sx={{m: 1.45, minWidth: 210}}>
                 <MUI.Button 
                   type="submit" 
                   variant="contained"
