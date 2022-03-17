@@ -6,10 +6,16 @@ import { orderData } from "../components/TrackingBox";
 import { orderBoxOrderData } from "../components/OrderBox";
 import WebcamStream from "./WebcamStream";
 
-const LiveFeed = "https://511ny.org/map/Cctv/4616667--17";
 //import { json } from "express";
 
 //import { useHistory } from "react-router-dom";
+
+//orderID and orderStatus for display
+// need 2 seperate init values so factoryOrderID and orderID do not accidently
+// match and allow webcam access
+var factoryOrderID = -2;
+var orderID = -1;
+var orderStatus = "No order";
 
 const Status = styled.div`
     width: 500px;
@@ -73,6 +79,7 @@ const checkOrigin = (orderData, orderBoxOrderData) =>{
 const TrackingStatus = props => {
 
    const [trackingData, setTrackingData] = useState([]);
+   const [factoryID, setFactoryOrderID] = useState([]);
    const [orderURL, setURL] = useState(0);
 
    var urlID = checkOrigin(orderData, orderBoxOrderData);
@@ -83,6 +90,12 @@ const TrackingStatus = props => {
         }, 5000);
     }, [trackingData]);
 
+    useEffect(()=>{
+        const timer = setTimeout(() =>{
+            getOrderIDFromFactory();
+        }, 5000);
+    }, [factoryID]);
+
     //const history = useHistory();
 
     //const prevPath = history.location.state.from;
@@ -92,7 +105,19 @@ const TrackingStatus = props => {
 
     //console.log(prevPath);
 
-    
+    const getOrderIDFromFactory = async () => {
+        //Keep the line below this for local host testing -- fetch order data
+        //const response = await fetch(`http://localhost:3306/api/getFactoryOrderID/`);
+
+        //Keep line below this for testing over live connection -- fetch order data
+        const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/getFactoryOrderID/`);
+
+        //put response into json format
+        const jsonData = await response.json();
+
+        setFactoryOrderID([jsonData]);
+
+    }
 
     const getOrderTrackingData = async () => {
 
@@ -109,18 +134,38 @@ const TrackingStatus = props => {
         setTrackingData([jsonData]);
     }
 
-    return(
+    //map data
+    {trackingData.map((trackingData, index) => (
+        <l key={index}>
+            {
+            orderID =  trackingData.orderID,
+            orderStatus = trackingData.orderStatus
+            }
+        </l>
+    ))}
 
-        <div>
-        <Status>
-            <h1>Tracking Status</h1> 
-        </Status>
-        <Status>
-            {trackingData.map((trackingData, index) => (
-                <div key={index}>
+    //map factory orderID
+    {factoryID.map((factoryID, index) => (
+        <l key={index}>
+            {
+            factoryOrderID = factoryID.current_job
+            }
+        </l>
+    ))}
+    
+    // write if statement to check entered orderID against orderID currently in factory
+    if(orderID === factoryOrderID){
+        return(
+
+            <div>
+            <Status>
+                <h1>Tracking Status</h1> 
+            </Status>
+            <Status>
+                <div>
                     <OrderNS>
                     <h3>
-                      Order Number: {trackingData.orderID}
+                        Order Number: {orderID}
                     </h3>
                     </OrderNS>
                     <WebcamBox>
@@ -130,14 +175,47 @@ const TrackingStatus = props => {
                     </WebcamBox>
                     <OrderNS>
                     <h3>
-                     Order Status: {trackingData.orderStatus}
+                        Order Status: {orderStatus}
                     </h3>
                     </OrderNS>
                 </div>
-            ))}       
-        </Status>
-        </div>
-    )
+            </Status>
+            </div>
+        )
+    }
+    else{
+        return(
+
+            <div>
+            <Status>
+                <h1>Tracking Status</h1> 
+            </Status>
+            <Status>
+                <div>
+                    <OrderNS>
+                    <h3>
+                        Order Number: {orderID}
+                    </h3>
+                    </OrderNS>
+
+                    <OrderNS>
+                    <h3>
+                        Order is not being processed. 
+                    </h3>
+                    </OrderNS>
+
+                    <OrderNS>
+                    <h3>
+                        Order Status: {orderStatus}
+                    </h3> 
+                    </OrderNS>
+                </div>
+            </Status>
+            </div>
+        )
+    }
+
+    
 }
 
 export default TrackingStatus
