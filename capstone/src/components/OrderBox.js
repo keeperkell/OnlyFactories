@@ -16,7 +16,7 @@ import PaymentPopUp from "./PaymentPopUp";
 import { cardNumber, expDate, cvc } from "./CreditCardForm";
 
 const OrderBox = styled.div`
-    height: 600px;
+    height: 800px;
     width: 710px;
     display: flex;
     align-items: center;
@@ -507,7 +507,7 @@ const getItemPricing = async () => {
   total_price = ((valueRED*red_price) + (valueBLUE*blue_price) + (valueWHITE*white_price)).toFixed(2);
 
   //add $ to display out
-  redP_display = "${0}   Per Unit".replace('{0}', red_price);
+  redP_display = "${0}  Per Unit".replace('{0}', red_price);
   blueP_display = "${0}  Per Unit".replace('{0}', blue_price);
   whiteP_display = "${0}  Per Unit".replace('{0}', white_price);
   totalP_display = "${0}".replace('{0}', total_price);
@@ -643,6 +643,11 @@ const getItemPricing = async () => {
                   <MUI.Typography variant="h3" component="h3" align='center'>
                     Order Form
                   </MUI.Typography>
+                  <br/>
+
+                  <MUI.FormControl sx={{m:0.5, pl:2, fontWeight: 'bold', fontSize: 22}}>
+                    Name
+                  </MUI.FormControl>
 
                   <MUI.FormControl sx={{m: 2, minWidth: 675}}>
                   <MUI.TextField
@@ -660,6 +665,12 @@ const getItemPricing = async () => {
                       }
                   /> 
                   </MUI.FormControl> 
+                  <br/>
+                  <br/>
+
+                  <MUI.FormControl sx={{m:0.5, pl:2, fontWeight: 'bold', fontSize: 22}}>
+                    Email
+                  </MUI.FormControl>
 
                   <MUI.FormControl sx={{m: 2, minWidth: 675}}>
                   <MUI.TextField
@@ -681,6 +692,19 @@ const getItemPricing = async () => {
                   )}
                   </MUI.FormControl>
                   <br/>
+                  <br/>
+
+                  <MUI.FormControl sx={{m:1.45, pl:8, pr:14, fontWeight: 'bold', fontSize: 22}}>
+                    Colors
+                  </MUI.FormControl>
+
+                  <MUI.FormControl sx={{m:1.45, pl: 4, pr:16 , fontWeight: 'bold', fontSize: 22}}>
+                    Quantity
+                  </MUI.FormControl>
+
+                  <MUI.FormControl sx={{m:1.45, pr: 2, fontWeight: 'bold', fontSize: 22}}>
+                    Price
+                  </MUI.FormControl>
                   
                   <MUI.FormControl sx={{m: 1.45, minWidth: 180}}>
                     <MUI.TextField
@@ -827,9 +851,9 @@ const getItemPricing = async () => {
                     <MUI.TextField
                         id="totals"
                         name="totals"
-                        placeholder="Totals"
+                        placeholder="Total"
                         type="text"
-                        value="Totals"
+                        value="Total"
                         //disabled={true}
                         InputProps={{
                           readOnly: true,
@@ -865,7 +889,7 @@ const getItemPricing = async () => {
                     /> 
                   </MUI.FormControl> 
 
-              <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+              <MUI.FormControl sx={{m: 1.45, minWidth: 210}}>
                 <MUI.Button
                   variant="contained"
                   type="button"
@@ -877,7 +901,7 @@ const getItemPricing = async () => {
                 </MUI.Button>
               </MUI.FormControl>
 
-              <MUI.FormControl sx={{m: 2, minWidth: 210}}>
+              <MUI.FormControl sx={{m: 1.45, minWidth: 210}}>
                 <MUI.Button 
                   type="submit" 
                   variant="contained"
