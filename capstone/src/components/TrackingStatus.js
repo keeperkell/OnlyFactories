@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import { orderData } from "../components/TrackingBox";
 import { orderBoxOrderData } from "../components/OrderBox";
-import WebcamStream from "./WebcamStream";
+import WebcamFrame from "./WebcamStream";
 
 //import { json } from "express";
 
@@ -170,7 +170,7 @@ const TrackingStatus = props => {
                     </OrderNS>
                     <WebcamBox>
                         
-                        <WebcamStream />
+                        <WebcamFrame />
                         
                     </WebcamBox>
                     <OrderNS>
@@ -214,8 +214,6 @@ const TrackingStatus = props => {
             </div>
         )
     }
-
-    
 }
 
 export default TrackingStatus
