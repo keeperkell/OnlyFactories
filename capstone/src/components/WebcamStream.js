@@ -1,7 +1,7 @@
 // https://codepen.io/Chenzo/pen/QXXVvr
 // https://stackoverflow.com/questions/57047692/reactjs-video-stream-from-webcam-not-working
 
-import React from "react";
+import React, { Component } from "react";
 
 class VideoOutput extends React.Component {
     constructor(props) {
@@ -59,17 +59,28 @@ class WebcamStream extends React.Component {
   render(){
     return(
       <div>
-          <button onClick={this.handleVideoClick}>
-            {this.state.video ? 'Vid On' : 'Vid Off'}
-          </button>
-      <div>
-      {this.state.video ? <VideoOutput video={this.state.video} /> : ''}
-       </div>
-       </div>
+        <button onClick={this.handleVideoClick}>
+          {this.state.video ? 'Vid On' : 'Vid Off'}
+        </button>
+
+        <div>
+          {this.state.video ? <VideoOutput video={this.state.video} /> : ''}
+        </div>
+      </div>
     );
   }
   
   
 }
 
-export default WebcamStream
+class WebcamFrame extends React.Component{
+
+  render(){
+    return(
+      
+      <img src="https://onlyfactories.duckdns.org:3306/api/getWebcamFrame/" alt="Factory Webcam" />
+    )
+  }
+}
+
+export default WebcamFrame

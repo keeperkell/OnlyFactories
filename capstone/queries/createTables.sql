@@ -57,5 +57,12 @@ CREATE TABLE IF NOT EXISTS mqttMessages(
 CREATE TABLE IF NOT EXISTS ItemPrice(
     disk_color VARCHAR(10) NOT NULL,
     cust_price FLOAT NOT NULL,
-    prod_cost FLOAT NOT NULL,
+    prod_cost FLOAT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS Webcam(
+	webcam_status VARCHAR(20),
+    image_data LONGBLOB NOT NULL,
+    updated_at TIMESTAMP NOT NULL
+);
+	
