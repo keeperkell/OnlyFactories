@@ -78,7 +78,7 @@ class WebcamFrame extends React.Component{
   render(){
     return(
       
-      <img src="https://onlyfactories.duckdns.org:3306/api/getWebcamFrame/" alt="Factory Webcam" />
+      <img src="https://onlyfactories.duckdns.org:3306/images/webcam_frame.jpg" alt="Factory Webcam" />
     )
   }
 }
