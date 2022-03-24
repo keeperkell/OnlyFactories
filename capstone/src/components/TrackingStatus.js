@@ -15,6 +15,7 @@ import WebcamFrame from "./WebcamStream";
 // match and allow webcam access
 var factoryOrderID = -2;
 var orderID = -1;
+var jobID = -3;
 var orderStatus = "No order";
 
 const Status = styled.div`
@@ -108,7 +109,6 @@ const TrackingStatus = props => {
         //Keep line below this for testing over live connection -- fetch order data
         const jobResponse = await fetch(`https://onlyfactories.duckdns.org:3306/api/getFactoryJobID/`);
         let tempJob = [await jobResponse.json()];
-        var jobID;
         {tempJob.map((tempJob) => (
             <l>
                 {jobID = tempJob.current_job}
@@ -176,8 +176,12 @@ const TrackingStatus = props => {
         </l>
     ))}
     
+    console.log("OrderID: ",orderID);
+    console.log("factoryOrderID: ",factoryOrderID);
+    console.log("jobID: ",jobID);
+
     // write if statement to check entered orderID against orderID currently in factory
-    if(orderID === factoryOrderID){
+    if(orderID === factoryOrderID || jobID === orderID){
         return(
 
             <div>
