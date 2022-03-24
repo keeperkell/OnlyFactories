@@ -402,7 +402,7 @@ const sendPaymentData = async (values, cardNumber, expDate, totalPrice) =>{
     orderTotal: totalPrice
   };
 
-  alert(JSON.stringify(paymentDetails, null, 2));
+  //alert(JSON.stringify(paymentDetails, null, 2));
 
                 /*
                 //Keep the line below this for local host testing -- fetch order data
@@ -550,7 +550,7 @@ const getItemPricing = async () => {
               orderBoxOrderData = values.orderID;
               console.log(orderBoxOrderData);
     
-              alert(JSON.stringify(orderDetails, null, 2));
+              //alert(JSON.stringify(orderDetails, null, 2));
     
               //Send data to NodeJS(databse) via POST Start
               
