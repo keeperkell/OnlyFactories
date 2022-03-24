@@ -114,6 +114,8 @@ const TrackingStatus = props => {
                 {jobID = tempJob.current_job}
             </l>
         ))}
+        
+        console.log("Current Job: ", jobID);
 
         //Keep the line below this for local host testing -- fetch order data
         //const response = await fetch(`http://localhost:3306/api/getFactoryOrderID/`);
@@ -122,7 +124,7 @@ const TrackingStatus = props => {
         const orderResponse = await fetch(`https://onlyfactories.duckdns.org:3306/api/getFactoryOrderID/` + jobID);
 
         //put response into json format
-        const jsonData = await response.json();
+        const jsonData = await orderResponse.json();
 
         setFactoryOrderID([jsonData]);
 
