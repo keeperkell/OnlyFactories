@@ -78,7 +78,7 @@ class WebcamFrame extends React.Component{
   render(){
     return(
       
-      <img src="https://onlyfactories.duckdns.org:3306/images/webcam_frame.jpg" alt="Factory Webcam" height="720" width="1280" />
+      <img src="https://onlyfactories.duckdns.org:3306/images/webcam_frame.jpg" alt="Factory Webcam" height="563" width="1000" />
     )
   }
 }
