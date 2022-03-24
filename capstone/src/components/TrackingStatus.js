@@ -106,10 +106,25 @@ const TrackingStatus = props => {
         //const response = await fetch(`http://localhost:3306/api/getFactoryOrderID/`);
 
         //Keep line below this for testing over live connection -- fetch order data
-        const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/getFactoryOrderID/`);
+        const jobResponse = await fetch(`https://onlyfactories.duckdns.org:3306/api/getFactoryJobID/`);
+        let tempJob = [await jobResponse.json()];
+        var jobID;
+        {tempJob.map((tempJob) => (
+            <l>
+                {jobID = jobID.current_job}
+            </l>
+        ))}
+
+        //Keep the line below this for local host testing -- fetch order data
+        //const response = await fetch(`http://localhost:3306/api/getFactoryOrderID/`);
+
+        //Keep line below this for testing over live connection -- fetch order data
+        const orderResponse = await fetch(`https://onlyfactories.duckdns.org:3306/api/getFactoryOrderID/` + jobID);
 
         //put response into json format
-        const jsonData = await response.json();
+        const jsonData = await orderResponse.json();
+
+
 
         setFactoryOrderID([jsonData]);
 
@@ -162,7 +177,7 @@ const TrackingStatus = props => {
     ))}
     
     // write if statement to check entered orderID against orderID currently in factory
-    if(orderID === factoryOrderID){
+    if(orderID == factoryOrderID){
         return(
 
             <div>
