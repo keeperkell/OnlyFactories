@@ -122,9 +122,7 @@ const TrackingStatus = props => {
         const orderResponse = await fetch(`https://onlyfactories.duckdns.org:3306/api/getFactoryOrderID/` + jobID);
 
         //put response into json format
-        const jsonData = await orderResponse.json();
-
-
+        const jsonData = await response.json();
 
         setFactoryOrderID([jsonData]);
 
@@ -177,7 +175,7 @@ const TrackingStatus = props => {
     ))}
     
     // write if statement to check entered orderID against orderID currently in factory
-    if(orderID == factoryOrderID){
+    if(orderID === factoryOrderID){
         return(
 
             <div>
