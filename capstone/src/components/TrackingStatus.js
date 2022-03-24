@@ -111,7 +111,7 @@ const TrackingStatus = props => {
         var jobID;
         {tempJob.map((tempJob) => (
             <l>
-                {jobID = jobID.current_job}
+                {jobID = tempJob.current_job}
             </l>
         ))}
 
