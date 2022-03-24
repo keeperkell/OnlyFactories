@@ -1,7 +1,7 @@
 // https://codepen.io/Chenzo/pen/QXXVvr
 // https://stackoverflow.com/questions/57047692/reactjs-video-stream-from-webcam-not-working
 
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 
 class VideoOutput extends React.Component {
     constructor(props) {
@@ -78,7 +78,7 @@ class WebcamFrame extends React.Component{
   render(){
     return(
       
-      <img src="https://onlyfactories.duckdns.org:3306/images/webcam_frame.jpg" alt="Factory Webcam" height="563" width="1000" />
+      <video src="https://onlyfactories.duckdns.org:3306/images/webcam_frame.jpg" alt="Factory Webcam" height="563" width="1000" />
     )
   }
 }

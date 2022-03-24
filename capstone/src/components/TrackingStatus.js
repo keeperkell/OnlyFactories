@@ -81,6 +81,7 @@ const TrackingStatus = props => {
    const [trackingData, setTrackingData] = useState([]);
    const [factoryID, setFactoryOrderID] = useState([]);
    const [orderURL, setURL] = useState(0);
+   const [img, setImg] = useState();
 
    var urlID = checkOrigin(orderData, orderBoxOrderData);
 
@@ -96,14 +97,9 @@ const TrackingStatus = props => {
         }, 5000);
     }, [factoryID]);
 
-    //const history = useHistory();
-
-    //const prevPath = history.location.state.from;
-    
-    //const prevPath = history.pop;
-    
-
-    //console.log(prevPath);
+    useEffect(()=>{
+        getWebcamSource();
+    }, [img])
 
     const getOrderIDFromFactory = async () => {
         //Keep the line below this for local host testing -- fetch order data
@@ -132,6 +128,18 @@ const TrackingStatus = props => {
 
         //Set trackingData state to data received from database (orderData)
         setTrackingData([jsonData]);
+    }
+
+    const getWebcamSource = async () => {
+        //const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/getWebcamFrame/`);
+        //const source = await response.json();
+        //setURL([source]);
+
+        const response = await fetch("https://onlyfactories.duckdns.org:3306/images/webcam_frame.jpg");
+        const imageBlob = await response.blob();
+        const imageObjectURL = URL.createObjectURL(imageBlob);
+        setImg(imageObjectURL);
+
     }
 
     //map data
@@ -170,8 +178,8 @@ const TrackingStatus = props => {
                     </OrderNS>
                     <WebcamBox>
                         
-                        <WebcamFrame />
-                        
+                        <img src={img} alt="webcam image" />         
+
                     </WebcamBox>
                     <OrderNS>
                     <h3>
