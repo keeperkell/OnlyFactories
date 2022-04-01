@@ -9,7 +9,9 @@ import Tracking from './webpages/tracking'
 import TrackingStatus from './components/TrackingStatus';
 import Management from './webpages/management';
 import Profit from './webpages/profit';
-import {ThemeProvider, createTheme} from '@mui/material/styles'
+import {ThemeProvider, createTheme} from '@mui/material/styles';
+import Particles, { ISourceOptions, Main} from "react-tsparticles";
+import { loadSeaAnemonePreset } from 'tsparticles-preset-sea-anemone';
 
 // color override for MUI theme, unable to use css vars here
 const theme = createTheme({
@@ -27,6 +29,14 @@ const theme = createTheme({
 });
 
 function App() {
+
+  const options: ISourceOptions = {
+    preset: "seaAnemone",
+  };
+
+  const initialize = (instance: Main) => {
+    loadSeaAnemonePreset(instance);
+  };
 
   return (
     <ThemeProvider theme={theme}>
