@@ -15,7 +15,8 @@
     */
 
     /*Temporary Background Colors*/
-    --backgroundPrimary: #ffffff;
+    --backgroundPrimary: linear-gradient(180deg, #808080, white);
+    --background-size: 100% 80%;
 
     /*Primary UI Colors*/
     --primaryPrideGold: #f1b300;
@@ -38,4 +39,10 @@
     --primaryFont: Ringside;
     --secondaryFont: Noto Serif;
 
+
+}
+
+@keyframes gradient {
+  0% {background-position: 0%}
+  100% {background-position: 100%}
 }

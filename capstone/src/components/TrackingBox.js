@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import {Formik, Form } from "formik";
 //import { Trackorder } from "../webpages/tracking";
 import { useHistory } from "react-router-dom";
-
+import '../globalStyles'
 
 const TrackStyle = styled.div`
     height: 600px;
@@ -18,7 +18,7 @@ const TrackStyle = styled.div`
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: var(--background);
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
     color: #333333;

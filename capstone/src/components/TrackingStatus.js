@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { orderData } from "../components/TrackingBox";
 import { orderBoxOrderData } from "../components/OrderBox";
 import WebcamStream from "./WebcamStream";
+import '../globalStyles'
 
 const LiveFeed = "https://511ny.org/map/Cctv/4616667--17";
 //import { json } from "express";
@@ -17,7 +18,7 @@ const Status = styled.div`
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: var(--background);
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
     color: #333333;   
@@ -29,7 +30,7 @@ const OrderNS = styled.div`
     align-items: center;
     justify-content: center;
     margin: 10px auto;
-    background-color: #fff;
+    background-color: var(--background);
     border-radius: 8px;
     padding: 10px 0px;
     color: #333333; 
@@ -42,7 +43,7 @@ const WebcamBox = styled.div`
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: var(--background);
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
     color: #333333; 
