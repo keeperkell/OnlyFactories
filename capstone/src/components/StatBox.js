@@ -16,7 +16,7 @@ const StatBox = () => {
     useEffect(()=>{
         const timer = setTimeout(() =>{
             getQuantities();
-        }, 1500);
+        }, 100);
     });
 
     //fetch data

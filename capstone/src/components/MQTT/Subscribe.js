@@ -8,14 +8,17 @@ const url = 'wss://onlyfactories.duckdns.org:9001';
 let client = mqtt.connect(url);
 
 client.on('connect', function(){
+    /*
     client.subscribe('Factory/Echo');                           // test topic that will echo back a message
     client.subscribe('Factory/Inventory');                      // listen for messages about inventory
     client.subscribe('Factory/Status');                         // listen for messages about factory status
     client.subscribe('Factory/Job_notice');                     // listen for messages about Job updates
     client.subscribe('UofICapstone_Cloud');
     client.subscribe('Factory/Webcam');
-
+    */
     console.log('Client has subscribed successfully');
+
+    client.subscribe('UofI_CapstoneCloud');
 });
 
 client.on('message', function(topic, message){
@@ -47,10 +50,9 @@ client.on('message', function(topic, message){
     }
     */
 
-    if(topic === 'Factory/Webcam'){
+    if(topic === 'UofI_CapstoneCloud'){
         payload = JSON.parse(message);
-        console.log("Webcam: ")
-        console.log("\t", payload);
+        console.log(payload);
     }
 
 });
