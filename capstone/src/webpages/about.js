@@ -43,9 +43,11 @@ const About = () => {
                     <td>This is a senior capstone project from the University of Idaho and allows customers
                 to order red, blue, and white disks from a Fischer-Technik Factory located in
                 Couer d'Alene, Idaho. </td>
-                    <td>This is a senior capstone project from the University of Idaho and allows customers
-                to order red, blue, and white disks from a Fischer-Technik Factory located in
-                Couer d'Alene, Idaho.</td>
+                    <td>Justin Harris is a graduating Senior in the Computer Science program at the
+                        Univeristy of Idaho. One of his main responsibilities in this project was 
+                        the set up and management of the MySQL database with a backend RESTful
+                        API utilizing the Express Framework for communication to the frontend. 
+                    </td>
                     <td>This is a senior capstone project from the University of Idaho and allows customers
                 to order red, blue, and white disks from a Fischer-Technik Factory located in
                 Couer d'Alene, Idaho.</td>
