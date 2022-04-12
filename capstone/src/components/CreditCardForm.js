@@ -6,6 +6,9 @@ export var cardNumber;
 export var expDate;
 export var cvc;
 
+//https://www.npmjs.com/package/react-payment-inputs#errortextprops
+// man page for react-payment-inputs
+
 const handleCcChange = e => {
   cardNumber= e.target.value;
 }
@@ -26,19 +29,19 @@ export default function PaymentInputs() {
 
   return (
       <div>
-        <PaymentInputsWrapper {...wrapperProps} style={{width: "450px"}}>
+        <PaymentInputsWrapper style={{width: "450px"}}>
           <svg {...getCardImageProps({ images })} />
           <input {...getCardNumberProps({onChange: handleCcChange})}  />
         </PaymentInputsWrapper>
 
-        <PaymentInputsWrapper {...wrapperProps} style={{width: "150px"}}>
+        <PaymentInputsWrapper style={{width: "150px"}}>
           <input {...getExpiryDateProps({onChange: handleExpChange})}  />
         </PaymentInputsWrapper>
 
-      <PaymentInputsWrapper {...wrapperProps} style={{width: "100px"}}>
-        <input {...getCVCProps()} value={cvc} />
-      </PaymentInputsWrapper>
-    </div>
+        <PaymentInputsWrapper style={{width: "100px"}}>
+          <input {...getCVCProps()} value={cvc} />
+        </PaymentInputsWrapper>
+      </div>
   );
 }
 
