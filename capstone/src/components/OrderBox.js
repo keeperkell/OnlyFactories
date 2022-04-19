@@ -491,9 +491,9 @@ const getItemPricing = async () => {
 
     //mapping JSON data
     itemPrices.map((jData, index) => (
-      <l key={index}> {red_price = itemPrices[0].cust_price,
+      <l key={index}> {[red_price = itemPrices[0].cust_price,
           blue_price = itemPrices[1].cust_price,
-          white_price = itemPrices[2].cust_price}
+          white_price = itemPrices[2].cust_price]}
       </l>
   
     ))

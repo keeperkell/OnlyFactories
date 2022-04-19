@@ -5,8 +5,24 @@ import * as mui from '@mui/material';
 import {Link} from 'react-router-dom';
 import { PieChart, Pie, Cell } from 'recharts';
 
+const mqtt = require("mqtt");
+const url = 'wss://onlyfactories.duckdns.org:9001';
+const client = mqtt.connect(url);
+
 var completed = 0, inQ = 0, totalOrders = 0;
 var red = 0, blue = 0, white = 0;
+
+function sendInventoryReset(){
+    const client = mqtt.connect(url);
+
+    var payload = {
+        msg_type: "reset-inventory"
+    }
+        
+    client.publish('UofICapstone_Cloud', payload, 2);
+
+    console.log("Reset inventory sent");
+}
 
 const StatBox = () => {
     const [time, setTime] = useState(1)
@@ -39,12 +55,12 @@ const StatBox = () => {
     
     //mapping JSON data
     jData.map((jData, index) => (
-        <l key={index}> {red = jData.numRed,
+        <l key={index}> {[red = jData.numRed,
             blue = jData.numBlue,
             white = jData.numWhite,
             inQ = jData.inQue,
             completed = jData.completed,
-            totalOrders = jData.totalOrders}
+            totalOrders = jData.totalOrders]}
         </l>
     ))
 
@@ -177,6 +193,13 @@ const StatBox = () => {
                     variant="contained"
                     style={{backgroundColor: "#EAAB00", WebkitTextFillColor:"black"}}>
                         Profit
+                </mui.Button>
+                <br />
+                <mui.Button 
+                    variant="contained"
+                    onClick={sendInventoryReset}
+                    style={{backgroundColor: "#EAAB00", WebkitTextFillColor:"black"}}>
+                        Reset Inventory
                 </mui.Button>
             </mui.FormControl>
         </mui.Box>
