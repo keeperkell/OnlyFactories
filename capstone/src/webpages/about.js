@@ -40,17 +40,19 @@ const About = () => {
                 </tr>
                 <tr><th></th><th></th><th></th></tr>
                 <tr>
-                    <td>This is a senior capstone project from the University of Idaho and allows customers
-                to order red, blue, and white disks from a Fischer-Technik Factory located in
-                Couer d'Alene, Idaho. </td>
+                    <td>Keller Lawson is a graduating Senior in the Computer Science program at the
+                        Univeristy of Idaho.His responsibilities including setting up Amazon Web Services
+                         (AWS) deployment, creating the MQTT secure communication channel and RESTful API,
+                         and coordinating work with the other students working on the mini-factory. 
+                    </td>
                     <td>Justin Harris is a graduating Senior in the Computer Science program at the
                         Univeristy of Idaho. One of his main responsibilities in this project was 
                         the set up and management of the MySQL database with a backend RESTful
                         API utilizing the Express Framework for communication to the frontend. 
                     </td>
-                    <td>Parker Weisel is a senior of Computer Science at the Univeristy of Idaho. 
-                        His main responsibilities were handling the management pages and graphs using 
-                        MySQL Queries, as well as the login and home pages.
+                    <td>Parker Weisel is a senior in the Computer Science program at the Univeristy 
+                        of Idaho. His main responsibilities were handling the management pages and 
+                        graphs using MySQL Queries, as well as the login and home pages.
                     </td>
                 </tr>
             </table>
