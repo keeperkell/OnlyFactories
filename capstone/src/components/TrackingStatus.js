@@ -19,7 +19,7 @@ var jobID = -3;
 var orderStatus = "No order";
 
 const Status = styled.div`
-    width: 500px;
+    width: 70em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -31,7 +31,7 @@ const Status = styled.div`
 `
 const OrderNS = styled.div`
     height: 100px;
-    width: 500px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,12 +43,11 @@ const OrderNS = styled.div`
 `
 
 const WebcamBox = styled.div`
-    height: 400px;
-    width: 400px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
+    margin: auto;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
@@ -168,9 +167,10 @@ const TrackingStatus = props => {
     //map data
     {trackingData.map((trackingData, index) => (
         <l key={index}>
-            {
+            {[
             orderID =  trackingData.orderID,
             orderStatus = trackingData.orderStatus
+            ]
             }
         </l>
     ))}
@@ -200,19 +200,19 @@ const TrackingStatus = props => {
             <Status>
                 <div>
                     <OrderNS>
-                    <h3>
+                    <h2>
                         Order Number: {orderID}
-                    </h3>
+                    </h2>
                     </OrderNS>
                     <WebcamBox>
                         
-                        <img src={img} alt="webcam image" />         
+                        <img width="100%" src={img} alt="webcam image" />         
 
                     </WebcamBox>
                     <OrderNS>
-                    <h3>
+                    <h2>
                         Order Status: {orderStatus}
-                    </h3>
+                    </h2>
                     </OrderNS>
                 </div>
             </Status>
@@ -229,21 +229,21 @@ const TrackingStatus = props => {
             <Status>
                 <div>
                     <OrderNS>
-                    <h3>
+                    <h2>
                         Order Number: {orderID}
-                    </h3>
+                    </h2>
                     </OrderNS>
 
                     <OrderNS>
-                    <h3>
+                    <h1>
                         Order is not being processed. 
-                    </h3>
+                    </h1>
                     </OrderNS>
 
                     <OrderNS>
-                    <h3>
+                    <h2>
                         Order Status: {orderStatus}
-                    </h3> 
+                    </h2> 
                     </OrderNS>
                 </div>
             </Status>
