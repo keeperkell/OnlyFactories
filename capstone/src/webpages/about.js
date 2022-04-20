@@ -39,7 +39,7 @@ const About = () => {
                     <td>Developer</td>
                 </tr>
                 <tr><th></th><th></th><th></th></tr>
-                <tr>
+                <tr style={{ textAlign: 'justify'}}>
                     <td>Keller Lawson is a graduating Senior in the Computer Science program at the
                         Univeristy of Idaho.His responsibilities including setting up Amazon Web Services
                          (AWS) deployment, creating the MQTT secure communication channel and RESTful API,
@@ -49,10 +49,12 @@ const About = () => {
                         Univeristy of Idaho. One of his main responsibilities in this project was 
                         the set up and management of the MySQL database with a backend RESTful
                         API utilizing the Express Framework for communication to the frontend. 
+                        <br /><br />
                     </td>
                     <td>Parker Weisel is a senior in the Computer Science program at the Univeristy 
                         of Idaho. His main responsibilities were handling the management pages and 
                         graphs using MySQL Queries, as well as the login and home pages.
+                        <br /><br /><br /><br />
                     </td>
                 </tr>
             </table>
