@@ -18,7 +18,7 @@ client.on('connect', function(){
     */
     console.log('Client has subscribed successfully');
 
-    client.subscribe('UofI_CapstoneCloud');
+    client.subscribe('UofICapstone_Cloud');
 });
 
 client.on('message', function(topic, message){
@@ -50,7 +50,7 @@ client.on('message', function(topic, message){
     }
     */
 
-    if(topic === 'UofI_CapstoneCloud'){
+    if(topic === 'UofICapstone_Cloud'){
         payload = JSON.parse(message);
         console.log(payload);
     }

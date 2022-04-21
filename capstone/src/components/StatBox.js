@@ -5,24 +5,18 @@ import * as mui from '@mui/material';
 import {Link} from 'react-router-dom';
 import { PieChart, Pie, Cell } from 'recharts';
 
-const mqtt = require("mqtt");
-const url = 'wss://onlyfactories.duckdns.org:9001';
-const client = mqtt.connect(url);
-
-var completed = 0, inQ = 0, totalOrders = 0;
-var red = 0, blue = 0, white = 0;
-
-function sendInventoryReset(){
-    const client = mqtt.connect(url);
+const sendInventoryReset = async() => {
 
     var payload = {
-        msg_type: "reset_inventory"
+        "msg_type": "reset_inventory"
     }
-        
-    client.publish('UofICapstone_Cloud', payload, 2);
+    const response = await fetch(`https://onlyfactories.duckdns.org:3306/mqtt/sendInventoryRefresh`);
 
-    console.log("Reset inventory sent");
+    console.log(response);
 }
+
+var completed = 0, inQ = 0, totalOrders = 0;
+var red = 0, blue = 0, white = 0; 
 
 const StatBox = () => {
     const [time, setTime] = useState(1)
@@ -33,7 +27,7 @@ const StatBox = () => {
         const timer = setTimeout(() =>{
             getQuantities();
         }, 100);
-    });
+    });   
 
     //fetch data
     const getQuantities = async () => {
@@ -43,7 +37,7 @@ const StatBox = () => {
         const response = await fetch(`https://onlyfactories.duckdns.org:3306/api/orderQuantities/` + time);
 
         const jsonData = await response.json();
-        console.log(jsonData);
+        //console.log(jsonData);
         setData(jsonData);
         //alert(JSON.stringify(jsonData))
     }
@@ -197,7 +191,10 @@ const StatBox = () => {
                 <br />
                 <mui.Button 
                     variant="contained"
-                    onClick={sendInventoryReset}
+                    onClick = {() => {
+                        sendInventoryReset();
+                        console.log("reset sent");
+                    }}
                     style={{backgroundColor: "#EAAB00", WebkitTextFillColor:"black"}}>
                         Reset Inventory
                 </mui.Button>
@@ -206,6 +203,5 @@ const StatBox = () => {
     </div>
     )
 }
-
 
 export default StatBox;
