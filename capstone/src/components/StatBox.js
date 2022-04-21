@@ -16,7 +16,7 @@ function sendInventoryReset(){
     const client = mqtt.connect(url);
 
     var payload = {
-        msg_type: "reset-inventory"
+        msg_type: "reset_inventory"
     }
         
     client.publish('UofICapstone_Cloud', payload, 2);
