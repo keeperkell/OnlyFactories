@@ -185,10 +185,10 @@ const LineC = () => {
             key = {data.profit}
           >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis key = {data.profit} domain={[0, maximum]} />
+          <XAxis dataKey="name" label={{value:"Date", position:"insideBottom", offset:-10}} />
+          <YAxis key = {data.profit} domain={[0, maximum]} label={{value:"Dollars", angle:-90, position:"insideLeft", offset:-10}} />
           <Tooltip />
-          <Legend />
+          <Legend align="left" wrapperStyle={{paddingTop:5, paddingLeft:40}} />
           <Line type="monotone" dataKey="Profit" key = {data.profit} stroke="#EAAB00" strokeWidth={2} activeDot={{ r: 8 }} />
           </LineChart>
 
