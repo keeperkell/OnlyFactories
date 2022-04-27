@@ -122,19 +122,21 @@ const TrackingStatus = props => {
         //Keep line below this for testing over live connection -- fetch order data
         const orderResponse = await fetch(`https://onlyfactories.duckdns.org:3306/api/getFactoryOrderID/` + jobID);
 
-        let tempOrder = [await orderResponse.json()];
+       /* let tempOrder = [await orderResponse.json()];
         {tempOrder.map((tempOrder) => (
             <l>
                 {factoryOrderID = tempOrder.orderID}
             </l>
-        ))}
+        ))}*/
 
-        /*
+        
         //put response into json format
         const jsonData = await orderResponse.json();
 
+        //const jOrderIDtoInt = parseInt(jsonData.orderID);
+
         setFactoryOrderID([jsonData]);
-        */
+        
     }
 
     const getOrderTrackingData = async () => {
@@ -175,19 +177,20 @@ const TrackingStatus = props => {
         </l>
     ))}
 
-    /*
+    
     //map factory orderID
     {factoryID.map((factoryID, index) => (
         <l key={index}>
             {
-            factoryOrderID = factoryID.current_job
+            factoryOrderID = factoryID.orderID
             }
         </l>
     ))}
-    */
+    
     
     console.log("OrderID: ",orderID);
     console.log("factoryOrderID: ",factoryOrderID);
+    console.log("FactoryID: ", factoryID);
 
     // write if statement to check entered orderID against orderID currently in factory
     if(orderID === factoryOrderID){
