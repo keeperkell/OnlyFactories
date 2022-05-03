@@ -88,13 +88,13 @@ const TrackingStatus = props => {
     useEffect(()=>{
         const timer = setTimeout(() =>{
             getOrderTrackingData();
-        }, 100);
+        }, 10000);
     }, [trackingData]);
 
     useEffect(()=>{
         const timer = setTimeout(() =>{
             getOrderIDFromFactory();
-        }, 100);
+        }, 10000);
     }, [factoryID]);
 
     useEffect(()=>{
