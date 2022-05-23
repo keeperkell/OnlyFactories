@@ -5,7 +5,7 @@ to order red, blue, and white disks from a Fischer-Technik Factory located in
 Coeur d'Alene, Idaho. It was designed and developed from August 2021 to May 2022 by 3 computer science students located
 at the remote campus in Coeur d'Alene, Idaho. <br />
 <br />
-The current release, V 1.0, was finalized in May 2022 and all AWS hosted services were shutdown. Cloning this repository and using the same services listed below will allow one to recreate the project. <br />
+The current release, v1.0.0, was finalized in May 2022 and all AWS hosted services were shutdown. Cloning this repository and using the same services listed below will allow one to recreate the project. <br />
 </br>
 
 ## Development Team
